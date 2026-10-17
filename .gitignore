@@ -19,3 +19,6 @@ venv/
 .DS_Store
 .vscode/
 .idea/
+
+# Real documents obtained under access terms
+project/data/real/docile/

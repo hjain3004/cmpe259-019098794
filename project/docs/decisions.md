@@ -57,6 +57,9 @@ Evidence spans and message bodies are stored with every run of six or more digit
 **D13. Short vendor names resolve as candidates.**
 Owners say "Greenway" or "Northside". A query whose words all match the start of a vendor's name or alias is treated as a candidate (score 0.9). When more than one vendor qualifies, every candidate is returned, so the caller can ask which one is meant.
 
+**D14. Real invoices added for the extraction check.**
+The end-to-end evaluation stays synthetic, because no public dataset links invoices, vendor messages, bank rows and a trusted vendor record with ground-truth payment links. To measure how much cleaner synthetic invoices are than real ones, the frozen extraction method is also scored on 40 real annotated invoices from DocILE, using DocILE's own text and field labels. DocILE files are not committed; only sample IDs and aggregate scores are.
+
 ## Open
 
 - Answering model and version, to be pinned before 1 Nov.

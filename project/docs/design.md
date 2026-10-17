@@ -77,6 +77,17 @@ Each scenario bundle is one business over two to four months:
 
 **Evaluation clock.** All relative dates resolve against 24 September 2026.
 
+**Why synthetic, and the real-invoice check.** Public data exists for each piece on its own: annotated real business documents ([DocILE](https://docile.rossum.ai/)), receipts (SROIE, CORD), bank transactions (PaySim, the Berka data), and business email (Enron). None links one business's invoices, vendor messages, bank rows and trusted vendor record with ground truth for which payment settled which invoice, and that link is what the evaluation checks. Real linked data of this kind is private, and anonymizing it breaks the links. The end-to-end evaluation therefore uses synthetic bundles, which also allow the hard cases and the attacks to be planted on purpose.
+
+Synthetic invoices are cleaner and more uniform than real ones, so extraction is also scored on real documents:
+
+- **Sample.** 40 annotated invoices from DocILE whose labelled fields overlap the header schema (vendor name, invoice number, issue and due dates, totals, line items). Selected once, before any scoring, and the IDs are recorded in `data/real/docile_sample.txt`.
+- **Input.** DocILE's own text for each document, not the PDF, so the comparison isolates layout and wording rather than PDF parsing.
+- **Method.** The frozen extraction method from the gate, unchanged. No prompt is tuned on these documents.
+- **Metrics.** Field-level precision, recall and F1 and amount and date exact match, reported next to the same numbers on synthetic invoices.
+- **Scope.** This checks extraction only. Reconciliation, dialogue and safety are still evaluated on the synthetic bundles.
+- **Licensing.** DocILE access is granted per user for research. Its documents are not committed to this repository; the README explains how to obtain them, and only the sample IDs and aggregate scores are committed.
+
 ## Ingestion and extraction
 
 Extraction runs once per bundle, offline, and its output is cached so C2, C3 and the extraction metrics all read the same records. The extraction LLM gets document text and a schema, and nothing else: no tools, no database, no conversation.
@@ -265,8 +276,8 @@ Each phase ends with something that runs, so a slip shows up as a missing artifa
 | --- | --- | --- | --- |
 | 1. Contracts and vertical slice | 16 Oct → 21 Oct | Contracts, `queries.yaml`, terms parser, one hand-built café bundle, SQLite load, two tools, BM25 C1, scorer writing the five required fields for about ten queries | Contracts and query file done 16 Oct |
 | 2. Generator and development bundles | 25 Oct | Ledger-first generator with distractors, ten development bundles, gold computed and spot-checked | Not started |
-| 3. Extraction gate and C2 to C4 | 1 Nov | Gate run and method frozen; C2, C3, C4 built; k and thresholds picked on dev; twenty test bundles generated, landscaping written separately, hashes recorded | Not started |
-| 4. Full runs, safety, peers | 9 Nov | All configurations on all 30 conversations and S01–S10; two classmate sessions; fixes logged and suite rerun | Not started |
+| 3. Extraction gate and C2 to C4 (DocILE access requested) | 1 Nov | Gate run and method frozen; C2, C3, C4 built; k and thresholds picked on dev; twenty test bundles generated, landscaping written separately, hashes recorded | Not started |
+| 4. Full runs, safety, user tests | 9 Nov | All configurations on all 30 conversations and S01–S10; frozen extraction scored on the 40 DocILE invoices; two classmate sessions; fixes logged and suite rerun | Not started |
 | 5. Analysis, slides, demo | 16 Nov | Tables by configuration, label and split; error analysis; slides; demo recording with one honest failure | Not started |
 | Presentations | 17 Nov | In-class presentation | |
 | 6. Final artifacts | 11 Dec | Clean README, logs, prompts, data, demo link; this submission cannot be revised | |

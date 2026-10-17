@@ -90,16 +90,26 @@ The checkboxes track reading status: `[x]` read, `[ ]` not yet.
 - Chen, Sizhe et al. **StruQ: Defending Against Prompt Injection with Structured Queries.** USENIX Security 2025. PR. <https://arxiv.org/abs/2402.06363> (instruction/data separation via fine-tuning; related work)
 - Zou, W. et al. **PoisonedRAG: Knowledge Corruption Attacks to Retrieval-Augmented Generation of Large Language Models.** USENIX Security 2025. PR. <https://arxiv.org/abs/2402.07867> (poisoned documents steer RAG answers; relevant to C1)
 - Patil, S. G. et al. **The Berkeley Function Calling Leaderboard (BFCL).** ICML 2025. PR. <https://proceedings.mlr.press/v267/patil25a.html>
-- Chen, Zhiyu et al. **FinQA.** EMNLP 2021. PR †. · Zhu, F. et al. **TAT-QA.** ACL 2021. PR †.
-- Rajpurkar, P., Jia, R. and Liang, P. **Know What You Don't Know: Unanswerable Questions for SQuAD.** ACL 2018. PR †.
-- Aliannejadi, M. et al. **Asking Clarifying Questions in Open-Domain Information-Seeking Conversations.** SIGIR 2019. PR †.
-- Strötgen, J. and Gertz, M. **HeidelTime.** SemEval 2010. PR † (rule-based temporal normalization baseline).
+- Chen, Zhiyu et al. **FinQA: A Dataset of Numerical Reasoning over Financial Data.** EMNLP 2021. PR †. <https://arxiv.org/abs/2109.00122>
+- Zhu, F. et al. **TAT-QA: A Question Answering Benchmark on a Hybrid of Tabular and Textual Content in Finance.** ACL 2021. PR †. <https://arxiv.org/abs/2105.07624>
+- Rajpurkar, P., Jia, R. and Liang, P. **Know What You Don't Know: Unanswerable Questions for SQuAD.** ACL 2018. PR †. <https://arxiv.org/abs/1806.03822>
+- Aliannejadi, M. et al. **Asking Clarifying Questions in Open-Domain Information-Seeking Conversations.** SIGIR 2019. PR †. <https://arxiv.org/abs/1907.06554>
+- Strötgen, J. and Gertz, M. **HeidelTime: High Quality Rule-Based Extraction and Normalization of Temporal Expressions.** SemEval 2010. PR †. <https://aclanthology.org/S10-1071/> (rule-based temporal normalization baseline)
 - Wang, Z. et al. **VRDU: A Benchmark for Visually-rich Document Understanding.** KDD 2023. PR. <https://doi.org/10.1145/3580305.3599929>
 - Ostroukhov, M. et al. **PRAGMA: Revolut Foundation Model.** 2026. Preprint. <https://arxiv.org/abs/2604.08649> (transaction-sequence model; introduction only)
 
-Recent preprints on invoice-borne prompt injection, useful for the related-work paragraph: ARGUS (arXiv:2605.03378) and A2AS (arXiv:2510.13825).
+Recent preprints on invoice-borne prompt injection, useful for the related-work paragraph: ARGUS (<https://arxiv.org/abs/2605.03378>) and A2AS (<https://arxiv.org/abs/2510.13825>).
 
 Not cited: MINT (arXiv:2608.14198) and Razorpay's Vulcan announcement. Neither supports a design or evaluation choice in this project.
+
+## Datasets
+
+| Dataset | Use in this project | Link |
+| --- | --- | --- |
+| DocILE (annotated set) | Real-invoice extraction check: 40 invoices, scored with the frozen extraction method | <https://docile.rossum.ai/> · code: <https://github.com/rossumai/docile> |
+| Synthetic scenario bundles | Everything else: reconciliation, dialogue, safety (generated in `data/generator/`) | this repository |
+
+Considered and not used: SROIE and CORD (receipts, not vendor invoices), PaySim and the Berka data (bank transactions with no linked documents), the Enron corpus (email with no linked invoices or bank rows). None links documents, messages and bank rows for one business.
 
 ## Motivation statistics (introduction only)
 
