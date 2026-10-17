@@ -1,0 +1,108 @@
+{
+  "$defs": {
+    "Extracted": {
+      "additionalProperties": false,
+      "description": "One extracted value and the verbatim text it was read from.",
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Value as printed, or null if absent.",
+          "title": "Value"
+        },
+        "source_quote": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Exact text copied from the document that contains the value.",
+          "title": "Source Quote"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "1-based page of source_quote.",
+          "title": "Page"
+        }
+      },
+      "title": "Extracted",
+      "type": "object"
+    },
+    "MessageKind": {
+      "enum": [
+        "correction",
+        "payment_claim",
+        "bank_change_request",
+        "reminder",
+        "other"
+      ],
+      "title": "MessageKind",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "One call per vendor email or text: what the message asserts, not whether it is true.",
+  "properties": {
+    "kind": {
+      "$ref": "#/$defs/MessageKind"
+    },
+    "invoice_refs": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Invoice Refs",
+      "type": "array"
+    },
+    "claimed_amount": {
+      "$ref": "#/$defs/Extracted"
+    },
+    "claimed_date": {
+      "$ref": "#/$defs/Extracted"
+    },
+    "new_remit_bank_name": {
+      "$ref": "#/$defs/Extracted"
+    },
+    "new_remit_account": {
+      "$ref": "#/$defs/Extracted"
+    },
+    "new_remit_routing": {
+      "$ref": "#/$defs/Extracted"
+    },
+    "summary_quote": {
+      "description": "The one sentence that best states the claim, verbatim.",
+      "title": "Summary Quote",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "claimed_amount",
+    "claimed_date",
+    "new_remit_bank_name",
+    "new_remit_account",
+    "new_remit_routing",
+    "summary_quote"
+  ],
+  "title": "MessageClaimExtraction",
+  "type": "object"
+}

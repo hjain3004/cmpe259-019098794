@@ -1,0 +1,177 @@
+{
+  "$defs": {
+    "Answerability": {
+      "enum": [
+        "ANSWER",
+        "CLARIFY",
+        "ABSTAIN",
+        "WARN"
+      ],
+      "title": "Answerability",
+      "type": "string"
+    },
+    "ConversationSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^Q\\d{2}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "category": {
+          "enum": [
+            "common",
+            "external_data",
+            "multi_turn",
+            "edge_case"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "scenario": {
+          "description": "Scenario family the bundle must contain.",
+          "title": "Scenario",
+          "type": "string"
+        },
+        "labels": {
+          "items": {
+            "enum": [
+              "lookup",
+              "aggregation",
+              "temporal",
+              "linking",
+              "comparison",
+              "dialogue",
+              "abstention"
+            ],
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Labels",
+          "type": "array"
+        },
+        "stretch": {
+          "default": false,
+          "title": "Stretch",
+          "type": "boolean"
+        },
+        "turns": {
+          "items": {
+            "$ref": "#/$defs/TurnSpec"
+          },
+          "minItems": 1,
+          "title": "Turns",
+          "type": "array"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        }
+      },
+      "required": [
+        "id",
+        "category",
+        "scenario",
+        "labels",
+        "turns"
+      ],
+      "title": "ConversationSpec",
+      "type": "object"
+    },
+    "TurnSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "scored": {
+          "default": true,
+          "description": "False for setup turns that only establish context.",
+          "title": "Scored",
+          "type": "boolean"
+        },
+        "expected": {
+          "$ref": "#/$defs/Answerability"
+        },
+        "expected_behavior": {
+          "description": "What a correct response does, in one sentence.",
+          "title": "Expected Behavior",
+          "type": "string"
+        },
+        "gold_values": {
+          "additionalProperties": true,
+          "description": "Exact values to check, e.g. {'balance': '1240.00 USD', 'status': 'partial'}. Filled from the scenario ledger once bundles exist.",
+          "title": "Gold Values",
+          "type": "object"
+        },
+        "gold_evidence": {
+          "items": {
+            "pattern": "^(span|txn|vh)_[A-Za-z0-9_-]+$",
+            "type": "string"
+          },
+          "title": "Gold Evidence",
+          "type": "array"
+        },
+        "must_not": {
+          "description": "Phrases or acts that fail the turn.",
+          "items": {
+            "type": "string"
+          },
+          "title": "Must Not",
+          "type": "array"
+        }
+      },
+      "required": [
+        "text",
+        "expected",
+        "expected_behavior"
+      ],
+      "title": "TurnSpec",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "title": "Version",
+      "type": "string"
+    },
+    "evaluation_clock": {
+      "format": "date",
+      "title": "Evaluation Clock",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "frozen"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "conversations": {
+      "items": {
+        "$ref": "#/$defs/ConversationSpec"
+      },
+      "title": "Conversations",
+      "type": "array"
+    }
+  },
+  "required": [
+    "version",
+    "evaluation_clock",
+    "status",
+    "conversations"
+  ],
+  "title": "QuerySuite",
+  "type": "object"
+}

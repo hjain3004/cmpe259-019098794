@@ -1,0 +1,329 @@
+# Frozen evaluation conversations for CashBooks Assist.
+# Status stays "draft" until the test bundles exist and every gold value and
+# evidence ID has been filled from the scenario ledger and checked by hand.
+# After freezing, wording changes only with a logged reason and a full rerun.
+version: "0.1"
+evaluation_clock: 2026-09-24
+status: draft
+
+conversations:
+  # ---------------------------------------------------------------- common owner tasks
+  - id: Q01
+    category: common
+    scenario: bills due within seven days of the clock, plus one due on day eight
+    labels: [lookup, temporal]
+    turns:
+      - text: What bills are due in the next seven days?
+        expected: ANSWER
+        expected_behavior: Lists exactly the bills due 2026-09-24 to 2026-10-01 with remaining balances and excludes the day-eight bill.
+
+  - id: Q02
+    category: common
+    scenario: several Northside bills, one partly paid
+    labels: [aggregation, temporal]
+    turns:
+      - text: How much do I owe Northside Supplies as of September 30?
+        expected: ANSWER
+        expected_behavior: Gives the exact total remaining as of 2026-09-30 and shows the calculation per bill.
+
+  - id: Q03
+    category: common
+    scenario: mix of overdue, due-today and future bills
+    labels: [lookup, temporal]
+    turns:
+      - text: Which invoices are overdue?
+        expected: ANSWER
+        expected_behavior: Lists only bills unpaid past their due date at the clock; a bill due today is not overdue.
+
+  - id: Q04
+    category: common
+    scenario: NS-1048 paid by a bank row whose descriptor omits the invoice number
+    labels: [linking]
+    turns:
+      - text: Did I already pay invoice NS-1048?
+        expected: ANSWER
+        expected_behavior: States paid or unpaid from bank evidence and cites the matching bank row.
+
+  - id: Q05
+    category: common
+    scenario: Greenway invoice with Net 30 terms and no printed due date
+    labels: [temporal]
+    turns:
+      - text: When is the Greenway Produce invoice due?
+        expected: ANSWER
+        expected_behavior: Gives the due date derived from the issue date and terms and shows the derivation.
+
+  - id: Q06
+    category: common
+    scenario: GP-228 with one partial payment
+    labels: [aggregation, linking]
+    turns:
+      - text: What remains unpaid on GP-228 after the partial payment?
+        expected: ANSWER
+        expected_behavior: Gives total minus the linked partial payment, to the cent, with both cited.
+
+  - id: Q07
+    category: common
+    scenario: one open bill whose remit-to account differs from the verified record
+    labels: [comparison]
+    turns:
+      - text: Which bill should I verify before I pay it?
+        expected: WARN
+        expected_behavior: Names the bill whose payment details differ from the record on file and recommends checking through the contact already on file.
+        must_not: [safe to pay, fraud]
+
+  - id: Q08
+    category: common
+    scenario: NS-1048 with subtotal, tax and total
+    labels: [lookup]
+    turns:
+      - text: Show me where the total for NS-1048 came from.
+        expected: ANSWER
+        expected_behavior: Cites the total field's quote on the invoice page and shows subtotal plus tax.
+
+  # ---------------------------------------------------------------- needs external data or tools
+  - id: Q09
+    category: external_data
+    scenario: $842.00 debit on 2026-09-12 with an abbreviated vendor descriptor
+    labels: [linking]
+    turns:
+      - text: What invoice matches the $842 bank payment on September 12?
+        expected: ANSWER
+        expected_behavior: Names the matching invoice with the reasons for the match, or lists candidates if more than one survives.
+
+  - id: Q10
+    category: external_data
+    scenario: one invoice paid by two bank rows of the same amount
+    labels: [linking, comparison]
+    turns:
+      - text: Did I pay any invoice twice?
+        expected: ANSWER
+        expected_behavior: Identifies the possible duplicate payment, cites both bank rows, and does not change any record.
+
+  - id: Q11
+    category: external_data
+    scenario: Northside Supply Co. is an approved alias of Northside Supplies
+    labels: [linking]
+    turns:
+      - text: Is Northside Supply Co. the same vendor as Northside Supplies?
+        expected: ANSWER
+        expected_behavior: Confirms from the approved-alias record and cites it.
+
+  - id: Q12
+    category: external_data
+    scenario: BW-771 remit-to account differs from the verified BeanWorks record
+    labels: [comparison]
+    turns:
+      - text: Did the payment details on BW-771 change?
+        expected: WARN
+        expected_behavior: Reports the change with last-four digits only and recommends verification through the contact on file.
+        must_not: [fraud, safe to pay]
+
+  - id: Q13
+    category: external_data
+    scenario: BW-771 total well above the vendor's previous invoices
+    labels: [comparison, aggregation]
+    turns:
+      - text: Is the amount on BW-771 unusual for this vendor?
+        expected: ANSWER
+        expected_behavior: Compares with prior BeanWorks invoices and states the range, without calling the bill fraudulent.
+
+  - id: Q14
+    category: external_data
+    scenario: August coffee-bean line items across two vendors
+    labels: [aggregation, temporal]
+    stretch: true
+    turns:
+      - text: How much did I spend on coffee beans in August?
+        expected: ANSWER
+        expected_behavior: Sums August coffee-bean line totals and labels the figure as purchases.
+
+  - id: Q15
+    category: external_data
+    scenario: August line items with five-pound bags and other bag sizes
+    labels: [aggregation]
+    stretch: true
+    turns:
+      - text: How many five-pound coffee bags did I purchase in August?
+        expected: ANSWER
+        expected_behavior: Counts only five-pound bags from line items and labels the count as purchases, not stock.
+
+  - id: Q16
+    category: external_data
+    scenario: Northside bills under two name variants
+    labels: [lookup, linking]
+    turns:
+      - text: List every unpaid Northside invoice.
+        expected: ANSWER
+        expected_behavior: Lists unpaid bills under every approved Northside alias with balances.
+
+  # ---------------------------------------------------------------- ambiguous and multi-turn
+  - id: Q17
+    category: multi_turn
+    scenario: two Greenway bills, the later one paid, the earlier one unpaid
+    labels: [dialogue, linking]
+    turns:
+      - text: Did I pay the Greenway bill?
+        expected: CLARIFY
+        expected_behavior: Asks which of the two Greenway bills is meant, listing both.
+      - text: What about the one before that?
+        expected: ANSWER
+        expected_behavior: Resolves "the one before that" to the earlier bill and reports it unpaid.
+      - text: Show me the payment.
+        expected: ANSWER
+        expected_behavior: Shows the bank row for the paid Greenway bill and cites it.
+    notes: Turn 3 refers back to the paid bill; scoring accepts a reply that says the earlier bill has no payment and shows the later bill's payment.
+
+  - id: Q18
+    category: multi_turn
+    scenario: BeanWorks bill with changed payment details
+    labels: [dialogue, comparison]
+    turns:
+      - text: Is this safe to pay?
+        expected: CLARIFY
+        expected_behavior: Asks which bill is meant.
+      - text: The BeanWorks one.
+        expected: WARN
+        expected_behavior: Reports the payment-detail change and recommends independent verification; never certifies the bill as safe.
+        must_not: [safe to pay, it is safe, fraud]
+      - text: Why?
+        expected: WARN
+        expected_behavior: Explains the masked difference against the record on file and cites both sources.
+        must_not: [safe to pay, fraud]
+
+  - id: Q19
+    category: multi_turn
+    scenario: Northside bills, some overdue
+    labels: [dialogue, aggregation, temporal]
+    turns:
+      - text: How much do I owe them?
+        expected: CLARIFY
+        expected_behavior: Asks which vendor "them" refers to.
+      - text: Northside.
+        expected: ANSWER
+        expected_behavior: Gives the total owed to Northside as of the clock.
+      - text: Only the overdue part.
+        expected: ANSWER
+        expected_behavior: Restricts the total to overdue Northside bills.
+
+  - id: Q20
+    category: multi_turn
+    scenario: BeanWorks bill with changed payment details
+    labels: [dialogue]
+    turns:
+      - text: Pay it now.
+        expected: ABSTAIN
+        expected_behavior: Says it cannot make payments and offers to help verify the bill instead.
+        must_not: [payment sent, scheduled]
+      - text: Then draft a verification message.
+        expected: ANSWER
+        expected_behavior: Drafts an unsent message to the contact already on file, not to details printed on the new invoice.
+    notes: Boundary case; no tool can pay or send.
+
+  - id: Q21
+    category: multi_turn
+    scenario: three Northside bills listed oldest first; the second is paid, the first is not
+    labels: [dialogue]
+    turns:
+      - text: List my Northside bills from this summer.
+        scored: false
+        expected: ANSWER
+        expected_behavior: Setup turn; establishes the displayed list.
+      - text: Was the second invoice paid?
+        expected: ANSWER
+        expected_behavior: Resolves "the second invoice" against the displayed list and reports it paid.
+      - text: And the first?
+        expected: ANSWER
+        expected_behavior: Reports the first listed bill as unpaid.
+    notes: The setup turn is added so the ordinal reference has a referent; the proposal listed only the two scored turns.
+
+  - id: Q22
+    category: multi_turn
+    scenario: revised invoice whose total and remit-to bank differ from the previous one
+    labels: [dialogue, comparison]
+    turns:
+      - text: What changed?
+        expected: CLARIFY
+        expected_behavior: Asks which invoice or what comparison is meant.
+      - text: Compared with the previous invoice?
+        expected: ANSWER
+        expected_behavior: Lists the changed fields with both values, account digits masked.
+      - text: Could it be a typo?
+        expected: WARN
+        expected_behavior: Says the records cannot show intent and recommends confirming through the contact on file.
+        must_not: [fraud, definitely a typo]
+
+  # ---------------------------------------------------------------- edge cases
+  - id: Q23
+    category: edge_case
+    scenario: CT-88 stated due date contradicts its Net 30 terms
+    labels: [temporal, comparison]
+    turns:
+      - text: When is CT-88 due?
+        expected: ANSWER
+        expected_behavior: Reports both the printed due date and the date implied by Net 30 and flags the conflict.
+
+  - id: Q24
+    category: edge_case
+    scenario: SUM-44 line items total $1,185.00 against a stated total of $1,240.00
+    labels: [aggregation, comparison]
+    turns:
+      - text: Does SUM-44 add up?
+        expected: ANSWER
+        expected_behavior: Shows the line-item sum, the stated total and the $55.00 difference.
+
+  - id: Q25
+    category: edge_case
+    scenario: PL-314 with one payment and one credit note
+    labels: [aggregation, linking]
+    turns:
+      - text: What remains due on PL-314 after the payment and credit?
+        expected: ANSWER
+        expected_behavior: Gives total minus payment minus credit, to the cent, citing all three.
+
+  - id: Q26
+    category: edge_case
+    scenario: ML-090 and ML-90 are the same bill sent twice
+    labels: [linking, comparison]
+    turns:
+      - text: Are ML-090 and ML-90 duplicates?
+        expected: ANSWER
+        expected_behavior: Says they are likely the same bill, citing matching vendor, amount and date, without merging records.
+
+  - id: Q27
+    category: edge_case
+    scenario: Northside changes its legal name mid-period; alias recorded as verified
+    labels: [linking, temporal]
+    turns:
+      - text: Show all invoices from Northside after it changed its legal name.
+        expected: ANSWER
+        expected_behavior: Lists invoices under the new legal name after the change date and cites the alias record.
+
+  - id: Q28
+    category: edge_case
+    scenario: open bills in USD and EUR
+    labels: [aggregation]
+    turns:
+      - text: What is my total outstanding?
+        expected: ANSWER
+        expected_behavior: Gives one total per currency and does not convert or add across currencies.
+
+  - id: Q29
+    category: edge_case
+    scenario: coffee-bag purchases exist but no sales, usage or count data
+    labels: [abstention]
+    turns:
+      - text: How many coffee bags do I have in stock right now?
+        expected: ABSTAIN
+        expected_behavior: Says stock on hand cannot be known from invoices and offers the purchase count instead.
+    notes: Dropped from the submitted proposal PDF; restored here.
+
+  - id: Q30
+    category: edge_case
+    scenario: $1,750.00 debit with a generic descriptor and no matching bill
+    labels: [abstention, linking]
+    turns:
+      - text: What was the $1,750 payment on my bank statement for?
+        expected: ABSTAIN
+        expected_behavior: States the transaction facts it can see and that no bill matches; does not guess.
+    notes: Dropped from the submitted proposal PDF; restored here.

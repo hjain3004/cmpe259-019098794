@@ -1,0 +1,117 @@
+{
+  "$defs": {
+    "Extracted": {
+      "additionalProperties": false,
+      "description": "One extracted value and the verbatim text it was read from.",
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Value as printed, or null if absent.",
+          "title": "Value"
+        },
+        "source_quote": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Exact text copied from the document that contains the value.",
+          "title": "Source Quote"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "1-based page of source_quote.",
+          "title": "Page"
+        }
+      },
+      "title": "Extracted",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Call 1 per invoice: a shallow header (14 fields, no nesting beyond Extracted).",
+  "properties": {
+    "vendor_name": {
+      "$ref": "#/$defs/Extracted"
+    },
+    "invoice_number": {
+      "$ref": "#/$defs/Extracted"
+    },
+    "issue_date": {
+      "$ref": "#/$defs/Extracted"
+    },
+    "stated_due_date": {
+      "$ref": "#/$defs/Extracted"
+    },
+    "payment_terms_raw": {
+      "$ref": "#/$defs/Extracted",
+      "description": "e.g. \"Net 30\", \"Due on receipt\", \"EOM\"."
+    },
+    "currency": {
+      "$ref": "#/$defs/Extracted"
+    },
+    "subtotal": {
+      "$ref": "#/$defs/Extracted"
+    },
+    "tax": {
+      "$ref": "#/$defs/Extracted"
+    },
+    "total": {
+      "$ref": "#/$defs/Extracted"
+    },
+    "remit_bank_name": {
+      "$ref": "#/$defs/Extracted"
+    },
+    "remit_account": {
+      "$ref": "#/$defs/Extracted"
+    },
+    "remit_routing": {
+      "$ref": "#/$defs/Extracted"
+    },
+    "reference_or_po": {
+      "$ref": "#/$defs/Extracted"
+    },
+    "memo": {
+      "$ref": "#/$defs/Extracted"
+    }
+  },
+  "required": [
+    "vendor_name",
+    "invoice_number",
+    "issue_date",
+    "stated_due_date",
+    "payment_terms_raw",
+    "currency",
+    "subtotal",
+    "tax",
+    "total",
+    "remit_bank_name",
+    "remit_account",
+    "remit_routing",
+    "reference_or_po",
+    "memo"
+  ],
+  "title": "InvoiceHeaderExtraction",
+  "type": "object"
+}

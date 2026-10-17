@@ -1,0 +1,163 @@
+{
+  "$defs": {
+    "Answerability": {
+      "enum": [
+        "ANSWER",
+        "CLARIFY",
+        "ABSTAIN",
+        "WARN"
+      ],
+      "title": "Answerability",
+      "type": "string"
+    },
+    "Calculation": {
+      "additionalProperties": false,
+      "description": "Shown so the owner can check the arithmetic, e.g. total - payments - credits.",
+      "properties": {
+        "steps": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Steps",
+          "type": "array"
+        },
+        "result": {
+          "$ref": "#/$defs/Money"
+        }
+      },
+      "required": [
+        "steps",
+        "result"
+      ],
+      "title": "Calculation",
+      "type": "object"
+    },
+    "Citation": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_id": {
+          "pattern": "^(span|txn|vh)_[A-Za-z0-9_-]+$",
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "supports": {
+          "description": "The specific claim in the answer this record supports.",
+          "title": "Supports",
+          "type": "string"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "supports"
+      ],
+      "title": "Citation",
+      "type": "object"
+    },
+    "Money": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,10}|(?=[\\d.]{1,13}0*$)\\d{0,10}\\.\\d{0,2}0*$)",
+              "type": "string"
+            }
+          ],
+          "title": "Amount"
+        },
+        "currency": {
+          "enum": [
+            "USD",
+            "EUR"
+          ],
+          "title": "Currency",
+          "type": "string"
+        }
+      },
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "title": "Money",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "answerability": {
+      "$ref": "#/$defs/Answerability"
+    },
+    "answer": {
+      "maxLength": 1500,
+      "minLength": 1,
+      "title": "Answer",
+      "type": "string"
+    },
+    "as_of": {
+      "format": "date",
+      "title": "As Of",
+      "type": "string"
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/Citation"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "calculation": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Calculation"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "risk_indicators": {
+      "description": "Observable discrepancies only (e.g. payment details differ from the record on file).",
+      "items": {
+        "type": "string"
+      },
+      "title": "Risk Indicators",
+      "type": "array"
+    },
+    "clarifying_question": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Clarifying Question"
+    },
+    "next_step": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Next Step"
+    }
+  },
+  "required": [
+    "answerability",
+    "answer",
+    "as_of"
+  ],
+  "title": "AssistantResponse",
+  "type": "object"
+}

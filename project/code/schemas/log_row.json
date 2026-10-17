@@ -1,0 +1,168 @@
+{
+  "$defs": {
+    "Answerability": {
+      "enum": [
+        "ANSWER",
+        "CLARIFY",
+        "ABSTAIN",
+        "WARN"
+      ],
+      "title": "Answerability",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "One row per (configuration, conversation, turn). Every reported number comes from these.",
+  "properties": {
+    "query_id": {
+      "title": "Query Id",
+      "type": "string"
+    },
+    "turn_index": {
+      "title": "Turn Index",
+      "type": "integer"
+    },
+    "turn_text": {
+      "title": "Turn Text",
+      "type": "string"
+    },
+    "scenario": {
+      "title": "Scenario",
+      "type": "string"
+    },
+    "business_type": {
+      "title": "Business Type",
+      "type": "string"
+    },
+    "split": {
+      "enum": [
+        "dev",
+        "test_seen",
+        "test_heldout"
+      ],
+      "title": "Split",
+      "type": "string"
+    },
+    "configuration": {
+      "enum": [
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ],
+      "title": "Configuration",
+      "type": "string"
+    },
+    "model_version": {
+      "title": "Model Version",
+      "type": "string"
+    },
+    "prompt_version": {
+      "title": "Prompt Version",
+      "type": "string"
+    },
+    "code_commit": {
+      "title": "Code Commit",
+      "type": "string"
+    },
+    "context": {
+      "description": "Retrieved chunks (C1/C2) or tool calls with args and outputs (C3/C4).",
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Context",
+      "type": "array"
+    },
+    "raw_response": {
+      "title": "Raw Response",
+      "type": "string"
+    },
+    "parsed_ok": {
+      "title": "Parsed Ok",
+      "type": "boolean"
+    },
+    "expected": {
+      "$ref": "#/$defs/Answerability"
+    },
+    "success": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Success"
+    },
+    "scores": {
+      "additionalProperties": true,
+      "title": "Scores",
+      "type": "object"
+    },
+    "error_label": {
+      "anyOf": [
+        {
+          "enum": [
+            "extraction",
+            "entity_linking",
+            "payment_linking",
+            "retrieval",
+            "tool_selection",
+            "reasoning",
+            "grounding",
+            "dialogue",
+            "abstention",
+            "safety"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Error Label"
+    },
+    "notes": {
+      "default": "",
+      "title": "Notes",
+      "type": "string"
+    },
+    "latency_ms": {
+      "title": "Latency Ms",
+      "type": "integer"
+    },
+    "input_tokens": {
+      "title": "Input Tokens",
+      "type": "integer"
+    },
+    "output_tokens": {
+      "title": "Output Tokens",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "query_id",
+    "turn_index",
+    "turn_text",
+    "scenario",
+    "business_type",
+    "split",
+    "configuration",
+    "model_version",
+    "prompt_version",
+    "code_commit",
+    "context",
+    "raw_response",
+    "parsed_ok",
+    "expected",
+    "latency_ms",
+    "input_tokens",
+    "output_tokens"
+  ],
+  "title": "LogRow",
+  "type": "object"
+}
