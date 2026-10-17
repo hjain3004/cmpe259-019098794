@@ -1,0 +1,26 @@
+[project]
+name = "cashbooks-assist"
+version = "0.1.0"
+description = "Read-only LLM assistant for vendor-bill and payment reconciliation (CMPE 259 term project)"
+requires-python = ">=3.11"
+dependencies = [
+  "pydantic>=2.7",
+  "pyyaml>=6",
+  "pdfplumber>=0.11",
+  "reportlab>=4",
+  "rank-bm25>=0.2.2",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "tests"]
+testpaths = ["tests"]
