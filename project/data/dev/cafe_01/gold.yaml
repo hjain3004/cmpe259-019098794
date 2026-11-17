@@ -1,0 +1,117 @@
+# Gold answers for the café development scenario (cafe_01), evaluation clock 2026-09-24.
+# Only conversations this scenario supports are listed; the others need scenarios
+# built later (revised invoices, conflicting due dates, line-item totals, multi-currency).
+#
+# Per scored turn:
+#   values    must appear: "1462.85 USD" = money (calculation result or text, any
+#             common format); "2026-10-01" = a date (ISO or written out); anything
+#             else = case-insensitive text
+#   evidence  documents the answer should cite, at document level (inv_NS-1048,
+#             txn_0193, vh_v_beanworks, msg_m03, cn_CN-0457)
+#   must_not  phrases that fail the turn (added to the ones in queries.yaml)
+# Turn order matches evaluation/queries.yaml; unscored setup turns are skipped.
+
+scenario: cafe_01
+verified_by_hand: 2026-11-17
+
+Q01:
+  - values: {bill: NS-1062, balance: "1073.25 USD", due: "2026-10-01"}
+    evidence: [inv_NS-1062]
+    must_not: [NS-1070]
+
+Q02:
+  - values: {total: "1462.85 USD"}
+    evidence: [inv_NS-1062, inv_NS-1070]
+
+Q03:
+  - values: {first: GP-221, second: GP-228}
+    evidence: [inv_GP-221, inv_GP-228]
+    must_not: [NS-1062, BW-771]
+
+Q04:
+  - values: {status: paid}
+    evidence: [txn_0193]
+
+Q06:
+  - values: {remaining: "212.30 USD"}
+    evidence: [inv_GP-228, txn_0181]
+
+Q07:
+  - values: {bill: BW-771}
+    evidence: [inv_BW-771, vh_v_beanworks]
+
+Q08:
+  - values: {total: "842.00 USD", subtotal: "777.85", tax: "64.15"}
+    evidence: [inv_NS-1048]
+
+Q09:
+  - values: {bill: NS-1048}
+    evidence: [txn_0193, inv_NS-1048]
+
+Q10:
+  - values: {bill: NS-1031}
+    evidence: [txn_0102, txn_0109]
+
+Q11:
+  - values: {answer: "yes"}
+    evidence: [vh_v_northside]
+
+Q12:
+  - values: {new_last4: "5507", old_last4: "4417"}
+    evidence: [inv_BW-771, vh_v_beanworks]
+
+Q13:
+  - values: {this_total: "1962.00 USD", previous_total: "486.00"}
+    evidence: [inv_BW-771, inv_BW-760]
+
+Q14:
+  - values: {spend: "486.00 USD"}
+    evidence: [inv_BW-760]
+
+Q15:
+  - values: {bags: "12"}
+    evidence: [inv_BW-760]
+
+Q16:
+  - values: {first: NS-1062, second: NS-1070}
+    evidence: [inv_NS-1062, inv_NS-1070]
+
+Q17:
+  - values: {first: GP-221, second: GP-228}
+    evidence: []
+  - values: {bill: GP-221, status: unpaid}
+    evidence: [inv_GP-221]
+  - values: {payment: "300.00"}
+    evidence: [txn_0181]
+
+Q18:
+  - values: {}
+    evidence: []
+  - values: {bill: BW-771, last4: "5507"}
+    evidence: [inv_BW-771, vh_v_beanworks]
+  - values: {last4: "4417"}
+    evidence: [inv_BW-771, vh_v_beanworks]
+
+Q19:
+  - values: {}
+    evidence: []
+  - values: {total: "1462.85 USD"}
+    evidence: [inv_NS-1062, inv_NS-1070]
+  - values: {}
+    evidence: []
+    note: No Northside bill is overdue on 2026-09-24 (NS-1062 is due 10/01, NS-1070 10/02); a correct reply says so.
+
+Q20:
+  - values: {}
+    evidence: []
+  - values: {contact: Priya Shah}
+    evidence: [vh_v_beanworks]
+    must_not: [billing@beanworks-roasters.co]
+
+Q29:
+  - values: {}
+    evidence: []
+
+Q30:
+  - values: {amount: "1750.00", date: "2026-09-18"}
+    evidence: [txn_0205]
