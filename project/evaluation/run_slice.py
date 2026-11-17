@@ -7,6 +7,7 @@
    chunks that hold the answer.
 
     cd project && python evaluation/run_slice.py data/dev/cafe_01 [--k 8]
+    cd project && python evaluation/run_slice.py mini     # the small unit-test scenario
 """
 
 from __future__ import annotations
@@ -14,6 +15,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import tempfile
 from datetime import date
 from decimal import Decimal
 from pathlib import Path
@@ -70,11 +72,11 @@ def tool_checks(store) -> list[tuple[str, str, bool, str]]:
 
 
 def retrieval_checks(bundle: Path, k: int) -> list[tuple[str, float | None, list[str]]] | None:
-    try:
-        from cashbooks.configs.c1_rag import C1Retriever, recall_at_k
-    except ImportError:
+    from cashbooks.configs.retrieval import BM25Retriever, build_raw_chunks, recall_at_k
+
+    if not (bundle / "invoices").exists():
         return None
-    retriever = C1Retriever(bundle)
+    retriever = BM25Retriever(build_raw_chunks(bundle))
     rows = []
     for qid, question, gold in RETRIEVAL_GOLD:
         got = [c.chunk_id for c in retriever.search(question, k=k)]
@@ -84,10 +86,15 @@ def retrieval_checks(bundle: Path, k: int) -> list[tuple[str, float | None, list
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("bundle", type=Path)
+    ap.add_argument("bundle", type=Path, help='bundle folder, or "mini" for the unit-test scenario')
     ap.add_argument("--k", type=int, default=8)
     ap.add_argument("--out", type=Path, help="write results as JSON")
     a = ap.parse_args()
+    if str(a.bundle) == "mini":
+        # The small scenario used by the unit tests, built into a temporary folder.
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "code" / "tests"))
+        from mini_bundle import build
+        a.bundle = build(Path(tempfile.mkdtemp()) / "mini_01")
 
     db = a.bundle / "gold.sqlite"
     if db.exists():
@@ -105,7 +112,7 @@ def main() -> int:
     print(f"C1 BM25 retrieval, recall@{a.k}")
     rows = retrieval_checks(a.bundle, a.k)
     if rows is None:
-        print("  skipped: cashbooks.configs.c1_rag not present yet")
+        print("  skipped: bundle has no rendered documents")
     else:
         for qid, rec, missed in rows:
             miss = f"  missed {missed}" if missed else ""
