@@ -21,8 +21,9 @@ configurations of it on the same documents, model and questions:
 
 ## Status
 
-Phase 1 (vertical slice) in progress. Contracts, normalizers, SQLite store, gold loader and the
-first two tools are implemented and tested. No model is called yet.
+Phase 1 is done and C1 to C4 run end to end on the café development scenario. The extraction
+pipeline, all seven tools, both retrievers, the run harness and the scorer are implemented and
+tested offline. Runs against Gemini are next.
 
 ```
 code/src/cashbooks/
@@ -30,10 +31,20 @@ code/src/cashbooks/
   ingest/      PDF page text, bank CSV parser, bundle readers
   normalize/   money, dates, payment terms, vendor names, account fingerprints
   store/       SQLite schema, Store (scoped to one business), gold loader
-  tools/       get_bill_status, list_open_bills, tool dispatch
+  tools/       the seven read-only tools, payment matching, tool dispatch
+  extract/     model extraction into records; a reference extractor for offline checks
+  configs/     BM25 retrieval (C1, C2) and the four answering configurations
+  llm/         model interface, Gemini client, scripted stand-in for tests
+  scoring.py   deterministic scoring, run logs, course CSV
+prompts/       answering and extraction prompts (versioned by file name)
+data/generator/render.py   renders a ledger into invoice PDFs, messages, bank CSV, vendor record
+data/dev/cafe_01/          café scenario: ledger.json, rendered documents, gold.yaml
 evaluation/
-  queries.yaml 30 evaluation conversations (draft until bundles and gold exist)
-  run_slice.py Phase 1 slice: load a bundle, check the tools, measure C1 retrieval
+  queries.yaml      30 evaluation conversations
+  extract_bundle.py extract a scenario into extracted.sqlite and score field accuracy
+  run_eval.py       run configurations, score every turn, write logs, course.csv and summaries
+  run_slice.py      Phase 1 slice runner
+  results/          one folder per run
 ```
 
 ## Setup and usage
@@ -43,17 +54,25 @@ From the repository root:
 ```
 python -m venv .venv
 source .venv/bin/activate
-pip install -e "project/code[dev]"
+pip install -e "project/code[dev,gemini]"
 ```
 
 Then, from `project/`:
 
 ```
-(cd code && pytest)                                       # unit tests
-python -m cashbooks.contracts.export                      # refresh code/schemas/
-python data/generator/render.py data/dev/cafe_01          # render a scenario's documents
-python evaluation/run_slice.py data/dev/cafe_01           # load it, check tools, measure retrieval
+(cd code && pytest)                                              # unit tests (offline)
+python data/generator/render.py data/dev/cafe_01                 # render the café scenario
+python evaluation/extract_bundle.py data/dev/cafe_01 --llm reference   # offline pipeline check
+python evaluation/run_eval.py data/dev/cafe_01 --llm scripted    # offline harness check
+
+python evaluation/extract_bundle.py data/dev/cafe_01             # Gemini extraction -> extracted.sqlite
+python evaluation/run_eval.py data/dev/cafe_01 --configs C1 C2 C3 C4   # Gemini answering, all configs
+python evaluation/run_eval.py data/dev/cafe_01 --configs C1 C3 --queries Q01 Q04   # a subset
 ```
+
+Each run writes `evaluation/results/<run id>/`: `log.jsonl` (every turn with its context, raw
+reply and scores), `course.csv` (query, expected behavior, response, success, notes),
+`summary.json` and `summary.md`.
 
 ## Data
 
@@ -64,11 +83,13 @@ the ground-truth ledger. Generated SQLite files (`*.sqlite`) are not committed.
 
 ## Credentials
 
-Model calls need an API key, which is never committed. Create `project/code/.env` with:
+Model calls need an API key, which is never committed. Copy `code/.env.example` to
+`project/code/.env` and set:
 
 ```
-LLM_API_KEY=your_key_here
-LLM_MODEL=pinned-model-version
+GEMINI_API_KEY=your_key_here
+LLM_MODEL=optional-model-override
+LLM_MIN_INTERVAL=optional-seconds-between-calls
 ```
 
 `.env` is listed in `.gitignore`.

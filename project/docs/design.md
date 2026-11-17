@@ -274,9 +274,9 @@ Each phase ends with something that runs, so a slip shows up as a missing artifa
 
 | Phase | Target date | Deliverable | Status |
 | --- | --- | --- | --- |
-| 1. Contracts and vertical slice | 16 Oct → 21 Oct | Contracts, `queries.yaml`, terms parser, one hand-built café bundle, SQLite load, two tools, BM25 C1, scorer writing the five required fields for about ten queries | Contracts and query file done 16 Oct |
-| 2. Generator and development bundles | 25 Oct | Ledger-first generator with distractors, ten development bundles, gold computed and spot-checked | Not started |
-| 3. Extraction gate and C2 to C4 (DocILE access requested) | 1 Nov | Gate run and method frozen; C2, C3, C4 built; k and thresholds picked on dev; twenty test bundles generated, landscaping written separately, hashes recorded | Not started |
+| 1. Contracts and vertical slice | 16 Oct → 21 Oct | Contracts, `queries.yaml`, terms parser, one hand-built café bundle, SQLite load, two tools, BM25 C1, scorer writing the five required fields for about ten queries | Done. Contracts, query file, normalizers, store and gold loader, café scenario (8 invoices, 1 credit note, 4 messages, 15 bank rows) with hand-checked gold for 21 conversations, all seven tools, BM25 C1 and C2, scorer writing the course CSV |
+| 2. Generator and development bundles | 25 Oct | Ledger-first generator with distractors, ten development bundles, gold computed and spot-checked | Renderer done for hand-written ledgers (one scenario). Late: more scenarios |
+| 3. Extraction gate and C2 to C4 (DocILE access requested) | 1 Nov | Gate run and method frozen; C2, C3, C4 built; k and thresholds picked on dev; twenty test bundles generated, landscaping written separately, hashes recorded | Extraction pipeline, C2 to C4 and the run harness built and tested offline; k frozen at 8. Late: first Gemini runs, test bundles |
 | 4. Full runs, safety, user tests | 9 Nov | All configurations on all 30 conversations and S01–S10; frozen extraction scored on the 40 DocILE invoices; two classmate sessions; fixes logged and suite rerun | Not started |
 | 5. Analysis, slides, demo | 16 Nov | Tables by configuration, label and split; error analysis; slides; demo recording with one honest failure | Not started |
 | Presentations | 17 Nov | In-class presentation | |

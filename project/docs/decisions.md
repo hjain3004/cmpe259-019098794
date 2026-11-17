@@ -60,8 +60,21 @@ Owners say "Greenway" or "Northside". A query whose words all match the start of
 **D14. Real invoices added for the extraction check.**
 The end-to-end evaluation stays synthetic, because no public dataset links invoices, vendor messages, bank rows and a trusted vendor record with ground-truth payment links. To measure how much cleaner synthetic invoices are than real ones, the frozen extraction method is also scored on 40 real annotated invoices from DocILE, using DocILE's own text and field labels. DocILE files are not committed; only sample IDs and aggregate scores are.
 
+## 2026-11-17
+
+**D15. Changes made while building C1 to C4 on the café scenario.**
+- `list_open_bills` gains `include_settled` (default false), because with only open bills the model could not see that NS-1031 was paid twice. `due_before` is inclusive.
+- `match_payments` can now look up bank debits by amount and/or posted date, not only by invoice number or txn ID: an owner asks "what was the $842 payment on the 12th", not for a txn ID. Exactly one lookup mode per call. A confirmed result may list several links (one debit can be a duplicate of another).
+- Payment matching uses ranked evidence: invoice number in the bank descriptor, then a unique full-amount match, then a unique duplicate of an already-paid total, then a unique partial payment. Without the ranking a full and a partial candidate competed and the Northside payments stayed unlinked.
+- BM25 tokens add a whole-dollar variant for amounts ending in .00 ("$842" now matches "842.00"); recall@8 on the café questions went from 0.60 to 0.75. k = 8 was picked on the café scenario and is now frozen.
+- Every configuration returns its JSON reply through the prompt and the same parser, not through a provider's JSON mode, because tool calling and JSON mode cannot be combined in one call for all configurations. This keeps the reply format identical across C1 to C4.
+- Answering and extraction model: Google Gemini through the `google-genai` SDK, temperature 0. The default model string is set in `code/src/cashbooks/llm/gemini.py` and can be overridden with `LLM_MODEL`; every run logs the exact model string it used.
+- Extraction: header fields and line items are separate calls; one call each per credit note and message. An empty string is read as "absent", and a value without a quote uses the value itself as the quote, which is then checked against the page like any other quote. Each call is made once and failures are logged, not retried.
+- Scoring compares citations at document level (`span_inv_NS-1048_total` and `span_inv_NS-1048_p1` both count as `inv_NS-1048`), so C1's page chunks and C3's field spans are scored the same way.
+- Fixed: the amount parser read "1728.00" (no thousands comma) as 172.00. Test cases added.
+
 ## Open
 
-- Answering model and version, to be pinned before 1 Nov.
+- Answering model: Gemini (D15); the exact model string is recorded in every run log.
 - Project name: "CashBooks Assist" unless renamed before the 17 Nov presentation.
 - Retriever: BM25 unless a dense retriever clearly wins on development bundles.
