@@ -121,5 +121,5 @@ def test_registry_round_trip_and_errors(store):
     assert out["bill"]["remaining"] == {"amount": "212.30", "currency": "USD"}
     assert "error" in json.loads(run_tool(store, "pay_bill", {}))
     assert "error" in json.loads(run_tool(store, "get_bill_status", {"invoice_number": "GP-228"}))
-    assert "error" in json.loads(run_tool(store, "match_payments", {"invoice_number": "GP-228"}))
+    assert "error" in json.loads(run_tool(store, "match_payments", {}))
     assert "error" in json.loads(run_tool(store, "list_open_bills", {"as_of": "2026-09-24", "business_id": "x"}))

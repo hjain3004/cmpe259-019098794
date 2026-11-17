@@ -52,7 +52,8 @@ class BillSummary(Strict):
 class ListOpenBillsArgs(Strict):
     as_of: date
     vendor: str | None = Field(None, description="Vendor name or alias; omit for all vendors.")
-    due_before: date | None = None
+    due_before: date | None = Field(None, description="Only bills due on or before this date.")
+    include_settled: bool = Field(False, description="Also list paid and overpaid bills.")
 
 
 class ListOpenBillsResult(Strict):
@@ -92,19 +93,23 @@ class GetBillStatusResult(Strict):
 
 
 class MatchPaymentsArgs(Strict):
-    invoice_number: str | None = None
-    txn_id: EvidenceId | None = None
+    invoice_number: str | None = Field(None, description="Find bank payments for this invoice.")
+    txn_id: EvidenceId | None = Field(None, description="Find invoices a bank transaction may pay.")
+    amount: Amount | None = Field(None, description="Look up bank debits of this amount (positive number).")
+    posted_on: date | None = Field(None, description="Look up bank debits posted on this date.")
 
     @model_validator(mode="after")
-    def _exactly_one(self) -> "MatchPaymentsArgs":
-        if (self.invoice_number is None) == (self.txn_id is None):
-            raise ValueError("give exactly one of invoice_number or txn_id")
+    def _one_mode(self) -> "MatchPaymentsArgs":
+        modes = [self.invoice_number is not None, self.txn_id is not None,
+                 self.amount is not None or self.posted_on is not None]
+        if sum(modes) != 1:
+            raise ValueError("give an invoice_number, or a txn_id, or an amount and/or posted_on")
         return self
 
 
 class MatchCandidate(Strict):
-    bill_id: str
-    invoice_number: str
+    bill_id: str | None
+    invoice_number: str | None
     txn_id: EvidenceId
     txn_amount: Money
     reasons_for: list[str]
@@ -119,8 +124,8 @@ class MatchPaymentsResult(Strict):
 
     @model_validator(mode="after")
     def _consistent(self) -> "MatchPaymentsResult":
-        if self.outcome == "confirmed" and len(self.candidates) != 1:
-            raise ValueError("a confirmed match has exactly one candidate")
+        if self.outcome == "confirmed" and not self.candidates:
+            raise ValueError("a confirmed match lists the confirmed payments")
         if self.outcome == "ambiguous" and (len(self.candidates) < 2 or not self.why_undecided):
             raise ValueError("ambiguous needs two or more candidates and a reason")
         if self.outcome == "no_candidates" and self.candidates:
@@ -233,7 +238,8 @@ class ToolSpec(BaseModel):
 TOOLS: list[ToolSpec] = [
     ToolSpec(
         name="list_open_bills",
-        description="List unpaid and partly paid bills with exact remaining balances as of a date.",
+        description="List unpaid and partly paid bills with exact remaining balances as of a date "
+        "(set include_settled to also list paid and overpaid bills).",
         args=ListOpenBillsArgs,
         result=ListOpenBillsResult,
     ),
@@ -245,8 +251,8 @@ TOOLS: list[ToolSpec] = [
     ),
     ToolSpec(
         name="match_payments",
-        description="Find bank transactions that may pay an invoice, or invoices a transaction may pay. "
-        "Returns ranked candidates with reasons, or says why it cannot choose.",
+        description="Find bank payments for an invoice, invoices a bank transaction may pay, or bank debits "
+        "by amount and/or date. Returns candidates with reasons, or says why it cannot choose.",
         args=MatchPaymentsArgs,
         result=MatchPaymentsResult,
     ),

@@ -14,10 +14,18 @@ from cashbooks.contracts.tools import parse_tool_call
 from cashbooks.store.db import Store
 from cashbooks.tools.bills import get_bill_status, list_open_bills
 from cashbooks.tools.errors import ToolError
+from cashbooks.tools.more import (
+    compare_vendor_payment_details, get_source_evidence, match_payments, sum_amount_due, summarize_purchases,
+)
 
 IMPLEMENTED: dict[str, Callable] = {
-    "get_bill_status": get_bill_status,
     "list_open_bills": list_open_bills,
+    "get_bill_status": get_bill_status,
+    "match_payments": match_payments,
+    "sum_amount_due": sum_amount_due,
+    "compare_vendor_payment_details": compare_vendor_payment_details,
+    "summarize_purchases": summarize_purchases,
+    "get_source_evidence": get_source_evidence,
 }
 
 

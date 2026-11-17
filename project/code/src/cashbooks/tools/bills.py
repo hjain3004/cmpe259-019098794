@@ -63,7 +63,7 @@ def list_open_bills(store: Store, args: ListOpenBillsArgs) -> ListOpenBillsResul
         if vendor_ids is not None and bill.vendor_id not in vendor_ids:
             continue
         st = compute_state(store, bill, args.as_of)
-        if st.state not in (PaymentState.UNPAID, PaymentState.PARTIAL):
+        if not args.include_settled and st.state not in (PaymentState.UNPAID, PaymentState.PARTIAL):
             continue
         due = bill.due_date
         if args.due_before is not None and (due is None or due > args.due_before):
