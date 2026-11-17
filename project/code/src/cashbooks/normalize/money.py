@@ -9,7 +9,7 @@ from cashbooks.contracts.common import Money
 
 _SYMBOLS = {"$": "USD", "US$": "USD", "€": "EUR"}
 _CODES = {"USD", "EUR"}
-_AMOUNT = re.compile(r"-?\(?\d{1,3}(?:,\d{3})*(?:\.\d+)?\)?|-?\(?\d+(?:\.\d+)?\)?")
+_AMOUNT = re.compile(r"-?\(?\d{1,3}(?:,\d{3})+(?:\.\d+)?\)?|-?\(?\d+(?:\.\d+)?\)?")  # comma-grouped, or plain digits
 
 
 class MoneyParseError(ValueError):

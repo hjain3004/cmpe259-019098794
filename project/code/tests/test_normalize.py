@@ -21,6 +21,9 @@ from cashbooks.normalize.vendors import normalize_name, resolve_vendor
     ("-$45.00", "-45.00"),
     ("($45.00)", "-45.00"),
     ("€85.5", "85.50"),
+    ("1728.00", "1728.00"),        # thousands without a comma, as models often write them
+    ("1962", "1962.00"),
+    ("12,345,678.90", "12345678.90"),
 ])
 def test_parse_amount(text, expected):
     assert parse_amount(text) == Decimal(expected)

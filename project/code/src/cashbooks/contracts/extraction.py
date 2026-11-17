@@ -89,3 +89,12 @@ class MessageClaimExtraction(Strict):
     new_remit_account: Extracted
     new_remit_routing: Extracted
     summary_quote: str = Field(description="The one sentence that best states the claim, verbatim.")
+
+
+class CreditNoteExtraction(Strict):
+    """One call per credit note."""
+
+    credit_id: Extracted
+    invoice_ref: Extracted = Field(description="The invoice number the credit applies to.")
+    amount: Extracted
+    issue_date: Extracted

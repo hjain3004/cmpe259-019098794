@@ -1,0 +1,1 @@
+You extract fields from one vendor credit note. Return credit_id, invoice_ref (the invoice the credit applies to), amount and issue_date exactly as printed, each with a source_quote copied character for character from the text and page 1. Use null for anything not printed.
