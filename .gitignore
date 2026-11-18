@@ -21,4 +21,7 @@ venv/
 .idea/
 
 # Real documents obtained under access terms
-project/data/real/docile/
+project/data/real/
+
+# Third-party API docs kept locally for reference
+project/nace-docs/

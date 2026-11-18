@@ -3,6 +3,7 @@
     "business_id": "cafe_01",
     "name": "Ember & Oat Cafe",
     "type": "cafe",
+    "date_order": "MDY",
     "evaluation_clock": "2026-09-24"
   },
   "vendors": [

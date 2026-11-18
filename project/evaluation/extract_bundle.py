@@ -2,7 +2,7 @@
 extraction against the ledger.
 
     cd project
-    python evaluation/extract_bundle.py data/dev/cafe_01                 # Gemini (key in code/.env)
+    python evaluation/extract_bundle.py data/dev/cafe_01                 # default model (key in code/.env)
     python evaluation/extract_bundle.py data/dev/cafe_01 --llm reference # offline check of the pipeline
 
 Writes:
@@ -29,7 +29,7 @@ PROJECT = Path(__file__).resolve().parents[1]
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("bundle", type=Path)
-    ap.add_argument("--llm", choices=["gemini", "reference"], default="gemini")
+    ap.add_argument("--llm", choices=["claude", "gemini", "reference"], default="claude")
     ap.add_argument("--model", help="override LLM_MODEL")
     ap.add_argument("--out", type=Path)
     a = ap.parse_args()
@@ -37,6 +37,9 @@ def main() -> int:
     if a.llm == "reference":
         from cashbooks.extract.reference import ReferenceExtractor
         llm = ReferenceExtractor(a.bundle)
+    elif a.llm == "claude":
+        from cashbooks.llm.claude import ClaudeLLM
+        llm = ClaudeLLM(model=a.model)
     else:
         from cashbooks.llm.gemini import GeminiLLM
         llm = GeminiLLM(model=a.model)

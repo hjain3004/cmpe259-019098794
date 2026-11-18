@@ -2,7 +2,7 @@
 turn, and write the logs and summaries.
 
     cd project
-    python evaluation/run_eval.py data/dev/cafe_01 --configs C1 C4            # Gemini (key in code/.env)
+    python evaluation/run_eval.py data/dev/cafe_01 --configs C1 C4            # default model (key in code/.env)
     python evaluation/run_eval.py data/dev/cafe_01 --configs C1 C2 C3 C4 --queries Q01 Q04
     python evaluation/run_eval.py data/dev/cafe_01 --llm scripted             # offline dry run
 
@@ -31,7 +31,7 @@ from cashbooks.configs.answer import PROMPT_VERSION, Turn, build_configs
 from cashbooks.contracts.common import Answerability
 from cashbooks.contracts.evaluation import LogRow, QuerySuite
 from cashbooks.contracts.postprocess import postprocess
-from cashbooks.scoring import conversation_success, dump_json, export_course_csv, score_turn, summarize, write_log
+from cashbooks.scoring import score_turn, write_log, write_run_outputs
 from cashbooks.store.db import Store
 from cashbooks.store.load_gold import load_gold
 
@@ -49,6 +49,9 @@ def make_llm(kind: str, model: str | None):
     if kind == "scripted":
         from cashbooks.llm.scripted import ScriptedLLM
         return ScriptedLLM()
+    if kind == "claude":
+        from cashbooks.llm.claude import ClaudeLLM
+        return ClaudeLLM(model=model)
     from cashbooks.llm.gemini import GeminiLLM
     return GeminiLLM(model=model)
 
@@ -58,7 +61,7 @@ def main() -> int:
     ap.add_argument("bundle", type=Path)
     ap.add_argument("--configs", nargs="+", default=["C1", "C2", "C3", "C4"])
     ap.add_argument("--queries", nargs="*", help="conversation IDs to run (default: all with gold)")
-    ap.add_argument("--llm", choices=["gemini", "scripted"], default="gemini")
+    ap.add_argument("--llm", choices=["claude", "gemini", "scripted"], default="claude")
     ap.add_argument("--model", help="override LLM_MODEL")
     ap.add_argument("--out", type=Path, help="results folder (default evaluation/results/<timestamp>)")
     a = ap.parse_args()
@@ -129,32 +132,10 @@ def main() -> int:
                       f"{(resp.answer if resp else raw)[:90]!r}")
                 history.append(Turn(turn.text, resp.answer if resp else raw[:800]))
 
-    export_course_csv(rows, out / "course.csv")
-    summary = summarize(rows)
-    conv = conversation_success(rows)
-    for cname, per in conv.items():
-        summary[cname]["conversations"] = len(per)
-        summary[cname]["conversation_successes"] = sum(per.values())
-    dump_json({"run": run_id, "model": llm.model, "commit": commit, "bundle": str(a.bundle),
-               "configs": summary, "per_conversation": conv}, out / "summary.json")
-
-    lines = [f"# Run {run_id}", "", f"Model `{llm.model}`, prompt `{PROMPT_VERSION}`, commit `{commit}`, "
-             f"scenario `{a.bundle.name}`, {len(convs)} conversations, {sum(1 for c in convs for t in c.turns if t.scored)} scored turns.", "",
-             "| Config | Turn success | Conversation success | Answer type | Exact values | Parsed | Median latency (s) | Mean tokens |",
-             "| --- | --- | --- | --- | --- | --- | --- | --- |"]
-    for cname, s in summary.items():
-        lines.append(f"| {cname} | {s['successes']}/{s['turns']} ({s['success_rate']:.0%}) | "
-                     f"{s['conversation_successes']}/{s['conversations']} | {s['answer_type_accuracy']:.0%} | "
-                     f"{s['value_accuracy'] if s['value_accuracy'] is None else format(s['value_accuracy'], '.0%')} | "
-                     f"{s['parsed']}/{s['turns']} | {s['median_latency_s']} | {s['mean_tokens']} |")
-    ids = [c.id for c in convs]
-    lines += ["", "## Conversation success", "", "| Conversation | " + " | ".join(conv) + " |",
-              "| --- |" + " --- |" * len(conv)]
-    for q in ids:
-        lines.append(f"| {q} | " + " | ".join("pass" if conv[c].get(q) else "fail" for c in conv) + " |")
-    (out / "summary.md").write_text("\n".join(lines) + "\n")
+    lines = write_run_outputs(rows, out, run_id, llm.model, commit, str(a.bundle), [c.id for c in convs],
+                              sum(1 for c in convs for t in c.turns if t.scored), PROMPT_VERSION)
     print(f"\nwrote {out}")
-    print("\n".join(lines[4:4 + len(summary) + 2]))
+    print("\n".join(lines[4:4 + len(configs) + 2]))
     return 0
 
 

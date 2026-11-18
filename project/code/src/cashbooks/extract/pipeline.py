@@ -30,7 +30,7 @@ from cashbooks.ingest.bank_csv import read_bank_csv
 from cashbooks.ingest.bundle import read_messages, read_vendor_history
 from cashbooks.ingest.pdf_text import find_span, page_texts
 from cashbooks.llm.base import LLM, Message, extract_json, simplify_schema
-from cashbooks.normalize.dates import DateParseError, parse_date
+from cashbooks.normalize.dates import AmbiguousDateError, DateParseError, parse_date
 from cashbooks.normalize.fingerprint import fingerprint, mask_digits
 from cashbooks.normalize.money import MoneyParseError, detect_currency, parse_amount
 from cashbooks.normalize.terms import derive_due_date, parse_terms
@@ -41,6 +41,7 @@ from cashbooks.tools.matching import link_payments
 PROMPTS = Path(__file__).resolve().parents[4] / "prompts"
 _SAFE = re.compile(r"[^A-Za-z0-9_-]")
 SPAN_KEY = {"payment_terms_raw": "payment_terms"}
+VERBOSE = True  # one progress line per model call
 
 
 def _id(*parts: str) -> str:
@@ -70,7 +71,9 @@ def _clean(obj: Any) -> Any:
     if isinstance(obj, list):
         return [_clean(v) for v in obj]
     if not isinstance(obj, dict):
-        return None if obj == "" else obj
+        if isinstance(obj, str) and obj.strip().lower() in ("", "null", "none"):
+            return None
+        return obj
     out = {k: _clean(v) for k, v in obj.items()}
     if "value" in out:  # an Extracted field
         if out.get("value") is not None and not out.get("source_quote"):
@@ -87,7 +90,32 @@ def _clean(obj: Any) -> Any:
     return out
 
 
+_NULLISH = ("", "null", "none", "n/a")
+
+
+def _coerce_extracted(model: type[BaseModel], data: Any) -> tuple[Any, list[str]]:
+    """A field typed Extracted sometimes comes back as a bare string or null ("memo": "null").
+    Wrap it so it validates; the value is still checked against the page like any other."""
+    if not isinstance(data, dict):
+        return data, []
+    changed = []
+    for name, f in model.model_fields.items():
+        if f.annotation is not Extracted or name not in data:
+            continue
+        v = data[name]
+        if isinstance(v, dict):
+            continue
+        if v is None or (isinstance(v, str) and v.strip().lower() in _NULLISH):
+            data[name] = {"value": None, "source_quote": None, "page": None}
+        else:
+            data[name] = {"value": str(v), "source_quote": str(v), "page": 1}
+        changed.append(name)
+    return data, changed
+
+
 def call_schema(llm: LLM, prompt: str, text: str, model: type[BaseModel], doc: str) -> tuple[BaseModel | None, CallLog]:
+    if VERBOSE:
+        print(f"  extracting {doc} ({model.__name__})", flush=True)
     system = (PROMPTS / prompt).read_text()
     schema = simplify_schema(model.model_json_schema())
     res = llm.complete(system, [Message("user", f"DOCUMENT TEXT\n\n{text}")], json_schema=schema)
@@ -98,6 +126,9 @@ def call_schema(llm: LLM, prompt: str, text: str, model: type[BaseModel], doc: s
     if data is None:
         log.error = "invalid_json"
         return None, log
+    data, coerced = _coerce_extracted(model, data)
+    if coerced:
+        log.notes.append("wrapped bare values: " + ", ".join(coerced))
     try:
         parsed = model.model_validate(_clean(data))
     except ValidationError as e:
@@ -114,12 +145,15 @@ def _value(f: Extracted | None) -> str | None:
     return f.value.strip() if f is not None and f.value and f.value.strip() else None
 
 
-def _date(f: Extracted | None, notes: list[str], name: str) -> date | None:
+def _date(f: Extracted | None, notes: list[str], name: str, order: str | None = None) -> date | None:
     v = _value(f)
     if not v:
         return None
     try:
-        return parse_date(v)
+        return parse_date(v, order)
+    except AmbiguousDateError:
+        notes.append(f"ambiguous_date:{name}={v!r} (no date order on the vendor or business record)")
+        return None
     except DateParseError:
         notes.append(f"unparsed_date:{name}={v!r}")
         return None
@@ -177,6 +211,9 @@ def extract_bundle(bundle: Path, llm: LLM, db_path: Path | None = None) -> Extra
 
     # Trusted vendor history is the owner's own record: loaded, never extracted.
     history = read_vendor_history(bundle / "vendor_history.json")
+    # Numeric dates are read in the order the owner's records give (vendor first, then business); never guessed.
+    business_order = ledger["business"].get("date_order")
+    vendor_order = {v["vendor_id"]: v.get("date_order") for v in history}
     records.append(Document(business_id=biz, doc_id="vendor_history", kind=DocumentKind.VENDOR_HISTORY,
                             path="vendor_history.json", received_on=clock))
     for v in history:
@@ -211,12 +248,15 @@ def extract_bundle(bundle: Path, llm: LLM, db_path: Path | None = None) -> Extra
             # span keys match the gold loader and the tools ("payment_terms", not the schema's name)
             _span(biz, doc_id, SPAN_KEY.get(key, key), pages, getattr(head, key), spans, ungrounded)
         number = _value(head.invoice_number) or pdf.stem
-        issue = _date(head.issue_date, notes, "issue_date")
+        cands = resolve_vendor(_value(head.vendor_name) or "", history)
+        vendor_id = cands[0].vendor_id if len(cands) == 1 else None
+        order = vendor_order.get(vendor_id) or business_order
+        issue = _date(head.issue_date, notes, "issue_date", order)
         if issue is None:
             notes.append("no issue date: bill skipped")
             log.notes += notes
             continue
-        stated = _date(head.stated_due_date, notes, "stated_due_date")
+        stated = _date(head.stated_due_date, notes, "stated_due_date", order)
         terms = parse_terms(_value(head.payment_terms_raw))
         derived, calc = derive_due_date(issue, terms)
         total = _amount(_value(head.total), notes, "total")
@@ -224,8 +264,6 @@ def extract_bundle(bundle: Path, llm: LLM, db_path: Path | None = None) -> Extra
             notes.append("no total: bill skipped")
             log.notes += notes
             continue
-        cands = resolve_vendor(_value(head.vendor_name) or "", history)
-        vendor_id = cands[0].vendor_id if len(cands) == 1 else None
         if vendor_id is None:
             notes.append(f"vendor unresolved: {_value(head.vendor_name)!r}")
         currency = (_value(head.currency) or "").upper() or detect_currency(_value(head.total) or "", "USD") or "USD"
@@ -292,7 +330,7 @@ def extract_bundle(bundle: Path, llm: LLM, db_path: Path | None = None) -> Extra
                        ("total", cn.amount)):
             _span(biz, doc_id, key, pages, f, spans, ungrounded)
         amount = _amount(_value(cn.amount), notes, "amount")
-        issued = _date(cn.issue_date, notes, "issue_date")
+        issued = _date(cn.issue_date, notes, "issue_date", business_order)
         ref = (_value(cn.invoice_ref) or "").upper()
         bill_id = bills_by_number.get(ref)
         log.notes += notes
@@ -334,7 +372,7 @@ def extract_bundle(bundle: Path, llm: LLM, db_path: Path | None = None) -> Extra
             business_id=biz, claim_id=_id("claim", mid), doc_id=doc_id, kind=claim.kind.value,
             invoice_refs=[r.strip().upper() for r in claim.invoice_refs if r.strip()],
             claimed_amount=_amount(_value(claim.claimed_amount), notes, "claimed_amount"),
-            claimed_date=_date(claim.claimed_date, notes, "claimed_date"),
+            claimed_date=_date(claim.claimed_date, notes, "claimed_date", business_order),
             new_account_hash=nh, new_account_last4=n4, evidence_id=span_id))
         log.notes += notes
         out["messages"][mid] = {"kind": claim.kind.value, "invoice_refs": sorted(r.strip().upper() for r in claim.invoice_refs),

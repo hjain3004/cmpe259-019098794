@@ -1,0 +1,166 @@
+{
+  "fields": 87,
+  "correct": 66,
+  "accuracy": 0.759,
+  "errors": [
+    {
+      "doc": "NS-1031",
+      "field": "invoice_number",
+      "gold": "NS-1031",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "NS-1031",
+      "field": "vendor_id",
+      "gold": "v_northside",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "NS-1031",
+      "field": "issue_date",
+      "gold": "2026-07-20",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "NS-1031",
+      "field": "stated_due_date",
+      "gold": "2026-08-19",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "NS-1031",
+      "field": "total",
+      "gold": "615.40",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "NS-1031",
+      "field": "remit_account_last4",
+      "gold": "9931",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "NS-1031",
+      "field": "line_count",
+      "gold": 3,
+      "extracted": 0,
+      "correct": false
+    },
+    {
+      "doc": "NS-1031",
+      "field": "line1.line_total",
+      "gold": "290.00",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "NS-1031",
+      "field": "line2.line_total",
+      "gold": "195.00",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "NS-1031",
+      "field": "line3.line_total",
+      "gold": "79.08",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "NS-1048",
+      "field": "invoice_number",
+      "gold": "NS-1048",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "NS-1048",
+      "field": "vendor_id",
+      "gold": "v_northside",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "NS-1048",
+      "field": "issue_date",
+      "gold": "2026-08-13",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "NS-1048",
+      "field": "stated_due_date",
+      "gold": "2026-09-12",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "NS-1048",
+      "field": "total",
+      "gold": "842.00",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "NS-1048",
+      "field": "remit_account_last4",
+      "gold": "9931",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "NS-1048",
+      "field": "line_count",
+      "gold": 3,
+      "extracted": 0,
+      "correct": false
+    },
+    {
+      "doc": "NS-1048",
+      "field": "line1.line_total",
+      "gold": "422.50",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "NS-1048",
+      "field": "line2.line_total",
+      "gold": "256.25",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "NS-1048",
+      "field": "line3.line_total",
+      "gold": "99.10",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "m02",
+      "field": "invoice_refs",
+      "gold": [
+        "NS-1062"
+      ],
+      "extracted": [
+        "CN-0457",
+        "NS-1062"
+      ],
+      "correct": false
+    }
+  ],
+  "model": "claude-haiku-5-5",
+  "bundle": "data/dev/cafe_01",
+  "calls": 21,
+  "failed_calls": 2,
+  "input_tokens": 42510,
+  "output_tokens": 10556,
+  "ungrounded": {}
+}

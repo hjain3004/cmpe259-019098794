@@ -157,3 +157,21 @@ def test_all_configs_run_with_scripted_model(extracted):
             assert "txn_0193" in out.context[0]["result"]
         else:
             assert len(out.context) == 8
+
+
+def test_bare_or_null_extracted_fields_are_wrapped():
+    fields = list(InvoiceHeaderExtraction.model_fields)
+    data = {k: {"value": None, "source_quote": None, "page": None} for k in fields}
+    data.update(memo="null", invoice_number="NS-1031")
+    parsed, log = call_schema(_Fixed(json.dumps(data)), "extract_invoice_header_v1.md", "x", InvoiceHeaderExtraction, "d")
+    assert parsed is not None, log.error
+    assert parsed.memo.value is None and parsed.invoice_number.value == "NS-1031"
+    assert "memo" in log.notes[0] and "invoice_number" in log.notes[0]
+
+
+def test_postprocess_unwraps_one_code_fence_only():
+    from cashbooks.contracts.postprocess import postprocess
+    body = '{"answerability": "ABSTAIN", "answer": "I can\'t tell.", "as_of": "2026-09-24"}'
+    pp = postprocess("```json\n" + body + "\n```", set())
+    assert pp.response is not None and "unwrapped_code_fence" in pp.issues
+    assert postprocess("Sure! " + body, set()).response is None

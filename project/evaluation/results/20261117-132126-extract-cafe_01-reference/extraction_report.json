@@ -1,0 +1,13 @@
+{
+  "fields": 87,
+  "correct": 87,
+  "accuracy": 1.0,
+  "errors": [],
+  "model": "reference",
+  "bundle": "data/dev/cafe_01",
+  "calls": 21,
+  "failed_calls": 0,
+  "input_tokens": 2434,
+  "output_tokens": 4200,
+  "ungrounded": {}
+}

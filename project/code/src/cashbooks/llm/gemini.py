@@ -12,6 +12,7 @@ harness runs the tool loop itself so every call and result is logged.
 from __future__ import annotations
 
 import os
+import sys
 import time
 from pathlib import Path
 from typing import Callable
@@ -20,6 +21,7 @@ from cashbooks.llm.base import LLMResult, Message, ToolCall
 
 DEFAULT_MODEL = "gemini-3.6-flash"
 MAX_RETRIES = 5
+TIMEOUT_MS = 180_000  # a single request never hangs longer than this
 
 
 def load_env(path: Path | None = None) -> None:
@@ -45,7 +47,7 @@ class GeminiLLM:
             raise RuntimeError("Set GEMINI_API_KEY in project/code/.env")
         self.model = model or os.environ.get("LLM_MODEL", DEFAULT_MODEL)
         self.min_interval = float(os.environ.get("LLM_MIN_INTERVAL", "0"))
-        self._client = genai.Client(api_key=key)
+        self._client = genai.Client(api_key=key, http_options=genai.types.HttpOptions(timeout=TIMEOUT_MS))
         self._last = 0.0
 
     # ---------------------------------------------------------------- plumbing
@@ -66,9 +68,17 @@ class GeminiLLM:
                 return self._client.models.generate_content(model=self.model, contents=contents, config=config)
             except Exception as e:  # rate limits and transient server errors
                 msg = str(e)
-                retryable = any(s in msg for s in ("429", "RESOURCE_EXHAUSTED", "503", "500", "UNAVAILABLE", "DEADLINE"))
+                code = getattr(e, "code", None)
+                if code == 402 or "credits are depleted" in msg:
+                    raise SystemExit(f"Stopped: prepaid credits for this API key's project are used up ({self.model}).")
+                if code == 429 and "PerDay" in msg:
+                    raise SystemExit(f"Stopped: daily request limit reached for {self.model} on this API key. "
+                                     "Retrying today cannot help; add credit or use another model or key.")
+                retryable = any(s in msg for s in ("429", "RESOURCE_EXHAUSTED", "503", "500", "UNAVAILABLE", "DEADLINE",
+                                                   "timed out", "Timeout"))
                 if not retryable or attempt == MAX_RETRIES - 1:
                     raise
+                print(f"  [{type(e).__name__}: {msg[:120]}] retrying in {delay:.0f}s", file=sys.stderr, flush=True)
                 time.sleep(delay)
                 delay *= 2
 

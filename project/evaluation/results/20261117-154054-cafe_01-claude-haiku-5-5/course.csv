@@ -1,0 +1,65 @@
+configuration,query_id,turn,query,expected_behavior,response,success,notes
+C1,Q01,0,What bills are due in the next seven days?,ANSWER,"{
+  ""answerability"": ""WARN"",
+  ""answer"": ""One bill falls in the next seven days (through 2026-10-01): invoice NS-1062 from Northside Supplies, due 10/01 according to Dana Ruiz's reminder email. The records don't show its total, and the $45.00 credit note CN-0457 is applied to it. Two other Northside invoices are just outside the window: NS-1070 is due 10/02 (total $389.60 USD). Two invoices are already past due as of 2026-09-24: NS-1048 (due 09/12, total $842.00 USD) and BW-760 from BeanWorks (due 09/03, total $486.00 USD). I have no bank records, so I can't confirm whether any of these have been paid.\n\nWarning about BeanWorks: a BeanWorks email dated 2026-09-09 asks you to send all payments, including invoice BW-771, to a new Summit Digital Bank account ending 5507 with routing ending 0019. Invoice BW-760 lists Golden Gate Credit Union, account ending 4417, routing ending 1627. BW-771's amount and due date are not in the records, so I can't say whether it is due in the window."",
+  ""as_of"": ""2026-09-24"",
+  ""evidence"": [
+    {""evidence_id"": ""span_msg_m02"", ""supports"": ""Dana Ruiz reminder says NS-1062 is due 10/01.""},
+    {""evidence_id"": ""span_cn_CN-0457_p1"", ""supports"": ""Credit note CN-0457 for $45.00 applies to invoice NS-1062.""},
+    {""evidence_id"": ""span_inv_NS-1070_p1"", ""supports"": ""NS-1070 is due 10/02/2026, total $389.60 USD.""},
+    {""evidence_id"": ""span_inv_NS-1048_p1"", ""supports"": ""NS-1048 was due 09/12/2026, total $842.00 USD.""},
+    {""evidence_id"": ""span_inv_BW-760_p1"", ""supports"": ""BW-760 was due 2026-09-03, total $486.00 USD, remit to Golden Gate Credit Union account ending 4417, routing ending 1627.""},
+    {""evidence_id"": ""span_msg_m01"", ""supports"": ""BeanWorks email asks for all payments, including BW-771, to Summit Digital Bank account ending 5507, routing ending 0019.""}
+  ],
+  ""calculation"": null,
+  ""risk_indicators"": [
+    ""BeanWorks email of 2026-09-09 gives a new bank account (Summit Digital Bank, account ending 5507, routing ending 0019) that differs from the remittance details on invoice BW-760 (Golden Gate Credit Union, account ending 4417, routing ending 1627)."",
+    ""The email asks for payment to the new account 'effective immediately', which conflicts with the bank details printed on the invoice on file.""
+  ],
+  ""clarifying_question"": null,
+  ""next_step"": ""Before paying anything to BeanWorks, call BeanWorks at the phone number or contact already on file (not one from the email) and confirm the bank change. Keep paying the account on BW-760 until that's confirmed. For NS-1062, check the invoice total in your Northside records, since only the reminder email and credit note are in the records I have.""
+}",False,
+C1,Q04,0,Did I already pay invoice NS-1048?,ANSWER,"{
+  ""answerability"": ""ABSTAIN"",
+  ""answer"": ""I can't tell whether NS-1048 has been paid. The records I have include the invoice itself but no bank transaction or payment record for it. Invoice NS-1048 is for a total of $842.00 USD and was due 09/12/2026. As of today (2026-09-24), that is past its due date, so if it hasn't been paid, it is overdue."",
+  ""as_of"": ""2026-09-24"",
+  ""evidence"": [
+    {""evidence_id"": ""span_inv_NS-1048_p1"", ""supports"": ""Invoice NS-1048 is dated 08/13/2026, is due 09/12/2026, and has a total due of $842.00 USD.""}
+  ],
+  ""calculation"": null,
+  ""risk_indicators"": [],
+  ""clarifying_question"": null,
+  ""next_step"": ""Check your Bay Commerce Bank statement for a $842.00 payment around or after 09/12/2026, or send me the bank transaction export and I can check it against NS-1048.""
+}",False,
+C3,Q01,0,What bills are due in the next seven days?,ANSWER,"{
+  ""answerability"": ""ANSWER"",
+  ""answer"": ""One open bill falls due within the next seven days (through 2026-10-01): Northside Supplies invoice NS-1062, due 2026-10-01, with 231.25 USD still remaining on its 1118.25 USD total (partly paid). Two Greenway Produce bills are already past due and still have balances: GP-221 (268.90 USD, due 2026-08-20, unpaid) and GP-228 (212.30 USD remaining of 512.30 USD, due 2026-09-10, partly paid). They are not in the seven-day window, but they need attention."",
+  ""as_of"": ""2026-09-24"",
+  ""evidence"": [
+    {""evidence_id"": ""span_inv_NS-1062_stated_due_date"", ""supports"": ""NS-1062 (Northside Supplies) is due 2026-10-01""},
+    {""evidence_id"": ""span_inv_NS-1062_total"", ""supports"": ""NS-1062 total is 1118.25 USD""},
+    {""evidence_id"": ""span_inv_NS-1062_invoice_number"", ""supports"": ""Bill identified as invoice NS-1062""},
+    {""evidence_id"": ""txn_0193"", ""supports"": ""Bank payment linked to NS-1062 leaves a partial balance""},
+    {""evidence_id"": ""span_inv_GP-221_total"", ""supports"": ""GP-221 total is 268.90 USD, unpaid and overdue""},
+    {""evidence_id"": ""span_inv_GP-221_payment_terms"", ""supports"": ""GP-221 payment terms behind its 2026-08-20 due date""},
+    {""evidence_id"": ""span_inv_GP-228_total"", ""supports"": ""GP-228 total is 512.30 USD""},
+    {""evidence_id"": ""txn_0181"", ""supports"": ""Bank payment reducing GP-228 to 212.30 USD remaining, overdue since 2026-09-10""}
+  ],
+  ""calculation"": null,
+  ""risk_indicators"": [],
+  ""clarifying_question"": null,
+  ""next_step"": ""Schedule the 231.25 USD balance on NS-1062 before 2026-10-01, and review the overdue Greenway Produce bills GP-221 and GP-228 with the vendor, using the contact already on file.""
+}",False,
+C3,Q04,0,Did I already pay invoice NS-1048?,ANSWER,"{
+  ""answerability"": ""ABSTAIN"",
+  ""answer"": ""I can't find invoice NS-1048 in your records, so I can't tell whether it has been paid. Searching by that number returned no bill, and the full list of bills (paid and unpaid) doesn't include it. The records do show two Northside Supplies invoices: NS-1062 (total 1118.25 USD, 231.25 USD still owed, partly paid, due 2026-10-01) and NS-1070 (total 389.60 USD, nothing paid, due 2026-10-02). If you meant one of those, tell me and I'll check its payment status."",
+  ""as_of"": ""2026-09-24"",
+  ""evidence"": [
+    {""evidence_id"": ""span_inv_NS-1062_invoice_number"", ""supports"": ""Invoice NS-1062 exists in the records (Northside Supplies).""},
+    {""evidence_id"": ""span_inv_NS-1070_invoice_number"", ""supports"": ""Invoice NS-1070 exists in the records (Northside Supplies).""}
+  ],
+  ""calculation"": null,
+  ""risk_indicators"": [],
+  ""clarifying_question"": null,
+  ""next_step"": ""Check the invoice number on the paper or email copy. If it reads NS-1062 or NS-1070, ask me again with that number.""
+}",False,

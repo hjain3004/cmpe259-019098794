@@ -174,3 +174,32 @@ def conversation_success(rows: list[LogRow]) -> dict[str, dict[str, bool]]:
 
 def dump_json(obj, path: Path) -> None:
     path.write_text(json.dumps(obj, indent=2, default=str) + "\n")
+
+
+def write_run_outputs(rows: list[LogRow], out: Path, run_id: str, model: str, commit: str, bundle: str,
+                      conv_ids: list[str], scored_turns: int, prompt_version: str) -> list[str]:
+    """course.csv, summary.json and summary.md for one run; returns the summary.md lines."""
+    export_course_csv(rows, out / "course.csv")
+    summary = summarize(rows)
+    conv = conversation_success(rows)
+    for cname, per in conv.items():
+        summary[cname]["conversations"] = len(per)
+        summary[cname]["conversation_successes"] = sum(per.values())
+    dump_json({"run": run_id, "model": model, "commit": commit, "bundle": bundle,
+               "configs": summary, "per_conversation": conv}, out / "summary.json")
+    lines = [f"# Run {run_id}", "", f"Model `{model}`, prompt `{prompt_version}`, commit `{commit}`, "
+             f"scenario `{Path(bundle).name}`, {len(conv_ids)} conversations, {scored_turns} scored turns.", "",
+             "| Config | Turn success | Conversation success | Answer type | Exact values | Parsed | Median latency (s) | Mean tokens |",
+             "| --- | --- | --- | --- | --- | --- | --- | --- |"]
+    for cname, s in summary.items():
+        va = s["value_accuracy"]
+        lines.append(f"| {cname} | {s['successes']}/{s['turns']} ({s['success_rate']:.0%}) | "
+                     f"{s['conversation_successes']}/{s['conversations']} | {s['answer_type_accuracy']:.0%} | "
+                     f"{'n/a' if va is None else format(va, '.0%')} | {s['parsed']}/{s['turns']} | "
+                     f"{s['median_latency_s']} | {s['mean_tokens']} |")
+    lines += ["", "## Conversation success", "", "| Conversation | " + " | ".join(conv) + " |",
+              "| --- |" + " --- |" * len(conv)]
+    for q in conv_ids:
+        lines.append(f"| {q} | " + " | ".join("pass" if conv[c].get(q) else "fail" for c in conv) + " |")
+    (out / "summary.md").write_text("\n".join(lines) + "\n")
+    return lines

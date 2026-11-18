@@ -22,6 +22,7 @@ _DIGIT_RUN = re.compile(r"\b\d{6,}\b")
 _BANNED = re.compile(r"\b(safe to pay|fraud(?:ulent)?|scam|verified|authenticated|legitimate)\b", re.I)
 
 _TEXT_FIELDS = ("answer", "clarifying_question", "next_step")
+_FENCE = re.compile(r"```(?:json)?\s*(\{.*\})\s*```", re.S)
 
 
 @dataclass
@@ -45,6 +46,10 @@ def postprocess(raw: str, known_evidence_ids: set[str]) -> PostprocessResult:
     citation to another business's record is dropped exactly like a made-up one.
     """
     issues: list[str] = []
+    fenced = _FENCE.fullmatch(raw.strip())
+    if fenced:  # a reply wrapped in one ```json fence; anything else must be bare JSON
+        raw = fenced.group(1)
+        issues.append("unwrapped_code_fence")
     try:
         data = json.loads(raw)
     except json.JSONDecodeError as e:

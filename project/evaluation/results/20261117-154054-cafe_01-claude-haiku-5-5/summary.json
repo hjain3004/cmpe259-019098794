@@ -1,0 +1,48 @@
+{
+  "run": "20261117-154054-cafe_01-claude-haiku-5-5",
+  "model": "claude-haiku-5-5",
+  "commit": "1e94e92",
+  "bundle": "data/dev/cafe_01",
+  "configs": {
+    "C1": {
+      "turns": 2,
+      "parsed": 2,
+      "successes": 0,
+      "answer_type_ok": 0,
+      "values_ok": 3,
+      "values_total": 4,
+      "success_rate": 0.0,
+      "answer_type_accuracy": 0.0,
+      "value_accuracy": 0.75,
+      "median_latency_s": 8.89,
+      "mean_tokens": 4578,
+      "conversations": 2,
+      "conversation_successes": 0
+    },
+    "C3": {
+      "turns": 2,
+      "parsed": 2,
+      "successes": 0,
+      "answer_type_ok": 1,
+      "values_ok": 3,
+      "values_total": 4,
+      "success_rate": 0.0,
+      "answer_type_accuracy": 0.5,
+      "value_accuracy": 0.75,
+      "median_latency_s": 6.33,
+      "mean_tokens": 11699,
+      "conversations": 2,
+      "conversation_successes": 0
+    }
+  },
+  "per_conversation": {
+    "C1": {
+      "Q01": false,
+      "Q04": false
+    },
+    "C3": {
+      "Q01": false,
+      "Q04": false
+    }
+  }
+}

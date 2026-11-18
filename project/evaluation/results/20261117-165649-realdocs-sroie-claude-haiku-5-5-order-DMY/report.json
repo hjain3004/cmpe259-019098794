@@ -1,0 +1,179 @@
+{
+  "dataset": "SROIE (ICDAR 2019), transcripts from github.com/zzzDavid/ICDAR-2019-SROIE",
+  "model": "claude-haiku-5-5",
+  "prompt": "extract_invoice_header_v1.md",
+  "date_order_given": "DMY",
+  "real": {
+    "documents": 626,
+    "failed_calls": 3,
+    "vendor_read": {
+      "correct": 549,
+      "of": 626,
+      "accuracy": 0.877
+    },
+    "vendor_read_lenient": {
+      "correct": 591,
+      "of": 626,
+      "accuracy": 0.944
+    },
+    "date_read": {
+      "correct": 622,
+      "of": 626,
+      "accuracy": 0.994
+    },
+    "date_normalized": {
+      "correct": 586,
+      "of": 626,
+      "accuracy": 0.936
+    },
+    "date_flagged": {
+      "correct": 0,
+      "of": 626,
+      "accuracy": 0.0
+    },
+    "date_silently_wrong": {
+      "correct": 1,
+      "of": 626,
+      "accuracy": 0.002
+    },
+    "total_read": {
+      "correct": 606,
+      "of": 625,
+      "accuracy": 0.97
+    },
+    "total_normalized": {
+      "correct": 606,
+      "of": 625,
+      "accuracy": 0.97
+    },
+    "quotes_found_verbatim": {
+      "found": 1866,
+      "quotes": 1867
+    },
+    "input_tokens": 2139038,
+    "output_tokens": 517983
+  },
+  "failed_ids": {
+    "vendor": [
+      "sroie_000",
+      "sroie_002",
+      "sroie_026",
+      "sroie_028",
+      "sroie_039",
+      "sroie_040",
+      "sroie_041",
+      "sroie_050",
+      "sroie_052",
+      "sroie_060",
+      "sroie_062",
+      "sroie_065",
+      "sroie_069",
+      "sroie_070",
+      "sroie_088",
+      "sroie_095",
+      "sroie_134",
+      "sroie_143",
+      "sroie_149",
+      "sroie_150",
+      "sroie_155",
+      "sroie_158",
+      "sroie_160",
+      "sroie_163",
+      "sroie_173",
+      "sroie_186",
+      "sroie_209",
+      "sroie_233",
+      "sroie_246",
+      "sroie_247",
+      "sroie_248",
+      "sroie_253",
+      "sroie_259",
+      "sroie_262",
+      "sroie_267",
+      "sroie_268",
+      "sroie_276",
+      "sroie_296",
+      "sroie_301",
+      "sroie_314",
+      "sroie_317",
+      "sroie_318",
+      "sroie_321",
+      "sroie_322",
+      "sroie_323",
+      "sroie_324",
+      "sroie_327",
+      "sroie_380",
+      "sroie_384",
+      "sroie_385",
+      "sroie_387",
+      "sroie_391",
+      "sroie_394",
+      "sroie_398",
+      "sroie_405",
+      "sroie_407",
+      "sroie_410",
+      "sroie_411",
+      "sroie_415",
+      "sroie_419",
+      "sroie_423",
+      "sroie_440",
+      "sroie_453",
+      "sroie_460",
+      "sroie_462",
+      "sroie_464",
+      "sroie_529",
+      "sroie_574",
+      "sroie_575",
+      "sroie_576",
+      "sroie_577",
+      "sroie_578",
+      "sroie_593",
+      "sroie_594",
+      "sroie_601",
+      "sroie_603",
+      "sroie_612"
+    ],
+    "date": [
+      "sroie_088",
+      "sroie_423",
+      "sroie_601",
+      "sroie_603"
+    ],
+    "total": [
+      "sroie_065",
+      "sroie_088",
+      "sroie_149",
+      "sroie_152",
+      "sroie_157",
+      "sroie_173",
+      "sroie_187",
+      "sroie_193",
+      "sroie_213",
+      "sroie_267",
+      "sroie_296",
+      "sroie_297",
+      "sroie_422",
+      "sroie_423",
+      "sroie_426",
+      "sroie_478",
+      "sroie_479",
+      "sroie_561",
+      "sroie_603"
+    ]
+  },
+  "synthetic": {
+    "documents": 8,
+    "vendor": {
+      "correct": 8,
+      "accuracy": 1.0
+    },
+    "date": {
+      "correct": 8,
+      "accuracy": 1.0
+    },
+    "total": {
+      "correct": 8,
+      "accuracy": 1.0
+    }
+  }
+}

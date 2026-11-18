@@ -4,7 +4,7 @@ from decimal import Decimal
 import pytest
 
 from cashbooks.contracts.records import TermsKind
-from cashbooks.normalize.dates import DateParseError, parse_date
+from cashbooks.normalize.dates import AmbiguousDateError, DateParseError, parse_date
 from cashbooks.normalize.fingerprint import fingerprint
 from cashbooks.normalize.money import MoneyParseError, parse_amount, parse_money
 from cashbooks.normalize.terms import derive_due_date, parse_terms
@@ -54,6 +54,40 @@ def test_parse_date_sept_and_errors():
     assert parse_date("Sept 2, 2026") == date(2026, 9, 2)
     with pytest.raises(DateParseError):
         parse_date("next Tuesday")
+    with pytest.raises(DateParseError):
+        parse_date("13/13/2026")
+
+
+def test_numeric_dates_never_guess_the_order():
+    with pytest.raises(AmbiguousDateError):
+        parse_date("05/03/2026")                      # May 3 or 5 March: refuse to guess
+    assert parse_date("05/03/2026", "MDY") == date(2026, 5, 3)
+    assert parse_date("05/03/2026", "DMY") == date(2026, 3, 5)
+    assert parse_date("03/03/2026") == date(2026, 3, 3)  # both readings agree
+
+
+def test_only_valid_reading_wins_over_the_given_order():
+    assert parse_date("25/12/2018") == date(2018, 12, 25)
+    assert parse_date("25/12/2018", "MDY") == date(2018, 12, 25)
+    assert parse_date("12/28/2017", "DMY") == date(2017, 12, 28)
+
+
+@pytest.mark.parametrize("text,order,expected", [
+    ("28-01-18", "DMY", date(2018, 1, 28)),
+    ("21 MARCH, 2018", None, date(2018, 3, 21)),
+    ("02/JAN/2017", None, date(2017, 1, 2)),
+    ("25-Dec-18", None, date(2018, 12, 25)),
+    ("20180304", None, date(2018, 3, 4)),
+    ("2026/08/13", None, date(2026, 8, 13)),
+    ("25032018", None, date(2018, 3, 25)),
+    ("29/12/2017 11:41", None, date(2017, 12, 29)),
+    ("22/02/2018 7:41:46 AM", "DMY", date(2018, 2, 22)),
+    ("03 MAR 2018 18:22", None, date(2018, 3, 3)),
+    ("OCT 3, 2016 12:16:25 PM", None, date(2016, 10, 3)),
+    ("05-JAN-2017 03:17:50 PM", None, date(2017, 1, 5)),
+])
+def test_other_printed_forms(text, order, expected):
+    assert parse_date(text, order) == expected
 
 
 # ---------------------------------------------------------------- terms

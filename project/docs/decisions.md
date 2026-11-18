@@ -73,6 +73,17 @@ The end-to-end evaluation stays synthetic, because no public dataset links invoi
 - Scoring compares citations at document level (`span_inv_NS-1048_total` and `span_inv_NS-1048_p1` both count as `inv_NS-1048`), so C1's page chunks and C3's field spans are scored the same way.
 - Fixed: the amount parser read "1728.00" (no thousands comma) as 172.00. Test cases added.
 
+**D16. Answering and extraction model: Claude Haiku 5.5, not Gemini.**
+The Gemini free tier allows 20 requests a day for the planned model, too few for one run, and the paid project had no credit. All four configurations and the extraction step now use `claude-haiku-5-5` through the Anthropic Messages API (`code/src/cashbooks/llm/claude.py`); the Gemini client is kept. One model answers every configuration; every log row records it. The current API takes no temperature setting, so runs are not bit-for-bit repeatable; differences of one or two turns between configurations are within run-to-run noise until repeated runs are reported. The system prompt and tool list are cached between calls to cut cost.
+
+**D17. Two scoring fixes, applied to saved replies by `evaluation/rescore.py`.**
+- A reply wrapped in a single ```json code fence is now unwrapped before parsing, in every configuration; it is logged as `unwrapped_code_fence`. Anything else that is not bare JSON still counts as unparsed.
+- Q30's expected amount is money, so it now carries its currency (`1750.00 USD`); without it the scorer required the literal "1750.00" and rejected "$1,750" in all four configurations.
+Neither fix touches the prompts, the model or the replies. The original run files are kept next to the rescored ones.
+
+**D18. Numeric dates are never read in a guessed order.**
+The real-receipt check (626 SROIE receipts, `evaluation/real_docs_check.py`) showed that the old parser, which assumed US month-first order, turned 23% of real receipt dates into a wrong but valid date without any error, and rejected most of the rest. `normalize/dates.py` now takes the order a document uses (`MDY` or `DMY`), read from the vendor's record and then the business record (`date_order`, set to `MDY` for the café). When only one reading is a real date (25/12/2018) it is used; when both are and no order is known (05/03/2026), the value is flagged as ambiguous and left empty instead of guessed. The parser also reads the other printed forms the receipts use (28-01-18, 21 MARCH 2018, 02/JAN/2017, 20180304). Re-scored on the same saved extractions, no model calls: with the order unknown, no date is silently wrong and ambiguous ones are flagged; told the receipts are day-first, almost all dates come out right. The café extraction is unchanged (87/87 fields with the reference extractor).
+
 ## Open
 
 - Answering model: Gemini (D15); the exact model string is recorded in every run log.
