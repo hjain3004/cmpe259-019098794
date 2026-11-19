@@ -22,7 +22,7 @@ import yaml
 from cashbooks.configs.answer import PROMPT_VERSION, build_configs
 from cashbooks.contracts.evaluation import LogRow, QuerySuite
 from cashbooks.contracts.postprocess import postprocess
-from cashbooks.scoring import read_log, score_turn, write_log, write_run_outputs
+from cashbooks.scoring import _is_identifier, read_log, score_turn, write_log, write_run_outputs
 from cashbooks.store.db import Store
 from cashbooks.store.load_gold import load_gold
 
@@ -60,13 +60,17 @@ def main() -> int:
             write_log([r], out / "log.jsonl")
             continue
         gi = sum(1 for t in spec.turns[: r.turn_index] if t.scored)
-        g = gold[r.query_id][gi] if gi < len(gold[r.query_id]) else {}
+        gold_entry = gold[r.query_id]
+        gold_turns = list(gold_entry.get("turns", []) if isinstance(gold_entry, dict) else gold_entry)
+        g = gold_turns[gi] if gi < len(gold_turns) else {}
         pp = postprocess(r.raw_response, known[r.configuration]) if r.raw_response else None
         resp = pp.response if pp else None
         sc = score_turn(resp, turn.expected, g.get("values", {}), g.get("evidence", []),
                         list(turn.must_not) + list(g.get("must_not", [])))
         notes = [n for n in r.notes.split("; ") if n.startswith("llm_error")] + (pp.issues if pp else []) + \
-                ([f"wording: {w}" for w in pp.wording_flags] if pp else [])
+                ([f"wording: {w}" for w in pp.wording_flags] if pp else []) + \
+                [f"must_not_identifier: {p}" for p in sc.must_not_hits if _is_identifier(p)] + \
+                [f"skipped_must_not: {p}" for p in sc.must_not_skipped]
         new = r.model_copy(update={"parsed_ok": resp is not None, "success": sc.success, "scores": sc.to_dict(),
                                    "notes": "; ".join(notes)})
         changed += int(new.success != r.success)
@@ -75,8 +79,9 @@ def main() -> int:
 
     meta = json.loads((a.run / "summary.json").read_text())
     conv_ids = [q for q in gold if q in specs and q in {r.query_id for r in rows}]
+    qlabels = {c.id: list(c.labels) for c in suite.conversations}
     lines = write_run_outputs(scored, out, meta["run"] + " (rescored)", meta["model"], meta["commit"], str(a.bundle),
-                              conv_ids, len(scored) // len(names), PROMPT_VERSION)
+                              conv_ids, len(scored) // len(names), PROMPT_VERSION, query_labels=qlabels)
     print(f"{changed} turn verdicts changed; wrote {out}")
     print("\n".join(lines[4:4 + len(names) + 2]))
     return 0

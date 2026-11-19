@@ -1,0 +1,33 @@
+{
+  "fields": 128,
+  "correct": 126,
+  "accuracy": 0.984,
+  "errors": [
+    {
+      "doc": "m01",
+      "field": "kind",
+      "gold": "other",
+      "extracted": "correction",
+      "correct": false
+    },
+    {
+      "doc": "m04",
+      "field": "invoice_refs",
+      "gold": [
+        "PL-314"
+      ],
+      "extracted": [
+        "CN-0812",
+        "PL-314"
+      ],
+      "correct": false
+    }
+  ],
+  "model": "claude-haiku-5-5",
+  "bundle": "data/dev/plumbing_01",
+  "calls": 31,
+  "failed_calls": 0,
+  "input_tokens": 63908,
+  "output_tokens": 15702,
+  "ungrounded": {}
+}

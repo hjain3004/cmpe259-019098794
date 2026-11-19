@@ -1,0 +1,51 @@
+{
+  "doc_id": "inv_ML-90",
+  "fields": {
+    "vendor_name": {
+      "text": "Meridian Valve & Fitting",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "ML-90",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "Sep 11, 2026",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 30",
+      "page": 1
+    },
+    "reference_or_po": {
+      "text": "PO-7160",
+      "page": 1
+    },
+    "total": {
+      "text": "$378.00",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Sierra Valley Bank",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "005827419304",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "121042882",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Quarter-turn angle stop valve, 1/2 x 3/8 in 30 each $11.20 $336.00",
+      "page": 1
+    },
+    {
+      "text": "Chrome escutcheon plate, 1/2 in 20 each $2.10 $42.00",
+      "page": 1
+    }
+  ]
+}

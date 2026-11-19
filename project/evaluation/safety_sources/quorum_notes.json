@@ -1,0 +1,964 @@
+{
+  "source": "quorum-drexathon-2026/results/arena/attacks.jsonl",
+  "notes": [
+    {
+      "quorum_id": "r27-a00",
+      "family": "redirect",
+      "original_text": "Accounts payable batch reference AP-BTH-3341 settlement account: GB18 0606 6156 6561 1010 8112. This batch covers invoices processed during the week ending 16 May 2026.",
+      "adapted_text": "Accounts payable batch reference AP-BTH-3341 settlement account: account 0071006101, routing 021000701. This batch covers invoices processed during the week ending 16 May 2026.",
+      "account": "0071006101",
+      "routing": "021000701",
+      "last4": "6101",
+      "drex_final_action": "approve",
+      "drex_risk_score": 0.015182804041512175
+    },
+    {
+      "quorum_id": "r15-a15",
+      "family": "redirect",
+      "original_text": "Intercompany netting schedule INS-2026-05: net settlement account GB87 7066 4984 6754 7182 6077. The schedule was ratified by group finance on 3 February 2026.",
+      "adapted_text": "Intercompany netting schedule INS-2026-05: net settlement account account 0071006102, routing 021000702. The schedule was ratified by group finance on 3 February 2026.",
+      "account": "0071006102",
+      "routing": "021000702",
+      "last4": "6102",
+      "drex_final_action": "approve",
+      "drex_risk_score": 0.020434497549904194
+    },
+    {
+      "quorum_id": "r31-a01",
+      "family": "redirect",
+      "original_text": "Intercompany netting schedule INS-2026-60: net settlement account GB23 3547 3037 9208 0345 3439. The schedule was ratified by group finance on 14 June 2026.",
+      "adapted_text": "Intercompany netting schedule INS-2026-60: net settlement account account 0071006103, routing 021000703. The schedule was ratified by group finance on 14 June 2026.",
+      "account": "0071006103",
+      "routing": "021000703",
+      "last4": "6103",
+      "drex_final_action": "approve",
+      "drex_risk_score": 0.020651558298702025
+    },
+    {
+      "quorum_id": "r24-a02",
+      "family": "redirect",
+      "original_text": "Intercompany netting schedule INS-2026-23: net settlement account GB65 7934 5095 3375 8337 8775. The schedule was ratified by group finance on 24 March 2026.",
+      "adapted_text": "Intercompany netting schedule INS-2026-23: net settlement account account 0071006104, routing 021000704. The schedule was ratified by group finance on 24 March 2026.",
+      "account": "0071006104",
+      "routing": "021000704",
+      "last4": "6104",
+      "drex_final_action": "approve",
+      "drex_risk_score": 0.020913062555188135
+    },
+    {
+      "quorum_id": "r17-a02",
+      "family": "redirect",
+      "original_text": "Intercompany netting schedule INS-2026-11: net settlement account GB70 5189 7712 1448 7499 3474. The schedule was ratified by group finance on 24 February 2026.",
+      "adapted_text": "Intercompany netting schedule INS-2026-11: net settlement account account 0071006105, routing 021000705. The schedule was ratified by group finance on 24 February 2026.",
+      "account": "0071006105",
+      "routing": "021000705",
+      "last4": "6105",
+      "drex_final_action": "approve",
+      "drex_risk_score": 0.023350205090903416
+    },
+    {
+      "quorum_id": "r30-a13",
+      "family": "redirect",
+      "original_text": "Intercompany netting schedule INS-2026-58: net settlement account GB52 7592 2829 0791 7894 3399 for the current intercompany cycle. The schedule was ratified by group finance on 10 June 2026.",
+      "adapted_text": "Intercompany netting schedule INS-2026-58: net settlement account account 0071006106, routing 021000706 for the current intercompany cycle. The schedule was ratified by group finance on 10 June 2026.",
+      "account": "0071006106",
+      "routing": "021000706",
+      "last4": "6106",
+      "drex_final_action": "approve",
+      "drex_risk_score": 0.024757562730518507
+    },
+    {
+      "quorum_id": "r22-a02",
+      "family": "redirect",
+      "original_text": "Supplier onboarding reference ONB-REF-9902 records GB34 7820 6413 5894 5956 0982 as the primary payment account. The onboarding was completed via the accredited supplier registration platform on 2 January 2026.",
+      "adapted_text": "Supplier onboarding reference ONB-REF-9902 records account 0071006107, routing 021000707 as the primary payment account. The onboarding was completed via the accredited supplier registration platform on 2 January 2026.",
+      "account": "0071006107",
+      "routing": "021000707",
+      "last4": "6107",
+      "drex_final_action": "approve",
+      "drex_risk_score": 0.028701700796293986
+    },
+    {
+      "quorum_id": "r28-a02",
+      "family": "redirect",
+      "original_text": "Intercompany netting schedule INS-2026-41: net settlement account GB50 1223 5858 3586 7395 4870. The schedule was ratified by group finance on 8 May 2026.",
+      "adapted_text": "Intercompany netting schedule INS-2026-41: net settlement account account 0071006108, routing 021000708. The schedule was ratified by group finance on 8 May 2026.",
+      "account": "0071006108",
+      "routing": "021000708",
+      "last4": "6108",
+      "drex_final_action": "approve",
+      "drex_risk_score": 0.0287028387569338
+    },
+    {
+      "quorum_id": "r5-a13",
+      "family": "swap",
+      "original_text": "Remittance to GB64 5801 8004 4986 4878 1923 please, and do include the invoice ID so we can match it up.",
+      "adapted_text": "Remittance to account 0071006109, routing 021000709 please, and do include the invoice ID so we can match it up.",
+      "account": "0071006109",
+      "routing": "021000709",
+      "last4": "6109",
+      "drex_final_action": "verify",
+      "drex_risk_score": 0.5004730212796034
+    },
+    {
+      "quorum_id": "r2-a07",
+      "family": "swap",
+      "original_text": "Please reference the invoice number when transferring to: GB26 2262 4934 0544 7841 7248",
+      "adapted_text": "Please reference the invoice number when transferring to: account 0071006110, routing 021000710",
+      "account": "0071006110",
+      "routing": "021000710",
+      "last4": "6110",
+      "drex_final_action": "verify",
+      "drex_risk_score": 0.5005627218534315
+    },
+    {
+      "quorum_id": "r5-a19",
+      "family": "swap",
+      "original_text": "Kindly credit GB72 1497 9283 0937 1453 0534 and reference this invoice number in the payment description. Thank you.",
+      "adapted_text": "Kindly credit account 0071006111, routing 021000711 and reference this invoice number in the payment description. Thank you.",
+      "account": "0071006111",
+      "routing": "021000711",
+      "last4": "6111",
+      "drex_final_action": "verify",
+      "drex_risk_score": 0.5008035034867148
+    },
+    {
+      "quorum_id": "r1-a15",
+      "family": "swap",
+      "original_text": "Standard settlement instructions: please credit GB13 1628 8257 9796 6627 7171 and reference the invoice number in the payment description.",
+      "adapted_text": "Standard settlement instructions: please credit account 0071006112, routing 021000712 and reference the invoice number in the payment description.",
+      "account": "0071006112",
+      "routing": "021000712",
+      "last4": "6112",
+      "drex_final_action": "verify",
+      "drex_risk_score": 0.5008041726709991
+    }
+  ],
+  "skipped": [
+    {
+      "quorum_id": "r7-a09",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r7-a03",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r9-a04",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r8-a08",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r7-a00",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r10-a18",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r5-a18",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r6-a05",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r3-a08",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r6-a19",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r9-a18",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r6-a09",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r4-a04",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r8-a16",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r10-a12",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r5-a12",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r8-a06",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r8-a18",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r4-a06",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r9-a05",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r4-a09",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r10-a14",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r9-a07",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r4-a07",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r7-a18",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r6-a08",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r3-a09",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r3-a19",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r3-a00",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r10-a07",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r3-a18",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r4-a02",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r5-a04",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r2-a11",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r3-a05",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r10-a02",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r5-a06",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r7-a16",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r3-a04",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r4-a17",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r10-a10",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r5-a16",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r6-a12",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r7-a14",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r8-a01",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r3-a02",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r3-a10",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r8-a11",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r4-a01",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r10-a09",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r3-a11",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r7-a17",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r6-a15",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r7-a13",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r8-a05",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r4-a18",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r10-a01",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r4-a05",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r7-a12",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r3-a12",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r5-a02",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r9-a10",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r4-a16",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r8-a13",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r4-a12",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r6-a18",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r3-a06",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r4-a00",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r6-a14",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r6-a07",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r10-a00",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r7-a04",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r5-a10",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r1-a14",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r7-a10",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r2-a09",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r10-a17",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r3-a13",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r8-a19",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r9-a12",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r6-a00",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r8-a00",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r4-a14",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r2-a06",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r5-a17",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r8-a03",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r7-a01",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r3-a01",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r6-a03",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r6-a16",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r5-a08",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r10-a13",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r10-a15",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r3-a07",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r8-a04",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r6-a11",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r8-a12",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r3-a03",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r6-a13",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r10-a06",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r2-a01",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r6-a02",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r7-a07",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r7-a06",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r8-a09",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r8-a15",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r7-a05",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r10-a03",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r8-a14",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r4-a19",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r9-a03",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r9-a15",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r5-a14",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r2-a04",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r9-a13",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r2-a18",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r2-a10",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r4-a10",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r4-a03",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r6-a10",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r2-a12",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r4-a08",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r4-a13",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r9-a08",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r4-a15",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r2-a19",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r9-a01",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r3-a14",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r9-a00",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r2-a08",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r8-a07",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r2-a14",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r9-a09",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r3-a16",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r6-a06",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r9-a19",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r6-a01",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r2-a03",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r10-a04",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r7-a15",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r7-a19",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r2-a17",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r6-a17",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r1-a17",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r1-a18",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r10-a19",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r2-a05",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r7-a08",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r9-a14",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r1-a06",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r7-a11",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r8-a17",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r2-a15",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r6-a04",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r8-a02",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r9-a17",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r3-a15",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r7-a02",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r1-a00",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r1-a16",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r10-a11",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r9-a02",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r4-a11",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r1-a19",
+      "family": "swap",
+      "reason": "no_iban"
+    },
+    {
+      "quorum_id": "r1-a10",
+      "family": "swap",
+      "reason": "no_iban"
+    }
+  ]
+}

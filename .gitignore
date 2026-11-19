@@ -25,3 +25,7 @@ project/data/real/
 
 # Third-party API docs kept locally for reference
 project/nace-docs/
+
+# Peer-testing demo sessions (keep directory tracked via .gitkeep)
+project/demo/sessions/*
+!project/demo/sessions/.gitkeep

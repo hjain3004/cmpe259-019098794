@@ -45,14 +45,21 @@ def match_payments(store: Store, args: MatchPaymentsArgs) -> MatchPaymentsResult
                 cands.append(MatchCandidate(
                     bill_id=bill.bill_id, invoice_number=bill.invoice_number, txn_id=txn.txn_id,
                     txn_amount=Money(amount=txn.amount, currency=txn.currency),
+                    link_status=ln.status.value,
                     reasons_for=list(ln.reasons) + [f"posted {txn.posted_on}, descriptor '{txn.descriptor}'"],
                     evidence_ids=[txn.txn_id],
                 ))
+            poss = [c for c in cands if c.link_status == "candidate"]
             note = None
             if len(cands) > 1:
                 total = sum((-c.txn_amount.amount for c in cands), Decimal("0"))
                 note = f"{len(cands)} payments totalling {total} against a bill total of {bill.total}"
-            return MatchPaymentsResult(outcome="confirmed", candidates=cands, why_undecided=note)
+            elif poss:
+                note = "possible payment(s), not confirmed"
+            outcome = "confirmed" if any(c.link_status == "confirmed" for c in cands) and not poss else "candidate"
+            return MatchPaymentsResult(
+                outcome=outcome, candidates=cands, possible_payments=poss, why_undecided=note,
+            )
         # No link yet: look for debits that could pay it.
         cands = []
         for txn in store.txns():
@@ -80,18 +87,22 @@ def match_payments(store: Store, args: MatchPaymentsArgs) -> MatchPaymentsResult
         cands.extend(r.candidates or [MatchCandidate(
             bill_id=None, invoice_number=None, txn_id=t.txn_id,
             txn_amount=Money(amount=t.amount, currency=t.currency),
+            link_status="candidate",
             reasons_for=[f"bank debit posted {t.posted_on}, descriptor '{t.descriptor}'"],
             reasons_against=["no bill from a known vendor matches this transaction"],
             evidence_ids=[t.txn_id])])
     linked = [c for c in cands if c.bill_id]
+    poss = [c for c in linked if c.link_status == "candidate"]
     if len(cands) == 1 and linked:
-        return MatchPaymentsResult(outcome="confirmed", candidates=cands)
+        outcome = "confirmed" if linked[0].link_status == "confirmed" else "candidate"
+        note = "possible payment, not confirmed" if outcome == "candidate" else None
+        return MatchPaymentsResult(outcome=outcome, candidates=cands, possible_payments=poss, why_undecided=note)
     if not linked:
         return MatchPaymentsResult(outcome="ambiguous" if len(cands) > 1 else "no_candidates",
                                    candidates=cands if len(cands) > 1 else [],
                                    why_undecided="; ".join(f"{c.txn_id}: {c.reasons_against[0]}" for c in cands)
                                    if len(cands) > 1 else f"{cands[0].txn_id} ({cands[0].reasons_for[0]}): no bill matches")
-    return MatchPaymentsResult(outcome="ambiguous", candidates=cands,
+    return MatchPaymentsResult(outcome="ambiguous", candidates=cands, possible_payments=poss,
                                why_undecided="more than one transaction or bill fits")
 
 
@@ -99,6 +110,7 @@ def _cand(c) -> MatchCandidate:
     return MatchCandidate(
         bill_id=c.bill.bill_id, invoice_number=c.bill.invoice_number, txn_id=c.txn.txn_id,
         txn_amount=Money(amount=c.txn.amount, currency=c.txn.currency),
+        link_status=c.status.value,
         reasons_for=c.reasons_for, reasons_against=c.reasons_against, evidence_ids=[c.txn.txn_id],
     )
 
@@ -106,9 +118,12 @@ def _cand(c) -> MatchCandidate:
 def _result(cands: list[MatchCandidate]) -> MatchPaymentsResult:
     if not cands:
         return MatchPaymentsResult(outcome="no_candidates", candidates=[])
+    poss = [c for c in cands if c.link_status == "candidate"]
     if len(cands) == 1:
-        return MatchPaymentsResult(outcome="confirmed", candidates=cands)
-    return MatchPaymentsResult(outcome="ambiguous", candidates=cands,
+        outcome = "confirmed" if cands[0].link_status == "confirmed" else "candidate"
+        note = "possible payment, not confirmed" if outcome == "candidate" else None
+        return MatchPaymentsResult(outcome=outcome, candidates=cands, possible_payments=poss, why_undecided=note)
+    return MatchPaymentsResult(outcome="ambiguous", candidates=cands, possible_payments=poss,
                                why_undecided="several transactions or bills fit equally well")
 
 
@@ -121,10 +136,19 @@ def _for_txn(store: Store, txn) -> MatchPaymentsResult:
             cands.append(MatchCandidate(
                 bill_id=b.bill_id, invoice_number=b.invoice_number, txn_id=txn.txn_id,
                 txn_amount=Money(amount=txn.amount, currency=txn.currency),
+                link_status=ln.status.value,
                 reasons_for=list(ln.reasons) + [f"posted {txn.posted_on}, descriptor '{txn.descriptor}'"],
                 evidence_ids=[txn.txn_id] + [e for e in (b.field_evidence.get("total"), b.field_evidence.get("invoice_number")) if e],
             ))
-        return MatchPaymentsResult(outcome="confirmed", candidates=cands)
+        poss = [c for c in cands if c.link_status == "candidate"]
+        if len(cands) > 1:
+            return MatchPaymentsResult(
+                outcome="ambiguous", candidates=cands, possible_payments=poss,
+                why_undecided="transaction is a possible match for multiple bills",
+            )
+        outcome = "confirmed" if cands[0].link_status == "confirmed" else "candidate"
+        note = "possible payment, not confirmed" if outcome == "candidate" else None
+        return MatchPaymentsResult(outcome=outcome, candidates=cands, possible_payments=poss, why_undecided=note)
     if txn.amount >= 0:
         return MatchPaymentsResult(outcome="no_candidates", candidates=[],
                                    why_undecided=f"{txn.txn_id} is a deposit, not a payment")
@@ -138,11 +162,19 @@ def sum_amount_due(store: Store, args: SumAmountDueArgs) -> SumAmountDueResult:
     r = list_open_bills(store, ListOpenBillsArgs(as_of=args.as_of, vendor=args.vendor))
     bills = [b for b in r.bills if b.overdue] if args.overdue_only else r.bills
     totals: dict[str, Decimal] = {}
+    totals_with_cands: dict[str, Decimal] = {}
+    has_cands = False
     for b in bills:
-        totals[b.remaining.currency] = totals.get(b.remaining.currency, Decimal("0")) + b.remaining.amount
+        cur = b.remaining.currency
+        totals[cur] = totals.get(cur, Decimal("0")) + b.remaining.amount
+        rem_c = b.remaining_if_candidates_apply.amount if b.remaining_if_candidates_apply is not None else b.remaining.amount
+        totals_with_cands[cur] = totals_with_cands.get(cur, Decimal("0")) + rem_c
+        if b.possible_payments:
+            has_cands = True
     return SumAmountDueResult(
         as_of=args.as_of,
         totals=[Money(amount=v, currency=k) for k, v in sorted(totals.items())],
+        totals_if_candidates_apply=[Money(amount=v, currency=k) for k, v in sorted(totals_with_cands.items())] if has_cands else [],
         contributing_bills=bills,
     )
 

@@ -1,0 +1,63 @@
+{
+  "doc_id": "inv_SB-510",
+  "fields": {
+    "vendor_name": {
+      "text": "Summit Brass & Heating",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "SB-510",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "2026-08-04",
+      "page": 1
+    },
+    "stated_due_date": {
+      "text": "2026-09-03",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 30",
+      "page": 1
+    },
+    "subtotal": {
+      "text": "$640.00",
+      "page": 1
+    },
+    "tax": {
+      "text": "$0.00",
+      "page": 1
+    },
+    "total": {
+      "text": "$640.00",
+      "page": 1
+    },
+    "currency": {
+      "text": "USD",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Cascade Industrial Credit Union",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "006491820345",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "321175261",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Thermostatic mixing valve, 3/4 in 4 each $125.00 $500.00",
+      "page": 1
+    },
+    {
+      "text": "Expansion tank mounting bracket 2 each $70.00 $140.00",
+      "page": 1
+    }
+  ]
+}

@@ -8,7 +8,7 @@ The checkboxes track reading status: `[x]` read, `[ ]` not yet.
 
 ## Core
 
-### Retrieval (C1)
+### Retrieval (C0–C2)
 
 - [x] Lewis, P. et al. **Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks.** NeurIPS 2020. PR †. <https://arxiv.org/abs/2005.11401>
   The retrieve-then-generate paradigm that C1 instantiates.
@@ -16,6 +16,10 @@ The checkboxes track reading status: `[x]` read, `[ ]` not yet.
   The C1 and C2 retriever.
 - [ ] Liu, N. F. et al. **Lost in the Middle: How Language Models Use Long Contexts.** TACL 12, 2024. PR †. <https://arxiv.org/abs/2307.03172>
   The main risk for C2: records placed mid-context are used less reliably.
+- [ ] Li, Z., Li, C., Zhang, M., Mei, Q. and Bendersky, M. **Retrieval Augmented Generation or Long-Context LLMs? A Comprehensive Study and Hybrid Approach.** EMNLP 2024 Industry Track, pp. 881–893. PR. <https://aclanthology.org/2024.emnlp-industry.66/>
+  Explains why C0 (whole corpus in the prompt) ties the tools when the corpus fits.
+- [ ] Jin, B., Yoon, J., Han, J. and Arık, S. Ö. **Long-Context LLMs Meet RAG: Overcoming Challenges for Long Inputs in RAG.** ICLR 2025. PR. <https://arxiv.org/abs/2410.05983>
+  Hard negatives drive long-context degradation; basis for the planned corpus-scaling experiment.
 
 ### Structured data and tools (C2, C3)
 
@@ -42,7 +46,7 @@ The checkboxes track reading status: `[x]` read, `[ ]` not yet.
 - [x] Chen, Z. et al. **ConvFinQA: Exploring the Chain of Numerical Reasoning in Conversational Finance Question Answering.** EMNLP 2022. PR †. <https://arxiv.org/abs/2210.03849>
   Multi-turn numeric QA over financial documents; the nearest established task to follow-ups such as "and the one before that?".
 - [x] Tumpati, S. et al. **FinBalance: A Multi-Document Accounting Reconciliation Benchmark.** 2026. Preprint; its repository reports acceptance to Findings of EMNLP 2026 (not yet confirmed in the ACL Anthology). <https://arxiv.org/abs/2606.15949>
-  Generator-built, ledger-grounded document bundles with cited outputs. The closest neighbour; the novelty statement must distinguish this project from it.
+  Generator-built, ledger-grounded document bundles with cited outputs; the closest neighbour. The paper reports best exact balance-sheet accuracy of at most 46%, and a 26–41 percentage-point gap across four models between the balance sheet a model reports and the one obtained by replaying its own entries through a ledger, supporting computing totals in code.
 
 ### Entity and temporal
 
@@ -57,6 +61,8 @@ The checkboxes track reading status: `[x]` read, `[ ]` not yet.
   Abstention remains unsolved even for strong models; justifies scoring ANSWER, CLARIFY and ABSTAIN explicitly.
 - [ ] Zhang, T. et al. **CLAMBER: A Benchmark of Identifying and Clarifying Ambiguous Information Needs in Large Language Models.** ACL 2024. PR. <https://aclanthology.org/2024.acl-long.578/>
   When an LLM should ask one clarifying question.
+- [ ] Laban, P., Hayashi, H., Zhou, Y. and Neville, J. **LLMs Get Lost In Multi-Turn Conversation.** 2025. Preprint. <https://arxiv.org/abs/2505.06120>
+  Reports a 39% average drop from single-turn to multi-turn underspecified conversations, mostly from unreliability and premature answers; explains C3's follow-up failures.
 
 ### Grounding and citations
 
@@ -71,12 +77,18 @@ The checkboxes track reading status: `[x]` read, `[ ]` not yet.
   Definitions of Benign Utility, Utility Under Attack and Attack Success Rate used for S01–S10.
 - [x] Debenedetti, E. et al. **Defeating Prompt Injections by Design (CaMeL).** 2025. Preprint. <https://arxiv.org/abs/2503.18813>
   Separating trusted control flow from untrusted data, and what that costs in utility. Also discusses manipulated extracted values, so this project does not claim that problem is new.
+- [ ] Röttger, P., Kirk, H. R., Vidgen, B., Attanasio, G., Bianchi, F. and Hovy, D. **XSTest: A Test Suite for Identifying Exaggerated Safety Behaviours in Large Language Models.** NAACL 2024. PR. <https://aclanthology.org/2024.naacl-long.301/>
+  Defines "exaggerated safety" and provides the basis for the unwarranted-warning rate.
 
 ### Evaluation methodology
 
 - [ ] Berg-Kirkpatrick, T., Burkett, D. and Klein, D. **An Empirical Investigation of Statistical Significance in NLP.** EMNLP-CoNLL 2012. PR. <https://aclanthology.org/D12-1091/>
 - [ ] Dror, R., Baumer, G., Shlomov, S. and Reichart, R. **The Hitchhiker's Guide to Testing Statistical Significance in Natural Language Processing.** ACL 2018. PR. <https://aclanthology.org/P18-1128/>
   Together: the one paired bootstrap interval over conversations.
+- [ ] Card, D., Henderson, P., Khandelwal, U., Jia, R., Mahowald, K. and Jurafsky, D. **With Little Power Comes Great Responsibility.** EMNLP 2020, pp. 9263–9274. PR. <https://aclanthology.org/2020.emnlp-main.745/>
+  Planning test-set size and reporting the minimum detectable effect.
+- [ ] Miller, E. **Adding Error Bars to Evals: A Statistical Approach to Language Model Evaluations.** 2024. Preprint. <https://arxiv.org/abs/2411.00640>
+  Comparing two models and planning an evaluation; confidence intervals that account for turns grouped in conversations.
 - [x] Gill, A., Ravichander, A. and Marasović, A. **What Has Been Lost with Synthetic Evaluation?** Findings of EMNLP 2025. PR. <https://aclanthology.org/2025.findings-emnlp.526/>
   Generated test sets can be valid yet too easy; reason for hand verification, contrast pairs and the separately written held-out business type.
 
@@ -97,6 +109,7 @@ The checkboxes track reading status: `[x]` read, `[ ]` not yet.
 - Strötgen, J. and Gertz, M. **HeidelTime: High Quality Rule-Based Extraction and Normalization of Temporal Expressions.** SemEval 2010. PR †. <https://aclanthology.org/S10-1071/> (rule-based temporal normalization baseline)
 - Wang, Z. et al. **VRDU: A Benchmark for Visually-rich Document Understanding.** KDD 2023. PR. <https://doi.org/10.1145/3580305.3599929>
 - Ostroukhov, M. et al. **PRAGMA: Revolut Foundation Model.** 2026. Preprint. <https://arxiv.org/abs/2604.08649> (transaction-sequence model; introduction only)
+- Shi, F., Chen, X., Misra, K., Scales, N., Dohan, D., Chi, E., Schärli, N. and Zhou, D. **Large Language Models Can Be Easily Distracted by Irrelevant Context.** ICML 2023. PR. <https://arxiv.org/abs/2302.00093>
 
 Recent preprints on invoice-borne prompt injection, useful for the related-work paragraph: ARGUS (<https://arxiv.org/abs/2605.03378>) and A2AS (<https://arxiv.org/abs/2510.13825>).
 
@@ -106,10 +119,11 @@ Not cited: MINT (arXiv:2608.14198) and Razorpay's Vulcan announcement. Neither s
 
 | Dataset | Use in this project | Link |
 | --- | --- | --- |
-| DocILE (annotated set) | Real-invoice extraction check: 40 invoices, scored with the frozen extraction method | <https://docile.rossum.ai/> · code: <https://github.com/rossumai/docile> |
+| SROIE (ICDAR 2019) | Real-document extraction check: 626 receipts (transcripts only, MIT license; receipts, not supplier invoices) | <https://github.com/zzzDavid/ICDAR-2019-SROIE> |
+| DocILE (annotated set) | Planned for the real-invoice extraction check, but not used (replaced by SROIE) | <https://docile.rossum.ai/> · code: <https://github.com/rossumai/docile> |
 | Synthetic scenario bundles | Everything else: reconciliation, dialogue, safety (generated in `data/generator/`) | this repository |
 
-Considered and not used: SROIE and CORD (receipts, not vendor invoices), PaySim and the Berka data (bank transactions with no linked documents), the Enron corpus (email with no linked invoices or bank rows). None links documents, messages and bank rows for one business.
+Considered and not used: CORD (receipts, not vendor invoices), PaySim and the Berka data (bank transactions with no linked documents), the Enron corpus (email with no linked invoices or bank rows). None links documents, messages and bank rows for one business.
 
 ## Motivation statistics (introduction only)
 

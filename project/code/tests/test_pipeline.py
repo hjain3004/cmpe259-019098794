@@ -18,7 +18,7 @@ from cashbooks.extract.reference import ReferenceExtractor
 from cashbooks.llm.base import LLMResult, extract_json, simplify_schema
 from cashbooks.llm.scripted import ScriptedLLM
 from cashbooks.scoring import check_value, doc_level, score_turn
-from cashbooks.store.load_gold import load_gold
+from cashbooks.store.load_gold import gold_links, load_gold
 
 CAFE = Path(__file__).resolve().parents[2] / "data" / "dev" / "cafe_01"
 rendered = pytest.mark.skipif(not (CAFE / "invoices").exists(), reason="render the café bundle first")
@@ -36,8 +36,10 @@ def extracted():
 @rendered
 def test_reference_extraction_reproduces_gold(extracted):
     gold, _ = load_gold(CAFE)
-    q = "select bill_id, txn_id, amount_applied from payment_links order by 1, 2"
-    assert extracted.store.conn.execute(q).fetchall() == gold.conn.execute(q).fetchall()
+    q = "select bill_id, txn_id, amount_applied, status, reasons from payment_links order by 1, 2"
+    assert [tuple(r) for r in extracted.store.conn.execute(q)] == [tuple(r) for r in gold.conn.execute(q)]
+    ledger_pairs = {(l.bill_id, l.txn_id) for l in gold_links(CAFE)}
+    assert {(r[0], r[1]) for r in gold.conn.execute("select bill_id, txn_id from payment_links")} == ledger_pairs
     q = "select bill_id, vendor_id, total, stated_due_date, due_date_derived, remit_account_last4 from bills order by 1"
     assert [tuple(r) for r in extracted.store.conn.execute(q)] == [tuple(r) for r in gold.conn.execute(q)]
     report = score_extraction(CAFE, extracted.extracted)
@@ -147,7 +149,8 @@ def test_extract_json_from_fenced_text():
 @rendered
 def test_all_configs_run_with_scripted_model(extracted):
     gold, _ = load_gold(CAFE)
-    cfgs = build_configs(CAFE, gold, extracted.store, "Ember & Oat Cafe", AS_OF, ["C1", "C2", "C3", "C4"])
+    all_raw = build_raw_chunks(CAFE)
+    cfgs = build_configs(CAFE, gold, extracted.store, "Ember & Oat Cafe", AS_OF, ["C0", "C1", "C2", "C3", "C4"])
     llm = ScriptedLLM(tool_plan={"NS-1048": [("get_bill_status", {"invoice_number": "NS-1048", "as_of": "2026-09-24"})]})
     for name, cfg in cfgs.items():
         out = cfg.answer(llm, [], "Did we pay NS-1048?")
@@ -155,8 +158,53 @@ def test_all_configs_run_with_scripted_model(extracted):
         if name in ("C3", "C4"):
             assert out.context and out.context[0]["tool"] == "get_bill_status"
             assert "txn_0193" in out.context[0]["result"]
+        elif name == "C0":
+            assert [c["chunk_id"] for c in out.context] == [c.chunk_id for c in all_raw]
         else:
             assert len(out.context) == 8
+
+
+@rendered
+def test_rescore_supports_c0(tmp_path, extracted, monkeypatch):
+    import sys
+    from cashbooks.contracts.evaluation import LogRow
+    from cashbooks.scoring import write_log, write_run_outputs
+    sys.path.insert(0, str(CAFE.parents[2] / "evaluation"))
+    import rescore
+
+    # Ensure extracted.sqlite exists for rescore.py
+    xdb = CAFE / "extracted.sqlite"
+    if not xdb.exists():
+        extract_bundle(CAFE, ReferenceExtractor(CAFE), xdb)
+
+    run_dir = tmp_path / "run_c0"
+    run_dir.mkdir()
+    raw_resp = json.dumps({
+        "answerability": "ANSWER",
+        "answer": "Invoice NS-1048 is paid.",
+        "as_of": "2026-09-24",
+        "evidence": [{"evidence_id": "txn_0193", "supports": "payment"}],
+    })
+    rows = [
+        LogRow(
+            query_id="Q04", turn_index=0, turn_text="Did I already pay invoice NS-1048?",
+            scenario="cafe_01", business_type="cafe", split="dev", configuration=cfg_name,
+            model_version="scripted", prompt_version="answer_system_v1", code_commit="abc",
+            context=[], raw_response=raw_resp, parsed_ok=True, expected=Answerability.ANSWER,
+            success=True, scores={"parsed": True, "answerability_ok": True, "values": {"status": True},
+                                  "evidence_recall": 1.0, "evidence_precision": 1.0, "must_not_hits": [], "success": True},
+            latency_ms=10, input_tokens=100, output_tokens=20,
+        )
+        for cfg_name in ("C0", "C1")
+    ]
+    write_log(rows, run_dir / "log.jsonl")
+    write_run_outputs(rows, run_dir, "run_c0", "scripted", "abc", str(CAFE), ["Q04"], 1, "answer_system_v1")
+
+    monkeypatch.setattr(sys, "argv", ["rescore.py", str(run_dir), str(CAFE)])
+    assert rescore.main() == 0
+    rescored_summary = json.loads((run_dir / "rescored" / "summary.json").read_text())
+    assert "C0" in rescored_summary["configs"] and "C1" in rescored_summary["configs"]
+    assert rescored_summary["configs"]["C0"]["successes"] == 1
 
 
 def test_bare_or_null_extracted_fields_are_wrapped():

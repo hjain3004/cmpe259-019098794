@@ -1,0 +1,47 @@
+{
+  "doc_id": "inv_MV-301",
+  "fields": {
+    "vendor_name": {
+      "text": "Meridian Valve & Fitting",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "MV-301",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "Aug 05, 2026",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 15",
+      "page": 1
+    },
+    "total": {
+      "text": "$312.50",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Sierra Valley Bank",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "005827419304",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "121042882",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Brass ball valve, 1 in full port 10 each $24.50 $245.00",
+      "page": 1
+    },
+    {
+      "text": "Braided stainless supply line, 20 in 10 each $6.75 $67.50",
+      "page": 1
+    }
+  ]
+}

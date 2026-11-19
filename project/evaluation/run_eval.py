@@ -95,10 +95,18 @@ def main() -> int:
     for cname, cfg in configs.items():
         for conv in convs:
             history: list[Turn] = []
-            gold_turns = list(gold[conv.id])
+            gold_entry = gold[conv.id]
+            gold_turns = list(gold_entry.get("turns", []) if isinstance(gold_entry, dict) else gold_entry)
+            setup_text = gold_entry.get("setup_text") if isinstance(gold_entry, dict) else None
             gi = 0
             for ti, turn in enumerate(conv.turns):
-                o = cfg.answer(llm, history, turn.text)
+                g = (gold_turns[gi] if gi < len(gold_turns) else {}) if turn.scored else {}
+                if turn.scored:
+                    gi += 1
+                    t_text = str(g.get("text") or turn.text)
+                else:
+                    t_text = str(setup_text or turn.text)
+                o = cfg.answer(llm, history, t_text)
                 raw = o.result.text
                 pp = postprocess(raw, o.known_evidence) if raw else None
                 resp = pp.response if pp else None
@@ -108,8 +116,6 @@ def main() -> int:
                 if pp:
                     notes += pp.issues + [f"wording: {w}" for w in pp.wording_flags]
                 if turn.scored:
-                    g = gold_turns[gi] if gi < len(gold_turns) else {}
-                    gi += 1
                     sc = score_turn(resp, turn.expected, g.get("values", {}), g.get("evidence", []),
                                     list(turn.must_not) + list(g.get("must_not", [])))
                     scores, success = sc.to_dict(), sc.success
@@ -117,7 +123,7 @@ def main() -> int:
                     scores, success = {"setup_turn": True}, None
                     notes.append("setup turn, not scored")
                 row = LogRow(
-                    query_id=conv.id, turn_index=ti, turn_text=turn.text, scenario=a.bundle.name,
+                    query_id=conv.id, turn_index=ti, turn_text=t_text, scenario=a.bundle.name,
                     business_type=biz.get("type", ""), split="dev", configuration=cname,
                     model_version=llm.model, prompt_version=PROMPT_VERSION, code_commit=commit,
                     context=o.context, raw_response=raw, parsed_ok=resp is not None, expected=turn.expected,
@@ -130,7 +136,7 @@ def main() -> int:
                 mark = "-" if success is None else ("ok" if success else "FAIL")
                 print(f"{cname} {conv.id} t{ti} {mark:4} {resp.answerability.value if resp else 'unparsed':8} "
                       f"{(resp.answer if resp else raw)[:90]!r}")
-                history.append(Turn(turn.text, resp.answer if resp else raw[:800]))
+                history.append(Turn(t_text, resp.answer if resp else raw[:800]))
 
     lines = write_run_outputs(rows, out, run_id, llm.model, commit, str(a.bundle), [c.id for c in convs],
                               sum(1 for c in convs for t in c.turns if t.scored), PROMPT_VERSION)

@@ -23,6 +23,7 @@ from cashbooks.ingest.pdf_text import find_span, page_texts
 from cashbooks.normalize.fingerprint import fingerprint, mask_digits
 from cashbooks.normalize.terms import derive_due_date, parse_terms
 from cashbooks.store.db import Store, connect, insert
+from cashbooks.tools.matching import link_payments
 
 _SAFE = re.compile(r"[^A-Za-z0-9_-]")
 
@@ -76,6 +77,24 @@ def _spans_from_manifest(business_id: str, doc_id: str, pdf: Path, manifest: dic
     for i, line in enumerate(manifest.get("lines", []), start=1):
         locate(f"line{i}", line["text"], line.get("page", 1))
     return spans, ungrounded
+
+
+def gold_links(bundle_dir: str | Path) -> list[PaymentLink]:
+    """Return the ground-truth payment links from ledger.json (for scoring and reports only, never stored in C4)."""
+    bundle = Path(bundle_dir)
+    ledger = read_ledger(bundle)
+    biz = ledger["business"]["business_id"]
+    return [
+        PaymentLink(
+            business_id=biz,
+            bill_id=_id("bill", p["invoice_number"]),
+            txn_id=p["txn_id"],
+            amount_applied=_m(p["amount_applied"]),
+            status=LinkStatus.CONFIRMED,
+            reasons=["gold ledger link"],
+        )
+        for p in ledger.get("payments", [])
+    ]
 
 
 def load_gold(bundle_dir: str | Path, conn: sqlite3.Connection | None = None) -> tuple[Store, LoadReport]:
@@ -178,14 +197,6 @@ def load_gold(bundle_dir: str | Path, conn: sqlite3.Connection | None = None) ->
         records.append(BankTxn(business_id=biz, **row))
         report.add("bank_rows", 1)
 
-    # ---- gold payment links
-    for p in ledger.get("payments", []):
-        records.append(PaymentLink(
-            business_id=biz, bill_id=bill_ids[p["invoice_number"]], txn_id=p["txn_id"],
-            amount_applied=_m(p["amount_applied"]), status=LinkStatus.CONFIRMED, reasons=["gold ledger link"],
-        ))
-        report.add("payment_links", 1)
-
     # ---- messages: the body is the document; claims come from the ledger
     bodies = {m["msg_id"]: m for m in read_messages(bundle / "messages.jsonl")}
     for m in ledger.get("messages", []):
@@ -210,7 +221,11 @@ def load_gold(bundle_dir: str | Path, conn: sqlite3.Connection | None = None) ->
         report.add("messages", 1)
 
     insert(conn, records)
-    return Store(conn, biz), report
+    store = Store(conn, biz)
+    links = link_payments(store)
+    insert(conn, links)
+    report.add("payment_links", len(links))
+    return store, report
 
 
 if __name__ == "__main__":

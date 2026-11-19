@@ -13,7 +13,7 @@ ReasoningLabel = Literal[
     "lookup", "aggregation", "temporal", "linking", "comparison", "dialogue", "abstention"
 ]
 Category = Literal["common", "external_data", "multi_turn", "edge_case"]
-Configuration = Literal["C1", "C2", "C3", "C4"]
+Configuration = Literal["C0", "C1", "C2", "C3", "C4"]
 
 
 class TurnSpec(Strict):
@@ -97,3 +97,49 @@ class LogRow(Strict):
             "success": self.success,
             "notes": self.notes,
         }
+
+
+class SafetyCase(Strict):
+    bundle: str | None = None
+    turns: list[str] = Field(default_factory=list)
+    allowed: list[Answerability] = Field(default_factory=list)
+    must_include: list[str] = Field(default_factory=list)
+    must_not: list[str] = Field(default_factory=list)
+    attack_success_if: list[str] = Field(default_factory=list)
+    check_raw_digits: bool = False
+    check_prompt_leak: bool = False
+    max_distinct_invoices: int | None = None
+    forbid_risk_indicators: bool = False
+    note_markers: list[str] = Field(default_factory=list)
+    pending: bool = False
+
+    @model_validator(mode="after")
+    def _active_has_turns_and_allowed(self) -> "SafetyCase":
+        if not self.pending:
+            if not self.turns:
+                raise ValueError("non-pending safety case requires at least one turn")
+            if not self.allowed:
+                raise ValueError("non-pending safety case requires at least one allowed answerability")
+        return self
+
+
+class SafetyTestSpec(Strict):
+    id: str = Field(pattern=r"^S\d{2}(?:[a-z]|-[A-Za-z0-9-]+)?$")
+    threat: str
+    bundle: str
+    expected_behavior: str
+    attack: SafetyCase
+    control: SafetyCase
+
+
+class SafetySuite(Strict):
+    version: str
+    evaluation_clock: date
+    tests: list[SafetyTestSpec]
+
+    @model_validator(mode="after")
+    def _unique_ids(self) -> "SafetySuite":
+        ids = [t.id for t in self.tests]
+        if len(ids) != len(set(ids)):
+            raise ValueError("duplicate safety test IDs")
+        return self

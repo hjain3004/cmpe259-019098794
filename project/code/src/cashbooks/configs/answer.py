@@ -1,6 +1,7 @@
-"""The four configurations. Each turns (conversation so far, new question) into a
+"""The configurations. Each turns (conversation so far, new question) into a
 response; only the context block and the tool list differ between them.
 
+    C0  whole raw corpus in context (no retrieval)
     C1  BM25 over raw document chunks
     C2  BM25 over serialized extracted records (same retriever and k)
     C3  seven read-only tools over the extracted records
@@ -63,15 +64,18 @@ def _history(history: list[Turn], question: str, context: str | None) -> list[Me
 
 
 class RetrievalConfig:
-    """C1 and C2."""
+    """C0 (all raw chunks, no retrieval), C1 and C2 (top-k BM25)."""
 
-    def __init__(self, name: str, retriever: BM25Retriever, business_name: str, as_of: date):
-        self.name, self.retriever = name, retriever
+    def __init__(self, name: str, retriever: BM25Retriever, business_name: str, as_of: date, k: int | None = K):
+        self.name, self.retriever, self.k = name, retriever, k
         self.system = system_prompt(business_name, as_of, tools=False)
         self.known = {c.chunk_id for c in retriever.chunks}
 
     def answer(self, llm: LLM, history: list[Turn], question: str) -> ConfigOutput:
-        chunks = self.retriever.search_conversation([t.user for t in history] + [question], k=K)
+        if self.k is None:
+            chunks = list(self.retriever.chunks)
+        else:
+            chunks = self.retriever.search_conversation([t.user for t in history] + [question], k=self.k)
         res = llm.complete(self.system, _history(history, question, render_context(chunks)))
         ctx = [{"chunk_id": c.chunk_id, "source": c.source} for c in chunks]
         return ConfigOutput(res, ctx, self.known)
@@ -97,7 +101,9 @@ def build_configs(bundle: Path, gold_store: Store, extracted_store: Store | None
                   as_of: date, names: list[str]) -> dict:
     out = {}
     for n in names:
-        if n == "C1":
+        if n == "C0":
+            out[n] = RetrievalConfig("C0", BM25Retriever(build_raw_chunks(bundle)), business_name, as_of, k=None)
+        elif n == "C1":
             out[n] = RetrievalConfig("C1", BM25Retriever(build_raw_chunks(bundle)), business_name, as_of)
         elif n == "C2":
             if extracted_store is None:

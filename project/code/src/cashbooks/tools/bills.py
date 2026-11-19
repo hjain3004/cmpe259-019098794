@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
-from cashbooks.contracts.common import PaymentState
+from decimal import Decimal
+
+from cashbooks.contracts.common import Money, PaymentState
 from cashbooks.contracts.tools import (
-    GetBillStatusArgs, GetBillStatusResult, ListOpenBillsArgs, ListOpenBillsResult,
+    BillLineItem, GetBillStatusArgs, GetBillStatusResult, ListOpenBillsArgs, ListOpenBillsResult,
 )
 from cashbooks.normalize.vendors import resolve_vendor
 from cashbooks.store.db import Store
@@ -42,13 +44,54 @@ def get_bill_status(store: Store, args: GetBillStatusArgs) -> GetBillStatusResul
         and bill.invoice_number.upper() in (r.upper() for r in c.invoice_refs)
         and st.state is not PaymentState.PAID
     ]
+    summary = summarize(store, st)
+    lines = store.lines(bill.bill_id)
+    line_items = [
+        BillLineItem(
+            line_no=ln.line_no,
+            description=ln.description,
+            quantity=ln.quantity,
+            unit=ln.unit,
+            unit_price=ln.unit_price,
+            line_total=Money(amount=ln.line_total, currency=bill.currency) if ln.line_total is not None else None,
+            evidence_id=ln.evidence_id,
+        )
+        for ln in lines
+    ]
+    line_totals = [ln.line_total for ln in lines if ln.line_total is not None]
+    lines_sum_dec = sum(line_totals, Decimal("0.00")) if line_totals else None
+    lines_sum = Money(amount=lines_sum_dec, currency=bill.currency) if lines_sum_dec is not None else None
+    lines_match_sub = (
+        (lines_sum_dec == bill.subtotal)
+        if (lines_sum_dec is not None and bill.subtotal is not None)
+        else None
+    )
+    total_matches = (
+        (bill.subtotal + (bill.tax or Decimal("0.00")) == bill.total)
+        if bill.subtotal is not None
+        else (lines_sum_dec == bill.total if lines_sum_dec is not None else None)
+    )
+    ref_span_id = bill.field_evidence.get("reference_or_po")
+    ref_span = store.span(ref_span_id) if ref_span_id else None
+    ref_text = ref_span.quote if ref_span else None
     return GetBillStatusResult(
-        bill=summarize(store, st),
+        bill=summary,
+        subtotal=Money(amount=bill.subtotal, currency=bill.currency) if bill.subtotal is not None else None,
+        tax=Money(amount=bill.tax, currency=bill.currency) if bill.tax is not None else None,
+        line_items=line_items,
+        line_items_sum=lines_sum,
+        line_items_match_subtotal=lines_match_sub,
+        total_matches_subtotal_plus_tax=total_matches,
+        reference_or_po=ref_text,
+        memo=summary.memo,
+        has_note_outside_remit_fields=summary.has_note_outside_remit_fields,
         stated_due_date=bill.stated_due_date,
         derived_due_date=bill.due_date_derived,
         due_date_calculation=bill.due_date_calculation,
         due_date_conflict=bill.due_date_conflict,
         payments=st.payments,
+        possible_payments=st.possible_payments,
+        remaining_if_candidates_apply=summary.remaining_if_candidates_apply,
         credits=st.credits,
         conflicting_claims=conflicts,
     )

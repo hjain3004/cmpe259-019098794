@@ -1,0 +1,71 @@
+{
+  "doc_id": "inv_CP-418",
+  "fields": {
+    "vendor_name": {
+      "text": "Crestline Pipe & Supply",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "CP-418",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "08/10/2026",
+      "page": 1
+    },
+    "stated_due_date": {
+      "text": "09/09/2026",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 30",
+      "page": 1
+    },
+    "reference_or_po": {
+      "text": "PO-7124",
+      "page": 1
+    },
+    "subtotal": {
+      "text": "$729.00",
+      "page": 1
+    },
+    "tax": {
+      "text": "$59.40",
+      "page": 1
+    },
+    "total": {
+      "text": "$788.40",
+      "page": 1
+    },
+    "currency": {
+      "text": "USD",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Redwood Commercial Bank",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "003194827612",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "121140399",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Type L copper pipe, 3/4 in x 10 ft 15 length $38.00 $570.00",
+      "page": 1
+    },
+    {
+      "text": "Type M copper pipe, 1/2 in x 10 ft 5 length $24.20 $121.00",
+      "page": 1
+    },
+    {
+      "text": "Lead-free solder spool, 1 lb 2 spool $19.00 $38.00",
+      "page": 1
+    }
+  ]
+}

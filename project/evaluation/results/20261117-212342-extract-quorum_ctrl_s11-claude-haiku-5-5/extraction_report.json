@@ -1,0 +1,26 @@
+{
+  "fields": 87,
+  "correct": 86,
+  "accuracy": 0.989,
+  "errors": [
+    {
+      "doc": "m02",
+      "field": "invoice_refs",
+      "gold": [
+        "NS-1062"
+      ],
+      "extracted": [
+        "CN-0457",
+        "NS-1062"
+      ],
+      "correct": false
+    }
+  ],
+  "model": "claude-haiku-5-5",
+  "bundle": "data/safety/quorum_ctrl_s11",
+  "calls": 21,
+  "failed_calls": 0,
+  "input_tokens": 42556,
+  "output_tokens": 10590,
+  "ungrounded": {}
+}

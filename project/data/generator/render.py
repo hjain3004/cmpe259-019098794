@@ -36,8 +36,9 @@ def collapse(s: str) -> str:
     return WS.sub(" ", s).strip()
 
 
-def money(s: str) -> str:
-    return f"${Decimal(s):,.2f}"
+def money(s: str, currency: str = "USD") -> str:
+    sym = "€" if currency == "EUR" else "$"
+    return f"{sym}{Decimal(s):,.2f}"
 
 
 DATE_FORMATS = {"northside": "%m/%d/%Y", "greenway": "%b %d, %Y", "beanworks": "%Y-%m-%d"}
@@ -65,15 +66,21 @@ def validate_ledger(ledger: dict) -> None:
     errs = []
     for inv in ledger["invoices"]:
         n = inv["invoice_number"]
+        planted = inv.get("planted") or {}
         sub = Decimal("0")
         for ln in inv["lines"]:
             if Decimal(ln["quantity"]) * Decimal(ln["unit_price"]) != Decimal(ln["line_total"]):
                 errs.append(f"{n}: line '{ln['description']}' quantity x price != line_total")
             sub += Decimal(ln["line_total"])
-        if sub != Decimal(inv["subtotal"]):
+        if sub != Decimal(inv["subtotal"]) and not planted.get("stated_total_mismatch"):
             errs.append(f"{n}: lines sum {sub} != subtotal {inv['subtotal']}")
-        if Decimal(inv["subtotal"]) + Decimal(inv["tax"]) != Decimal(inv["total"]):
+        if Decimal(inv["subtotal"]) + Decimal(inv["tax"]) != Decimal(inv["total"]) and not planted.get("stated_total_mismatch"):
             errs.append(f"{n}: subtotal + tax != total")
+        if inv.get("stated_due_date") and not planted.get("due_date_conflict"):
+            days = int(re.search(r"\d+", inv["payment_terms"]).group())
+            derived = (date.fromisoformat(inv["issue_date"]) + timedelta(days=days)).isoformat()
+            if inv["stated_due_date"] != derived:
+                errs.append(f"{n}: stated_due_date {inv['stated_due_date']} != derived {derived}")
     txns = {t["txn_id"]: t for t in ledger["bank"]}
     if len(txns) != len(ledger["bank"]):
         errs.append("duplicate txn_id in bank")
@@ -128,11 +135,12 @@ class Page:
 def line_rows(p: Page, inv: dict, y: float, cols: tuple[int, int, int, int]) -> float:
     """Print item rows: description, quantity + unit, unit price, line total."""
     xd, xq, xp, xt = cols
+    cur = inv.get("currency", "USD")
     for ln in inv["lines"]:
         p.text(xd, y, ln["description"])
         p.right(xq, y, f"{ln['quantity']} {ln['unit']}")
-        p.right(xp, y, money(ln["unit_price"]))
-        p.right(xt, y, money(ln["line_total"]))
+        p.right(xp, y, money(ln["unit_price"], cur))
+        p.right(xt, y, money(ln["line_total"], cur))
         p.line_texts.append(ln["description"])
         y -= 16
     return y
@@ -147,8 +155,26 @@ def remit_block(p: Page, inv: dict, y: float, x: float = 54) -> float:
     return y - 60
 
 
+def _draw_memo(p: Page, inv: dict, y: float, label: str = "Memo:") -> None:
+    if not inv.get("memo"):
+        return
+    words, line, rows = inv["memo"].split(), "", []
+    for w in words:
+        if len(line) + len(w) + 1 > 95:
+            rows.append(line)
+            line = w
+        else:
+            line = f"{line} {w}".strip()
+    rows.append(line)
+    p.text(54, y, label, bold=True)
+    for i, row in enumerate(rows):
+        p.text(54, y - 14 - 12 * i, row, size=9)
+    p.fields["memo"] = inv["memo"]
+
+
 def layout_northside(p: Page, inv: dict, vendor: dict, biz: dict) -> None:
     t = "northside"
+    cur = inv.get("currency", "USD")
     p.text(54, 740, inv["printed_vendor_name"], size=18, bold=True, field="vendor_name")
     p.text(54, 724, "1450 Harbor Way, Oakland, CA 94607  |  (415) 555-0142")
     p.text(420, 740, "INVOICE", size=16, bold=True)
@@ -174,19 +200,19 @@ def layout_northside(p: Page, inv: dict, vendor: dict, biz: dict) -> None:
     p.rule(y + 6)
     y -= 10
     p.right(470, y, "Subtotal")
-    p.right(558, y, money(inv["subtotal"]), field="subtotal")
+    p.right(558, y, money(inv["subtotal"], cur), field="subtotal")
     p.right(470, y - 16, "Sales tax")
-    p.right(558, y - 16, money(inv["tax"]), field="tax")
-    p.right(470, y - 34, "Total Due (USD)", bold=True)
-    p.right(558, y - 34, money(inv["total"]), bold=True, field="total")
-    p.fields["currency"] = "USD"
+    p.right(558, y - 16, money(inv["tax"], cur), field="tax")
+    p.right(470, y - 34, f"Total Due ({cur})", bold=True)
+    p.right(558, y - 34, money(inv["total"], cur), bold=True, field="total")
+    p.fields["currency"] = cur
     y = remit_block(p, inv, y - 80)
-    if inv.get("memo"):
-        p.text(54, y, f"Note: {inv['memo']}", size=9, field="memo", value=inv["memo"])
+    _draw_memo(p, inv, y, label="Note:")
 
 
 def layout_greenway(p: Page, inv: dict, vendor: dict, biz: dict) -> None:
     t = "greenway"
+    cur = inv.get("currency", "USD")
     p.text(54, 742, inv["printed_vendor_name"], size=20, bold=True, field="vendor_name")
     p.text(54, 726, "Fresh produce, delivered daily  |  Hayward, CA  |  (510) 555-0187", size=9)
     p.rule(712)
@@ -194,6 +220,11 @@ def layout_greenway(p: Page, inv: dict, vendor: dict, biz: dict) -> None:
     issue = fmt_date(inv["issue_date"], t)
     p.text(54, 678, f"Date: {issue}", field="issue_date", value=issue)
     p.text(54, 664, f"Payment terms: {inv['payment_terms']}", field="payment_terms", value=inv["payment_terms"])
+    if inv.get("print_due_date"):
+        due = fmt_date(due_date(inv), t)
+        p.text(54, 650, f"Due date: {due}", field="stated_due_date", value=due)
+    if inv.get("reference_or_po"):
+        p.text(330, 664, f"Ref: {inv['reference_or_po']}", field="reference_or_po", value=inv["reference_or_po"])
     p.text(330, 694, "Customer:", bold=True)
     p.text(330, 680, biz["name"])
     p.text(54, 632, "Item", bold=True)
@@ -205,12 +236,14 @@ def layout_greenway(p: Page, inv: dict, vendor: dict, biz: dict) -> None:
     p.rule(y + 6)
     y -= 12
     p.right(460, y, "Invoice total", bold=True)
-    p.right(558, y, money(inv["total"]), bold=True, field="total")
-    remit_block(p, inv, y - 50)
+    p.right(558, y, money(inv["total"], cur), bold=True, field="total")
+    y = remit_block(p, inv, y - 50)
+    _draw_memo(p, inv, y, label="Note:")
 
 
 def layout_beanworks(p: Page, inv: dict, vendor: dict, biz: dict) -> None:
     t = "beanworks"
+    cur = inv.get("currency", "USD")
     p.text(54, 742, "TAX INVOICE", size=10, bold=True)
     p.text(54, 722, inv["printed_vendor_name"], size=16, bold=True, field="vendor_name")
     p.text(54, 708, "Small-batch roasters  |  2210 Third St, San Francisco, CA", size=9)
@@ -221,6 +254,8 @@ def layout_beanworks(p: Page, inv: dict, vendor: dict, biz: dict) -> None:
         due = fmt_date(due_date(inv), t)
         p.text(360, 714, f"Due: {due}", field="stated_due_date", value=due)
     p.text(360, 700, f"Terms: {inv['payment_terms']}", field="payment_terms", value=inv["payment_terms"])
+    if inv.get("reference_or_po"):
+        p.text(360, 686, f"Ref: {inv['reference_or_po']}", field="reference_or_po", value=inv["reference_or_po"])
     p.text(54, 680, f"Sold to: {biz['name']}")
     p.rule(664)
     p.text(54, 650, "Product", bold=True)
@@ -232,26 +267,14 @@ def layout_beanworks(p: Page, inv: dict, vendor: dict, biz: dict) -> None:
     p.rule(y + 6)
     y -= 12
     p.right(480, y, "Subtotal")
-    p.right(558, y, money(inv["subtotal"]), field="subtotal")
+    p.right(558, y, money(inv["subtotal"], cur), field="subtotal")
     p.right(480, y - 16, "Tax")
-    p.right(558, y - 16, money(inv["tax"]), field="tax")
-    p.right(480, y - 34, "Amount due USD", bold=True)
-    p.right(558, y - 34, money(inv["total"]), bold=True, field="total")
-    p.fields["currency"] = "USD"
+    p.right(558, y - 16, money(inv["tax"], cur), field="tax")
+    p.right(480, y - 34, f"Amount due {cur}", bold=True)
+    p.right(558, y - 34, money(inv["total"], cur), bold=True, field="total")
+    p.fields["currency"] = cur
     y = remit_block(p, inv, y - 80)
-    if inv.get("memo"):
-        words, line, rows = inv["memo"].split(), "", []
-        for w in words:
-            if len(line) + len(w) + 1 > 95:
-                rows.append(line)
-                line = w
-            else:
-                line = f"{line} {w}".strip()
-        rows.append(line)
-        p.text(54, y, "Memo:", bold=True)
-        for i, row in enumerate(rows):
-            p.text(54, y - 14 - 12 * i, row, size=9)
-        p.fields["memo"] = inv["memo"]
+    _draw_memo(p, inv, y, label="Memo:")
 
 
 LAYOUTS = {"northside": layout_northside, "greenway": layout_greenway, "beanworks": layout_beanworks}
@@ -312,18 +335,30 @@ def render_bundle(bundle: Path) -> list[str]:
     for inv in ledger["invoices"]:
         v = vendors[inv["vendor_id"]]
         pdf = bundle / "invoices" / f"{inv['invoice_number']}.pdf"
+        mf_path = pdf.with_suffix(".fields.json")
+        old_mf = mf_path.read_text() if mf_path.exists() else None
+        old_pdf = pdf.read_bytes() if pdf.exists() else None
         p = Page(pdf)
         LAYOUTS[v["template"]](p, inv, v, biz)
         p.save()
         m = manifest(pdf, p, f"inv_{inv['invoice_number']}")
-        pdf.with_suffix(".fields.json").write_text(json.dumps(m, indent=2) + "\n")
+        new_mf = json.dumps(m, indent=2) + "\n"
+        mf_path.write_text(new_mf)
+        if old_mf == new_mf and old_pdf is not None:
+            pdf.write_bytes(old_pdf)
         out.append(f"invoice {inv['invoice_number']:8} {v['template']:9} {len(m['fields'])} fields, {len(m['lines'])} lines")
     for cr in ledger.get("credits", []):
         inv = next(i for i in ledger["invoices"] if i["invoice_number"] == cr["invoice_number"])
         pdf = bundle / "credits" / f"{cr['credit_id']}.pdf"
+        mf_path = pdf.with_suffix(".fields.json")
+        old_mf = mf_path.read_text() if mf_path.exists() else None
+        old_pdf = pdf.read_bytes() if pdf.exists() else None
         p = render_credit(pdf, cr, vendors[inv["vendor_id"]], biz)
         m = manifest(pdf, p, f"cn_{cr['credit_id']}")
-        pdf.with_suffix(".fields.json").write_text(json.dumps(m, indent=2) + "\n")
+        new_mf = json.dumps(m, indent=2) + "\n"
+        mf_path.write_text(new_mf)
+        if old_mf == new_mf and old_pdf is not None:
+            pdf.write_bytes(old_pdf)
         out.append(f"credit  {cr['credit_id']:8} {len(m['fields'])} fields")
     with open(bundle / "messages.jsonl", "w", encoding="utf-8") as f:
         for msg in ledger.get("messages", []):

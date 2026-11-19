@@ -1,0 +1,71 @@
+{
+  "doc_id": "inv_NS-1062",
+  "fields": {
+    "vendor_name": {
+      "text": "Northside Supplies",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "NS-1062",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "09/01/2026",
+      "page": 1
+    },
+    "stated_due_date": {
+      "text": "10/01/2026",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 30",
+      "page": 1
+    },
+    "reference_or_po": {
+      "text": "PO-2250",
+      "page": 1
+    },
+    "subtotal": {
+      "text": "$1,033.03",
+      "page": 1
+    },
+    "tax": {
+      "text": "$85.22",
+      "page": 1
+    },
+    "total": {
+      "text": "$1,118.25",
+      "page": 1
+    },
+    "currency": {
+      "text": "USD",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Bay Commerce Bank",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "004417829931",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "121000358",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Paper cups 12 oz, sleeve of 50 40 sleeve $14.50 $580.00",
+      "page": 1
+    },
+    {
+      "text": "Compostable lids 12 oz, sleeve of 50 40 sleeve $9.75 $390.00",
+      "page": 1
+    },
+    {
+      "text": "Napkins, case 3 case $21.01 $63.03",
+      "page": 1
+    }
+  ]
+}

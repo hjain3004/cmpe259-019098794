@@ -1,0 +1,55 @@
+{
+  "doc_id": "inv_GP-221",
+  "fields": {
+    "vendor_name": {
+      "text": "Greenway Produce",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "GP-221",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "Aug 05, 2026",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 15",
+      "page": 1
+    },
+    "total": {
+      "text": "$268.90",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Pacific Western Bank",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "007733210456",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "121042882",
+      "page": 1
+    },
+    "memo": {
+      "text": "Thank you for your business. Payment details are unchanged.",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Strawberries, flat 6 flat $24.50 $147.00",
+      "page": 1
+    },
+    {
+      "text": "Bananas, case 3 case $28.90 $86.70",
+      "page": 1
+    },
+    {
+      "text": "Lemons, case 1 case $35.20 $35.20",
+      "page": 1
+    }
+  ]
+}
