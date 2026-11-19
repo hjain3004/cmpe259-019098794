@@ -27,7 +27,7 @@ from pathlib import Path
 
 import yaml
 
-from cashbooks.configs.answer import PROMPT_VERSION, Turn, build_configs
+from cashbooks.configs.answer import PROMPT_VERSION, Turn, build_configs, format_turn_assistant
 from cashbooks.contracts.common import Answerability
 from cashbooks.contracts.evaluation import LogRow, QuerySuite
 from cashbooks.contracts.postprocess import postprocess
@@ -136,7 +136,7 @@ def main() -> int:
                 mark = "-" if success is None else ("ok" if success else "FAIL")
                 print(f"{cname} {conv.id} t{ti} {mark:4} {resp.answerability.value if resp else 'unparsed':8} "
                       f"{(resp.answer if resp else raw)[:90]!r}")
-                history.append(Turn(t_text, resp.answer if resp else raw[:800]))
+                history.append(Turn(t_text, format_turn_assistant(resp, raw)))
 
     lines = write_run_outputs(rows, out, run_id, llm.model, commit, str(a.bundle), [c.id for c in convs],
                               sum(1 for c in convs for t in c.turns if t.scored), PROMPT_VERSION)

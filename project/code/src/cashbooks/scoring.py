@@ -106,6 +106,17 @@ _PAID_NEG_PREFIX = re.compile(
 _PAID_WORD_RE = re.compile(r"\b(?:paid\s+in\s+full|paid|settled)\b", re.I)
 
 
+_OVERPAID_RE = re.compile(
+    r"\b(?:overpaid|over-paid|paid\s+twice|paid\s+two\s+times|paid\s+(?:it\s+)?more\s+than\s+once|double[-\s]paid"
+    r"|duplicate\s+payments?|double\s+payments?|paid\s+(?:it\s+)?again)\b",
+    re.I,
+)
+
+
+def _match_overpaid(text: str) -> bool:
+    return _OVERPAID_RE.search(text) is not None
+
+
 def _match_paid(text: str) -> bool:
     for m in _PAID_WORD_RE.finditer(text):
         prefix = text[max(0, m.start() - 35) : m.start()]
@@ -140,6 +151,8 @@ def check_value(expected: str, resp: AssistantResponse) -> bool:
         return _PARTIAL_RE.search(text) is not None
     if exp == "paid":
         return _match_paid(text)
+    if exp == "overpaid":
+        return _match_overpaid(text)
     return exp in text.lower()
 
 

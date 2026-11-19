@@ -1,0 +1,63 @@
+{
+  "doc_id": "inv_BF-301",
+  "fields": {
+    "vendor_name": {
+      "text": "Bavaria Fuel & Turf GmbH",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "BF-301",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "2026-09-04",
+      "page": 1
+    },
+    "stated_due_date": {
+      "text": "2026-10-04",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 30",
+      "page": 1
+    },
+    "subtotal": {
+      "text": "\u20ac680.00",
+      "page": 1
+    },
+    "tax": {
+      "text": "\u20ac0.00",
+      "page": 1
+    },
+    "total": {
+      "text": "\u20ac680.00",
+      "page": 1
+    },
+    "currency": {
+      "text": "EUR",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Rheinland Commercial Bank",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "006219408312",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "021000021",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "2-cycle synthetic fuel additive, case 4 case \u20ac125.00 \u20ac500.00",
+      "page": 1
+    },
+    {
+      "text": "Winter diesel stabilizer, drum 1 drum \u20ac180.00 \u20ac180.00",
+      "page": 1
+    }
+  ]
+}

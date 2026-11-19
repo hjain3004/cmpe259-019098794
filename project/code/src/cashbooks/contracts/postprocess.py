@@ -10,6 +10,7 @@ from dataclasses import dataclass, field
 
 from pydantic import ValidationError
 
+from .common import Answerability
 from .response import AssistantResponse
 
 # Unbroken runs of 6+ digits (account / routing numbers) are cut to their last
@@ -56,6 +57,15 @@ def postprocess(raw: str, known_evidence_ids: set[str]) -> PostprocessResult:
         return PostprocessResult(None, [f"invalid_json: {e.msg}"])
     if not isinstance(data, dict):
         return PostprocessResult(None, ["invalid_json: top level is not an object"])
+
+    allowed_keys = set(AssistantResponse.model_fields.keys())
+    for key in [k for k in list(data.keys()) if k not in allowed_keys]:
+        data.pop(key)
+        issues.append(f"dropped_unknown_key: {key}")
+
+    if data.get("answerability") == Answerability.ABSTAIN.value and data.get("calculation") is not None:
+        data["calculation"] = None
+        issues.append("dropped_abstain_calculation")
 
     for key in _TEXT_FIELDS:
         if isinstance(data.get(key), str):

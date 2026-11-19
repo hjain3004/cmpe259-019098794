@@ -1,0 +1,60 @@
+[
+  {
+    "vendor_id": "v_meadow",
+    "canonical_name": "Meadowlark Nursery & Sod",
+    "aliases": [
+      {
+        "alias": "Meadowlark Landscape Supply Inc.",
+        "verified": true
+      }
+    ],
+    "verified_payment": {
+      "bank_name": "First Foothill Bank",
+      "account_number": "007184923106",
+      "routing_number": "121137522",
+      "verified_on": "2026-02-05"
+    },
+    "trusted_contact": "Hannah Cho, (530) 555-0136"
+  },
+  {
+    "vendor_id": "v_rainline",
+    "canonical_name": "Rainline Irrigation & Pump",
+    "aliases": [],
+    "verified_payment": {
+      "bank_name": "Valley Oak Credit Union",
+      "account_number": "008341096274",
+      "routing_number": "321170342",
+      "verified_on": "2026-03-14"
+    },
+    "trusted_contact": "Carlos Mendez, (916) 555-0162"
+  },
+  {
+    "vendor_id": "v_ironridge",
+    "canonical_name": "Ironridge Equipment Rental",
+    "aliases": [
+      {
+        "alias": "Ironridge Rentals",
+        "verified": true
+      }
+    ],
+    "verified_payment": {
+      "bank_name": "Pacific Coast Trust",
+      "account_number": "004920185739",
+      "routing_number": "122235821",
+      "verified_on": "2026-01-18"
+    },
+    "trusted_contact": "Derek Wallace, (209) 555-0184"
+  },
+  {
+    "vendor_id": "v_bavaria",
+    "canonical_name": "Bavaria Fuel & Turf GmbH",
+    "aliases": [],
+    "verified_payment": {
+      "bank_name": "Rheinland Commercial Bank",
+      "account_number": "006219408312",
+      "routing_number": "021000021",
+      "verified_on": "2026-04-08"
+    },
+    "trusted_contact": "Lukas Weber, +49 89 5550147"
+  }
+]

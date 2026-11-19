@@ -1,0 +1,47 @@
+{
+  "doc_id": "inv_RL-215",
+  "fields": {
+    "vendor_name": {
+      "text": "Rainline Irrigation & Pump",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "RL-215",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "Aug 26, 2026",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 30",
+      "page": 1
+    },
+    "total": {
+      "text": "$890.00",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Valley Oak Credit Union",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "008341096274",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "321170342",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Drip emitter tubing, 1/2 in x 500 ft 5 coil $118.00 $590.00",
+      "page": 1
+    },
+    {
+      "text": "Pressure regulator, 30 PSI 10 each $30.00 $300.00",
+      "page": 1
+    }
+  ]
+}

@@ -1,0 +1,198 @@
+# Gold answers for the landscaping contractor held-out test scenario (landscaping_01), evaluation clock 2026-09-24.
+# All 30 conversations (Q01-Q30) are supported by this scenario.
+#
+# Per scored turn:
+#   text      optional bundle-specific query text override (changes vendor, product, or invoice number only)
+#   values    must appear: "2354.50 USD" = money (calculation result or text, any
+#             common format); "2026-10-01" = a date (ISO or written out); anything
+#             else = case-insensitive text
+#   evidence  documents the answer should cite, at document level (inv_MN-495,
+#             txn_0514, vh_v_ironridge, msg_m03, cn_CN-0921)
+#   must_not  phrases that fail the turn (added to the ones in queries.yaml)
+#
+# Query wording overrides (conversation | original text | override | reason):
+# | Conv | Original text | Override | Reason |
+# |------|---------------|----------|--------|
+# | Q02 (t0) | How much do I owe Northside Supplies as of September 30? | How much do I owe Meadowlark Nursery & Sod as of September 30? | Replace café vendor with landscaping vendor |
+# | Q04 (t0) | Did I already pay invoice NS-1048? | Did I already pay invoice MN-495? | Replace café invoice with equivalent paid landscaping invoice |
+# | Q05 (t0) | When is the Greenway Produce invoice due? | When is the Rainline Irrigation & Pump invoice RL-215 due? | Replace café vendor with landscaping Net 30 invoice without printed due date |
+# | Q06 (t0) | What remains unpaid on GP-228 after the partial payment? | What remains unpaid on RL-215 after the partial payment? | Replace café invoice with landscaping invoice having a partial payment |
+# | Q08 (t0) | Show me where the total for NS-1048 came from. | Show me where the total for MN-495 came from. | Replace café invoice with landscaping invoice having subtotal and tax |
+# | Q09 (t0) | What invoice matches the $842 bank payment on September 12? | What invoice matches the $878.85 bank payment on September 12? | Replace café payment amount with landscaping payment amount on Sep 12 |
+# | Q11 (t0) | Is Northside Supply Co. the same vendor as Northside Supplies? | Is Meadowlark Landscape Supply Inc. the same vendor as Meadowlark Nursery & Sod? | Replace café vendor and alias with landscaping vendor and verified alias |
+# | Q12 (t0) | Did the payment details on BW-771 change? | Did the payment details on IR-618 change? | Replace café invoice with landscaping invoice whose remit-to bank changed |
+# | Q13 (t0) | Is the amount on BW-771 unusual for this vendor? | Is the amount on IR-618 unusual for this vendor? | Replace café invoice with high-total landscaping invoice |
+# | Q14 (t0) | How much did I spend on coffee beans in August? | How much did I spend on grass seed in August? | Replace café product with landscaping line-item product |
+# | Q15 (t0) | How many five-pound coffee bags did I purchase in August? | How many 50 lb grass seed bags did I purchase in August? | Replace café item size/product with landscaping item size/product |
+# | Q16 (t0) | List every unpaid Northside invoice. | List every unpaid Meadowlark invoice. | Replace café vendor with landscaping vendor |
+# | Q17 (t0) | Did I pay the Greenway bill? | Did I pay the Rainline bill? | Replace café vendor with landscaping vendor |
+# | Q18 (t1) | The BeanWorks one. | The Ironridge one from September. | Replace café vendor with landscaping vendor and disambiguate September bill IR-618 from August bill IR-602 |
+# | Q19 (t1) | Northside. | Meadowlark. | Replace café vendor with landscaping vendor |
+# | Q21 (t0) | List my Northside bills from this summer. | List my Meadowlark bills from July and August, oldest first. | Replace café vendor and scope to the 3 summer bills in oldest-first order |
+# | Q27 (t0) | Show all invoices from Northside after it changed its legal name. | Show all invoices from Meadowlark after it changed its legal name. | Replace café vendor with landscaping vendor that changed its legal name on Sep 1 |
+# | Q29 (t0) | How many coffee bags do I have in stock right now? | How many grass seed bags do I have in stock right now? | Replace café product with landscaping product |
+
+scenario: landscaping_01
+verified_by_hand: 2026-11-18
+
+Q01:
+  - values: {bill: PL-314, balance: "775.00 USD", due: "2026-10-01", second: RL-215}
+    evidence: [inv_PL-314, inv_RL-215]
+    must_not: [MN-512]
+
+Q02:
+  - text: How much do I owe Meadowlark Nursery & Sod as of September 30?
+    values: {total: "2354.50 USD"}
+    evidence: [inv_MN-480, inv_CT-88, inv_PL-314, inv_MN-512]
+
+Q03:
+  - values: {first: MN-480, second: CT-88, third: SUM-44}
+    evidence: [inv_MN-480, inv_CT-88, inv_SUM-44]
+    must_not: [PL-314, MN-512, IR-618, BF-301]
+
+Q04:
+  - text: Did I already pay invoice MN-495?
+    values: {status: paid}
+    evidence: [txn_0514]
+
+Q05:
+  - text: When is the Rainline Irrigation & Pump invoice RL-215 due?
+    values: {due: "2026-09-25", issue: "2026-08-26"}
+    evidence: [inv_RL-215]
+
+Q06:
+  - text: What remains unpaid on RL-215 after the partial payment?
+    values: {remaining: "550.00 USD"}
+    evidence: [inv_RL-215, txn_0512]
+
+Q07:
+  - values: {bill: IR-618}
+    evidence: [inv_IR-618, vh_v_ironridge]
+
+Q08:
+  - text: Show me where the total for MN-495 came from.
+    values: {total: "878.85 USD", subtotal: "810.00", tax: "68.85"}
+    evidence: [inv_MN-495]
+
+Q09:
+  - text: What invoice matches the $878.85 bank payment on September 12?
+    values: {bill: MN-495}
+    evidence: [txn_0514, inv_MN-495]
+
+Q10:
+  - values: {bill: RL-204}
+    evidence: [txn_0503, txn_0506]
+
+Q11:
+  - text: Is Meadowlark Landscape Supply Inc. the same vendor as Meadowlark Nursery & Sod?
+    values: {answer: "yes"}
+    evidence: [vh_v_meadow]
+
+Q12:
+  - text: Did the payment details on IR-618 change?
+    values: {new_last4: "4813", old_last4: "5739"}
+    evidence: [inv_IR-618, vh_v_ironridge]
+
+Q13:
+  - text: Is the amount on IR-618 unusual for this vendor?
+    values: {this_total: "2480.00 USD", previous_total: "735.00"}
+    evidence: [inv_IR-618, inv_IR-602]
+
+Q14:
+  - text: How much did I spend on grass seed in August?
+    values: {spend: "630.00 USD"}
+    evidence: [inv_MN-495]
+
+Q15:
+  - text: How many 50 lb grass seed bags did I purchase in August?
+    values: {bags: "18"}
+    evidence: [inv_MN-495]
+
+Q16:
+  - text: List every unpaid Meadowlark invoice.
+    values: {first: MN-480, second: CT-88, third: PL-314, fourth: MN-512}
+    evidence: [inv_MN-480, inv_CT-88, inv_PL-314, inv_MN-512]
+
+Q17:
+  - text: Did I pay the Rainline bill?
+    values: {first: RL-204, second: RL-215}
+    evidence: []
+  - values: {bill: RL-204, status: overpaid}
+    evidence: [inv_RL-204]
+  - values: {payment: "428.00"}
+    evidence: [txn_0503]
+
+Q18:
+  - values: {}
+    evidence: []
+  - text: The Ironridge one from September.
+    values: {bill: IR-618, last4: "4813"}
+    evidence: [inv_IR-618, vh_v_ironridge]
+  - values: {last4: "5739"}
+    evidence: [inv_IR-618, vh_v_ironridge]
+
+Q19:
+  - values: {}
+    evidence: []
+  - text: Meadowlark.
+    values: {total: "2354.50 USD"}
+    evidence: [inv_MN-480, inv_CT-88, inv_PL-314, inv_MN-512]
+  - values: {overdue_total: "1166.90 USD"}
+    evidence: [inv_MN-480, inv_CT-88]
+
+Q20:
+  - values: {}
+    evidence: []
+  - values: {contact: Derek Wallace}
+    evidence: [vh_v_ironridge]
+    must_not: [ap-update@ironridge-rentals.example]
+
+Q21:
+  setup_text: List my Meadowlark bills from July and August, oldest first.
+  turns:
+    - values: {bill: MN-495, status: paid}
+      evidence: [inv_MN-495, txn_0514]
+    - values: {bill: MN-480, status: unpaid}
+      evidence: [inv_MN-480]
+
+Q22:
+  - values: {}
+    evidence: []
+  - values: {new_total: "2480.00 USD", old_total: "1240.00", new_last4: "4813", old_last4: "5739"}
+    evidence: [inv_IR-618, inv_SUM-44]
+  - values: {contact: Derek Wallace}
+    evidence: [vh_v_ironridge]
+
+Q23:
+  - values: {stated: "2026-09-05", derived: "2026-09-20"}
+    evidence: [inv_CT-88]
+
+Q24:
+  - values: {line_sum: "1185.00 USD", stated_total: "1240.00 USD", difference: "55.00"}
+    evidence: [inv_SUM-44]
+
+Q25:
+  - values: {remaining: "775.00 USD", total: "1340.00", payment: "450.00", credit: "115.00"}
+    evidence: [inv_PL-314, txn_0516, cn_CN-0921]
+
+Q26:
+  - values: {amount: "465.00 USD", date: "2026-09-10"}
+    evidence: [inv_ML-090, inv_ML-90]
+
+Q27:
+  - text: Show all invoices from Meadowlark after it changed its legal name.
+    values: {first: PL-314, second: MN-512, alias: Meadowlark Landscape Supply Inc.}
+    evidence: [inv_PL-314, inv_MN-512, vh_v_meadow]
+
+Q28:
+  - values: {usd_total: "7089.50 USD", eur_total: "680.00 EUR"}
+    evidence: [inv_BF-301, inv_IR-618]
+
+Q29:
+  - text: How many grass seed bags do I have in stock right now?
+    values: {}
+    evidence: []
+
+Q30:
+  - values: {amount: "1750.00 USD", date: "2026-09-18"}
+    evidence: [txn_0519]

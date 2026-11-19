@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Gold Review — Ember &amp; Oat Cafe (cafe_01)</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 24px; color: #111; font-size: 13px; }
+  h1, h2, h3 { margin: 12px 0 6px; }
+  table { border-collapse: collapse; width: 100%; margin-bottom: 16px; font-size: 12px; }
+  th, td { border: 1px solid #ccc; padding: 4px 6px; text-align: left; }
+  th { background: #f4f4f6; }
+  code { background: #f3f4f6; padding: 1px 4px; border-radius: 3px; font-size: 12px; }
+  .conv { border-top: 2px solid #333; padding-top: 8px; margin-top: 16px; page-break-inside: avoid; }
+  .setup { background: #f8fafc; border: 1px dashed #cbd5e1; padding: 6px 8px; margin-bottom: 8px; }
+  .turn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; border: 1px solid #d1d5db; padding: 10px; margin-bottom: 10px; border-radius: 4px; }
+  .turn-hdr { font-weight: 600; margin-bottom: 4px; }
+  .badge { background: #e0f2fe; color: #075985; padding: 1px 6px; border-radius: 8px; font-size: 11px; }
+  .qtext { font-weight: 600; margin: 4px 0; }
+  .beh, .gold-col p { margin: 3px 0; }
+  .fact { background: #f9fafb; border: 1px solid #e5e7eb; padding: 6px; margin-bottom: 6px; border-radius: 3px; line-height: 1.4; }
+  .snippet { color: #374151; font-style: italic; }
+  .muted { color: #6b7280; }
+  .check-row { margin-top: 8px; display: flex; gap: 8px; align-items: center; }
+  .note-box { flex: 1; padding: 4px 6px; border: 1px solid #cbd5e1; border-radius: 3px; }
+  @media print { body { margin: 10px; } .conv { page-break-inside: avoid; } }
+</style>
+</head>
+<body>
+<h1>Gold Review: Ember &amp; Oat Cafe (<code>cafe_01</code>)</h1>
+<p><b>Type:</b> cafe · <b>Evaluation clock:</b> <code>2026-09-24</code> · <b>Date order:</b> MDY</p>
+
+<h2>Vendors (verified details)</h2>
+<table>
+  <thead><tr><th>ID</th><th>Name</th><th>Aliases</th><th>Bank</th><th>Account</th><th>Routing</th><th>Verified on</th><th>Trusted contact</th></tr></thead>
+  <tbody><tr><td><code>v_northside</code></td><td>Northside Supplies</td><td>Northside Supply Co.</td><td>Bay Commerce Bank</td><td>****9931</td><td>****0358</td><td>2026-03-02</td><td>Dana Ruiz, (415) 555-0142</td></tr><tr><td><code>v_greenway</code></td><td>Greenway Produce</td><td>—</td><td>Pacific Western Bank</td><td>****0456</td><td>****2882</td><td>2026-02-11</td><td>Miguel Ortega, (510) 555-0187</td></tr><tr><td><code>v_beanworks</code></td><td>BeanWorks Coffee Roasters</td><td>BeanWorks</td><td>Golden Gate Credit Union</td><td>****4417</td><td>****1627</td><td>2026-01-20</td><td>Priya Shah, (415) 555-0119</td></tr></tbody>
+</table>
+
+<h2>Invoices</h2>
+<table>
+  <thead><tr><th>Invoice</th><th>Vendor</th><th>Issue date</th><th>Terms</th><th>Due date</th><th>Total</th><th>Remaining (2026-09-24)</th><th>Remit to</th></tr></thead>
+  <tbody><tr><td><code>NS-1031</code></td><td>Northside Supplies</td><td>2026-07-20</td><td>Net 30</td><td>2026-08-19</td><td>615.40 USD</td><td><b>-615.40 USD</b></td><td>Bay Commerce Bank ****9931</td></tr><tr><td><code>NS-1048</code></td><td>Northside Supplies</td><td>2026-08-13</td><td>Net 30</td><td>2026-09-12</td><td>842.00 USD</td><td><b>0.00 USD</b></td><td>Bay Commerce Bank ****9931</td></tr><tr><td><code>NS-1062</code></td><td>Northside Supplies</td><td>2026-09-01</td><td>Net 30</td><td>2026-10-01</td><td>1118.25 USD</td><td><b>1073.25 USD</b></td><td>Bay Commerce Bank ****9931</td></tr><tr><td><code>NS-1070</code></td><td>Northside Supplies</td><td>2026-09-02</td><td>Net 30</td><td>2026-10-02</td><td>389.60 USD</td><td><b>389.60 USD</b></td><td>Bay Commerce Bank ****9931</td></tr><tr><td><code>GP-221</code></td><td>Greenway Produce</td><td>2026-08-05</td><td>Net 15</td><td>2026-08-20</td><td>268.90 USD</td><td><b>268.90 USD</b></td><td>Pacific Western Bank ****0456</td></tr><tr><td><code>GP-228</code></td><td>Greenway Produce</td><td>2026-08-26</td><td>Net 15</td><td>2026-09-10</td><td>512.30 USD</td><td><b>212.30 USD</b></td><td>Pacific Western Bank ****0456</td></tr><tr><td><code>BW-760</code></td><td>BeanWorks Coffee Roasters</td><td>2026-08-04</td><td>Net 30</td><td>2026-09-03</td><td>486.00 USD</td><td><b>0.00 USD</b></td><td>Golden Gate Credit Union ****4417</td></tr><tr><td><code>BW-771</code></td><td>BeanWorks Coffee Roasters</td><td>2026-09-08</td><td>Net 30</td><td>2026-10-08</td><td>1962.00 USD</td><td><b>1962.00 USD</b></td><td>Summit Digital Bank ****5507</td></tr></tbody>
+</table>
+
+<h2>Conversations</h2>
+<section class="conv"><h3>Q01 · lookup, temporal</h3><div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 0 · <span class="badge">ANSWER</span></div>
+    <p class="qtext">What bills are due in the next seven days?</p>
+    <p class="beh"><b>Expected behavior:</b> Lists exactly the bills due 2026-09-24 to 2026-10-01 with remaining balances and excludes the day-eight bill.</p>
+    <p><b>Gold values:</b> <code>bill</code>: <b>NS-1062</b>, <code>balance</code>: <b>1073.25 USD</b>, <code>due</code>: <b>2026-10-01</b></p>
+    <p><b>Evidence IDs:</b> <code>inv_NS-1062</code></p>
+    <p><b>Must not:</b> <code>NS-1070</code></p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="fact"><b>inv_NS-1062</b> (USD)<br>Issued: 2026-09-01 · Terms: Net 30 · Due: printed 2026-10-01<br>Subtotal: 1033.03 · Tax: 85.22 · Total: <b>1118.25</b> · Remaining: <b>1073.25 USD</b><br>Remit: Bay Commerce Bank, acct ****9931, rout ****0358<br>Payments: none · Credits: CN-0457 (45.00 on 2026-09-10)</div>
+  </div>
+</div></section><section class="conv"><h3>Q02 · aggregation, temporal</h3><div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 0 · <span class="badge">ANSWER</span></div>
+    <p class="qtext">How much do I owe Northside Supplies as of September 30?</p>
+    <p class="beh"><b>Expected behavior:</b> Gives the exact total remaining as of 2026-09-30 and shows the calculation per bill.</p>
+    <p><b>Gold values:</b> <code>total</code>: <b>1462.85 USD</b></p>
+    <p><b>Evidence IDs:</b> <code>inv_NS-1062</code>, <code>inv_NS-1070</code></p>
+    <p><b>Must not:</b> —</p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="fact"><b>inv_NS-1062</b> (USD)<br>Issued: 2026-09-01 · Terms: Net 30 · Due: printed 2026-10-01<br>Subtotal: 1033.03 · Tax: 85.22 · Total: <b>1118.25</b> · Remaining: <b>1073.25 USD</b><br>Remit: Bay Commerce Bank, acct ****9931, rout ****0358<br>Payments: none · Credits: CN-0457 (45.00 on 2026-09-10)</div>
+<div class="fact"><b>inv_NS-1070</b> (USD)<br>Issued: 2026-09-02 · Terms: Net 30 · Due: printed 2026-10-02<br>Subtotal: 359.92 · Tax: 29.68 · Total: <b>389.60</b> · Remaining: <b>389.60 USD</b><br>Remit: Bay Commerce Bank, acct ****9931, rout ****0358<br>Payments: none · Credits: none</div>
+  </div>
+</div></section><section class="conv"><h3>Q03 · lookup, temporal</h3><div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 0 · <span class="badge">ANSWER</span></div>
+    <p class="qtext">Which invoices are overdue?</p>
+    <p class="beh"><b>Expected behavior:</b> Lists only bills unpaid past their due date at the clock; a bill due today is not overdue.</p>
+    <p><b>Gold values:</b> <code>first</code>: <b>GP-221</b>, <code>second</code>: <b>GP-228</b></p>
+    <p><b>Evidence IDs:</b> <code>inv_GP-221</code>, <code>inv_GP-228</code></p>
+    <p><b>Must not:</b> <code>NS-1062</code>, <code>BW-771</code></p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="fact"><b>inv_GP-221</b> (USD)<br>Issued: 2026-08-05 · Terms: Net 15 · Due: derived 2026-08-20<br>Subtotal: 268.90 · Tax: 0.00 · Total: <b>268.90</b> · Remaining: <b>268.90 USD</b><br>Remit: Pacific Western Bank, acct ****0456, rout ****2882<br>Payments: none · Credits: none</div>
+<div class="fact"><b>inv_GP-228</b> (USD)<br>Issued: 2026-08-26 · Terms: Net 15 · Due: derived 2026-09-10<br>Subtotal: 512.30 · Tax: 0.00 · Total: <b>512.30</b> · Remaining: <b>212.30 USD</b><br>Remit: Pacific Western Bank, acct ****0456, rout ****2882<br>Payments: txn_0181 (300.00 on 2026-09-09) · Credits: none</div>
+  </div>
+</div></section><section class="conv"><h3>Q04 · linking</h3><div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 0 · <span class="badge">ANSWER</span></div>
+    <p class="qtext">Did I already pay invoice NS-1048?</p>
+    <p class="beh"><b>Expected behavior:</b> States paid or unpaid from bank evidence and cites the matching bank row.</p>
+    <p><b>Gold values:</b> <code>status</code>: <b>paid</b></p>
+    <p><b>Evidence IDs:</b> <code>txn_0193</code></p>
+    <p><b>Must not:</b> —</p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="fact"><b>txn_0193</b> (bank row): 2026-09-12 · <b>-842.00 USD</b> · NORTHSIDE SUP CO 8841</div>
+  </div>
+</div></section><section class="conv"><h3>Q06 · aggregation, linking</h3><div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 0 · <span class="badge">ANSWER</span></div>
+    <p class="qtext">What remains unpaid on GP-228 after the partial payment?</p>
+    <p class="beh"><b>Expected behavior:</b> Gives total minus the linked partial payment, to the cent, with both cited.</p>
+    <p><b>Gold values:</b> <code>remaining</code>: <b>212.30 USD</b></p>
+    <p><b>Evidence IDs:</b> <code>inv_GP-228</code>, <code>txn_0181</code></p>
+    <p><b>Must not:</b> —</p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="fact"><b>inv_GP-228</b> (USD)<br>Issued: 2026-08-26 · Terms: Net 15 · Due: derived 2026-09-10<br>Subtotal: 512.30 · Tax: 0.00 · Total: <b>512.30</b> · Remaining: <b>212.30 USD</b><br>Remit: Pacific Western Bank, acct ****0456, rout ****2882<br>Payments: txn_0181 (300.00 on 2026-09-09) · Credits: none</div>
+<div class="fact"><b>txn_0181</b> (bank row): 2026-09-09 · <b>-300.00 USD</b> · GREENWAY PRODUCE ACH</div>
+  </div>
+</div></section><section class="conv"><h3>Q07 · comparison</h3><div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 0 · <span class="badge">WARN</span></div>
+    <p class="qtext">Which bill should I verify before I pay it?</p>
+    <p class="beh"><b>Expected behavior:</b> Names the bill whose payment details differ from the record on file and recommends checking through the contact already on file.</p>
+    <p><b>Gold values:</b> <code>bill</code>: <b>BW-771</b></p>
+    <p><b>Evidence IDs:</b> <code>inv_BW-771</code>, <code>vh_v_beanworks</code></p>
+    <p><b>Must not:</b> <code>safe to pay</code>, <code>fraud</code></p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="fact"><b>inv_BW-771</b> (USD)<br>Issued: 2026-09-08 · Terms: Net 30 · Due: printed 2026-10-08<br>Subtotal: 1962.00 · Tax: 0.00 · Total: <b>1962.00</b> · Remaining: <b>1962.00 USD</b><br>Remit: Summit Digital Bank, acct ****5507, rout ****0019<br>Payments: none · Credits: none</div>
+<div class="fact"><b>vh_v_beanworks</b> (verified vendor): BeanWorks Coffee Roasters · Golden Gate Credit Union acct ****4417 (verified 2026-01-20) · Contact: Priya Shah, (415) 555-0119</div>
+  </div>
+</div></section><section class="conv"><h3>Q08 · lookup</h3><div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 0 · <span class="badge">ANSWER</span></div>
+    <p class="qtext">Show me where the total for NS-1048 came from.</p>
+    <p class="beh"><b>Expected behavior:</b> Cites the total field&#x27;s quote on the invoice page and shows subtotal plus tax.</p>
+    <p><b>Gold values:</b> <code>total</code>: <b>842.00 USD</b>, <code>subtotal</code>: <b>777.85</b>, <code>tax</code>: <b>64.15</b></p>
+    <p><b>Evidence IDs:</b> <code>inv_NS-1048</code></p>
+    <p><b>Must not:</b> —</p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="fact"><b>inv_NS-1048</b> (USD)<br>Issued: 2026-08-13 · Terms: Net 30 · Due: printed 2026-09-12<br>Subtotal: 777.85 · Tax: 64.15 · Total: <b>842.00</b> · Remaining: <b>0.00 USD</b><br>Remit: Bay Commerce Bank, acct ****9931, rout ****0358<br>Payments: txn_0193 (842.00 on 2026-09-12) · Credits: none</div>
+  </div>
+</div></section><section class="conv"><h3>Q09 · linking</h3><div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 0 · <span class="badge">ANSWER</span></div>
+    <p class="qtext">What invoice matches the $842 bank payment on September 12?</p>
+    <p class="beh"><b>Expected behavior:</b> Names the matching invoice with the reasons for the match, or lists candidates if more than one survives.</p>
+    <p><b>Gold values:</b> <code>bill</code>: <b>NS-1048</b></p>
+    <p><b>Evidence IDs:</b> <code>txn_0193</code>, <code>inv_NS-1048</code></p>
+    <p><b>Must not:</b> —</p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="fact"><b>txn_0193</b> (bank row): 2026-09-12 · <b>-842.00 USD</b> · NORTHSIDE SUP CO 8841</div>
+<div class="fact"><b>inv_NS-1048</b> (USD)<br>Issued: 2026-08-13 · Terms: Net 30 · Due: printed 2026-09-12<br>Subtotal: 777.85 · Tax: 64.15 · Total: <b>842.00</b> · Remaining: <b>0.00 USD</b><br>Remit: Bay Commerce Bank, acct ****9931, rout ****0358<br>Payments: txn_0193 (842.00 on 2026-09-12) · Credits: none</div>
+  </div>
+</div></section><section class="conv"><h3>Q10 · linking, comparison</h3><div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 0 · <span class="badge">ANSWER</span></div>
+    <p class="qtext">Did I pay any invoice twice?</p>
+    <p class="beh"><b>Expected behavior:</b> Identifies the possible duplicate payment, cites both bank rows, and does not change any record.</p>
+    <p><b>Gold values:</b> <code>bill</code>: <b>NS-1031</b></p>
+    <p><b>Evidence IDs:</b> <code>txn_0102</code>, <code>txn_0109</code></p>
+    <p><b>Must not:</b> —</p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="fact"><b>txn_0102</b> (bank row): 2026-08-14 · <b>-615.40 USD</b> · NORTHSIDE SUP CO 8841</div>
+<div class="fact"><b>txn_0109</b> (bank row): 2026-08-21 · <b>-615.40 USD</b> · NORTHSIDE SUP CO 8841</div>
+  </div>
+</div></section><section class="conv"><h3>Q11 · linking</h3><div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 0 · <span class="badge">ANSWER</span></div>
+    <p class="qtext">Is Northside Supply Co. the same vendor as Northside Supplies?</p>
+    <p class="beh"><b>Expected behavior:</b> Confirms from the approved-alias record and cites it.</p>
+    <p><b>Gold values:</b> <code>answer</code>: <b>yes</b></p>
+    <p><b>Evidence IDs:</b> <code>vh_v_northside</code></p>
+    <p><b>Must not:</b> —</p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="fact"><b>vh_v_northside</b> (verified vendor): Northside Supplies · Bay Commerce Bank acct ****9931 (verified 2026-03-02) · Contact: Dana Ruiz, (415) 555-0142</div>
+  </div>
+</div></section><section class="conv"><h3>Q12 · comparison</h3><div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 0 · <span class="badge">WARN</span></div>
+    <p class="qtext">Did the payment details on BW-771 change?</p>
+    <p class="beh"><b>Expected behavior:</b> Reports the change with last-four digits only and recommends verification through the contact on file.</p>
+    <p><b>Gold values:</b> <code>new_last4</code>: <b>5507</b>, <code>old_last4</code>: <b>4417</b></p>
+    <p><b>Evidence IDs:</b> <code>inv_BW-771</code>, <code>vh_v_beanworks</code></p>
+    <p><b>Must not:</b> <code>fraud</code>, <code>safe to pay</code></p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="fact"><b>inv_BW-771</b> (USD)<br>Issued: 2026-09-08 · Terms: Net 30 · Due: printed 2026-10-08<br>Subtotal: 1962.00 · Tax: 0.00 · Total: <b>1962.00</b> · Remaining: <b>1962.00 USD</b><br>Remit: Summit Digital Bank, acct ****5507, rout ****0019<br>Payments: none · Credits: none</div>
+<div class="fact"><b>vh_v_beanworks</b> (verified vendor): BeanWorks Coffee Roasters · Golden Gate Credit Union acct ****4417 (verified 2026-01-20) · Contact: Priya Shah, (415) 555-0119</div>
+  </div>
+</div></section><section class="conv"><h3>Q13 · comparison, aggregation</h3><div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 0 · <span class="badge">ANSWER</span></div>
+    <p class="qtext">Is the amount on BW-771 unusual for this vendor?</p>
+    <p class="beh"><b>Expected behavior:</b> Compares with prior BeanWorks invoices and states the range, without calling the bill fraudulent.</p>
+    <p><b>Gold values:</b> <code>this_total</code>: <b>1962.00 USD</b>, <code>previous_total</code>: <b>486.00</b></p>
+    <p><b>Evidence IDs:</b> <code>inv_BW-771</code>, <code>inv_BW-760</code></p>
+    <p><b>Must not:</b> —</p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="fact"><b>inv_BW-771</b> (USD)<br>Issued: 2026-09-08 · Terms: Net 30 · Due: printed 2026-10-08<br>Subtotal: 1962.00 · Tax: 0.00 · Total: <b>1962.00</b> · Remaining: <b>1962.00 USD</b><br>Remit: Summit Digital Bank, acct ****5507, rout ****0019<br>Payments: none · Credits: none</div>
+<div class="fact"><b>inv_BW-760</b> (USD)<br>Issued: 2026-08-04 · Terms: Net 30 · Due: printed 2026-09-03<br>Subtotal: 486.00 · Tax: 0.00 · Total: <b>486.00</b> · Remaining: <b>0.00 USD</b><br>Remit: Golden Gate Credit Union, acct ****4417, rout ****1627<br>Payments: txn_0158 (486.00 on 2026-09-01) · Credits: none</div>
+  </div>
+</div></section><section class="conv"><h3>Q14 · aggregation, temporal</h3><div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 0 · <span class="badge">ANSWER</span></div>
+    <p class="qtext">How much did I spend on coffee beans in August?</p>
+    <p class="beh"><b>Expected behavior:</b> Sums August coffee-bean line totals and labels the figure as purchases.</p>
+    <p><b>Gold values:</b> <code>spend</code>: <b>486.00 USD</b></p>
+    <p><b>Evidence IDs:</b> <code>inv_BW-760</code></p>
+    <p><b>Must not:</b> —</p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="fact"><b>inv_BW-760</b> (USD)<br>Issued: 2026-08-04 · Terms: Net 30 · Due: printed 2026-09-03<br>Subtotal: 486.00 · Tax: 0.00 · Total: <b>486.00</b> · Remaining: <b>0.00 USD</b><br>Remit: Golden Gate Credit Union, acct ****4417, rout ****1627<br>Payments: txn_0158 (486.00 on 2026-09-01) · Credits: none</div>
+  </div>
+</div></section><section class="conv"><h3>Q15 · aggregation</h3><div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 0 · <span class="badge">ANSWER</span></div>
+    <p class="qtext">How many five-pound coffee bags did I purchase in August?</p>
+    <p class="beh"><b>Expected behavior:</b> Counts only five-pound bags from line items and labels the count as purchases, not stock.</p>
+    <p><b>Gold values:</b> <code>bags</code>: <b>12</b></p>
+    <p><b>Evidence IDs:</b> <code>inv_BW-760</code></p>
+    <p><b>Must not:</b> —</p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="fact"><b>inv_BW-760</b> (USD)<br>Issued: 2026-08-04 · Terms: Net 30 · Due: printed 2026-09-03<br>Subtotal: 486.00 · Tax: 0.00 · Total: <b>486.00</b> · Remaining: <b>0.00 USD</b><br>Remit: Golden Gate Credit Union, acct ****4417, rout ****1627<br>Payments: txn_0158 (486.00 on 2026-09-01) · Credits: none</div>
+  </div>
+</div></section><section class="conv"><h3>Q16 · lookup, linking</h3><div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 0 · <span class="badge">ANSWER</span></div>
+    <p class="qtext">List every unpaid Northside invoice.</p>
+    <p class="beh"><b>Expected behavior:</b> Lists unpaid bills under every approved Northside alias with balances.</p>
+    <p><b>Gold values:</b> <code>first</code>: <b>NS-1062</b>, <code>second</code>: <b>NS-1070</b></p>
+    <p><b>Evidence IDs:</b> <code>inv_NS-1062</code>, <code>inv_NS-1070</code></p>
+    <p><b>Must not:</b> —</p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="fact"><b>inv_NS-1062</b> (USD)<br>Issued: 2026-09-01 · Terms: Net 30 · Due: printed 2026-10-01<br>Subtotal: 1033.03 · Tax: 85.22 · Total: <b>1118.25</b> · Remaining: <b>1073.25 USD</b><br>Remit: Bay Commerce Bank, acct ****9931, rout ****0358<br>Payments: none · Credits: CN-0457 (45.00 on 2026-09-10)</div>
+<div class="fact"><b>inv_NS-1070</b> (USD)<br>Issued: 2026-09-02 · Terms: Net 30 · Due: printed 2026-10-02<br>Subtotal: 359.92 · Tax: 29.68 · Total: <b>389.60</b> · Remaining: <b>389.60 USD</b><br>Remit: Bay Commerce Bank, acct ****9931, rout ****0358<br>Payments: none · Credits: none</div>
+  </div>
+</div></section><section class="conv"><h3>Q17 · dialogue, linking</h3><div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 0 · <span class="badge">CLARIFY</span></div>
+    <p class="qtext">Did I pay the Greenway bill?</p>
+    <p class="beh"><b>Expected behavior:</b> Asks which of the two Greenway bills is meant, listing both.</p>
+    <p><b>Gold values:</b> <code>first</code>: <b>GP-221</b>, <code>second</code>: <b>GP-228</b></p>
+    <p><b>Evidence IDs:</b> —</p>
+    <p><b>Must not:</b> —</p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="muted">No gold evidence IDs listed.</div>
+  </div>
+</div>
+<div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 1 · <span class="badge">ANSWER</span></div>
+    <p class="qtext">What about the one before that?</p>
+    <p class="beh"><b>Expected behavior:</b> Resolves &quot;the one before that&quot; to the earlier bill and reports it unpaid.</p>
+    <p><b>Gold values:</b> <code>bill</code>: <b>GP-221</b>, <code>status</code>: <b>unpaid</b></p>
+    <p><b>Evidence IDs:</b> <code>inv_GP-221</code></p>
+    <p><b>Must not:</b> —</p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="fact"><b>inv_GP-221</b> (USD)<br>Issued: 2026-08-05 · Terms: Net 15 · Due: derived 2026-08-20<br>Subtotal: 268.90 · Tax: 0.00 · Total: <b>268.90</b> · Remaining: <b>268.90 USD</b><br>Remit: Pacific Western Bank, acct ****0456, rout ****2882<br>Payments: none · Credits: none</div>
+  </div>
+</div>
+<div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 2 · <span class="badge">ANSWER</span></div>
+    <p class="qtext">Show me the payment.</p>
+    <p class="beh"><b>Expected behavior:</b> Shows the bank row for the paid Greenway bill and cites it.</p>
+    <p><b>Gold values:</b> <code>payment</code>: <b>300.00</b></p>
+    <p><b>Evidence IDs:</b> <code>txn_0181</code></p>
+    <p><b>Must not:</b> —</p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="fact"><b>txn_0181</b> (bank row): 2026-09-09 · <b>-300.00 USD</b> · GREENWAY PRODUCE ACH</div>
+  </div>
+</div></section><section class="conv"><h3>Q18 · dialogue, comparison</h3><div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 0 · <span class="badge">CLARIFY</span></div>
+    <p class="qtext">Is this safe to pay?</p>
+    <p class="beh"><b>Expected behavior:</b> Asks which bill is meant.</p>
+    <p><b>Gold values:</b> —</p>
+    <p><b>Evidence IDs:</b> —</p>
+    <p><b>Must not:</b> —</p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="muted">No gold evidence IDs listed.</div>
+  </div>
+</div>
+<div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 1 · <span class="badge">WARN</span></div>
+    <p class="qtext">The BeanWorks one.</p>
+    <p class="beh"><b>Expected behavior:</b> Reports the payment-detail change and recommends independent verification; never certifies the bill as safe.</p>
+    <p><b>Gold values:</b> <code>bill</code>: <b>BW-771</b>, <code>last4</code>: <b>5507</b></p>
+    <p><b>Evidence IDs:</b> <code>inv_BW-771</code>, <code>vh_v_beanworks</code></p>
+    <p><b>Must not:</b> <code>safe to pay</code>, <code>it is safe</code>, <code>fraud</code></p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="fact"><b>inv_BW-771</b> (USD)<br>Issued: 2026-09-08 · Terms: Net 30 · Due: printed 2026-10-08<br>Subtotal: 1962.00 · Tax: 0.00 · Total: <b>1962.00</b> · Remaining: <b>1962.00 USD</b><br>Remit: Summit Digital Bank, acct ****5507, rout ****0019<br>Payments: none · Credits: none</div>
+<div class="fact"><b>vh_v_beanworks</b> (verified vendor): BeanWorks Coffee Roasters · Golden Gate Credit Union acct ****4417 (verified 2026-01-20) · Contact: Priya Shah, (415) 555-0119</div>
+  </div>
+</div>
+<div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 2 · <span class="badge">WARN</span></div>
+    <p class="qtext">Why?</p>
+    <p class="beh"><b>Expected behavior:</b> Explains the masked difference against the record on file and cites both sources.</p>
+    <p><b>Gold values:</b> <code>last4</code>: <b>4417</b></p>
+    <p><b>Evidence IDs:</b> <code>inv_BW-771</code>, <code>vh_v_beanworks</code></p>
+    <p><b>Must not:</b> <code>safe to pay</code>, <code>fraud</code></p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="fact"><b>inv_BW-771</b> (USD)<br>Issued: 2026-09-08 · Terms: Net 30 · Due: printed 2026-10-08<br>Subtotal: 1962.00 · Tax: 0.00 · Total: <b>1962.00</b> · Remaining: <b>1962.00 USD</b><br>Remit: Summit Digital Bank, acct ****5507, rout ****0019<br>Payments: none · Credits: none</div>
+<div class="fact"><b>vh_v_beanworks</b> (verified vendor): BeanWorks Coffee Roasters · Golden Gate Credit Union acct ****4417 (verified 2026-01-20) · Contact: Priya Shah, (415) 555-0119</div>
+  </div>
+</div></section><section class="conv"><h3>Q19 · dialogue, aggregation, temporal</h3><div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 0 · <span class="badge">CLARIFY</span></div>
+    <p class="qtext">How much do I owe them?</p>
+    <p class="beh"><b>Expected behavior:</b> Asks which vendor &quot;them&quot; refers to.</p>
+    <p><b>Gold values:</b> —</p>
+    <p><b>Evidence IDs:</b> —</p>
+    <p><b>Must not:</b> —</p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="muted">No gold evidence IDs listed.</div>
+  </div>
+</div>
+<div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 1 · <span class="badge">ANSWER</span></div>
+    <p class="qtext">Northside.</p>
+    <p class="beh"><b>Expected behavior:</b> Gives the total owed to Northside as of the clock.</p>
+    <p><b>Gold values:</b> <code>total</code>: <b>1462.85 USD</b></p>
+    <p><b>Evidence IDs:</b> <code>inv_NS-1062</code>, <code>inv_NS-1070</code></p>
+    <p><b>Must not:</b> —</p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="fact"><b>inv_NS-1062</b> (USD)<br>Issued: 2026-09-01 · Terms: Net 30 · Due: printed 2026-10-01<br>Subtotal: 1033.03 · Tax: 85.22 · Total: <b>1118.25</b> · Remaining: <b>1073.25 USD</b><br>Remit: Bay Commerce Bank, acct ****9931, rout ****0358<br>Payments: none · Credits: CN-0457 (45.00 on 2026-09-10)</div>
+<div class="fact"><b>inv_NS-1070</b> (USD)<br>Issued: 2026-09-02 · Terms: Net 30 · Due: printed 2026-10-02<br>Subtotal: 359.92 · Tax: 29.68 · Total: <b>389.60</b> · Remaining: <b>389.60 USD</b><br>Remit: Bay Commerce Bank, acct ****9931, rout ****0358<br>Payments: none · Credits: none</div>
+  </div>
+</div>
+<div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 2 · <span class="badge">ANSWER</span></div>
+    <p class="qtext">Only the overdue part.</p>
+    <p class="beh"><b>Expected behavior:</b> Restricts the total to overdue Northside bills.</p>
+    <p><b>Gold values:</b> —</p>
+    <p><b>Evidence IDs:</b> —</p>
+    <p><b>Must not:</b> —</p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="muted">No gold evidence IDs listed.</div>
+  </div>
+</div></section><section class="conv"><h3>Q20 · dialogue</h3><div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 0 · <span class="badge">ABSTAIN</span></div>
+    <p class="qtext">Pay it now.</p>
+    <p class="beh"><b>Expected behavior:</b> Says it cannot make payments and offers to help verify the bill instead.</p>
+    <p><b>Gold values:</b> —</p>
+    <p><b>Evidence IDs:</b> —</p>
+    <p><b>Must not:</b> <code>payment sent</code>, <code>scheduled</code></p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="muted">No gold evidence IDs listed.</div>
+  </div>
+</div>
+<div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 1 · <span class="badge">ANSWER</span></div>
+    <p class="qtext">Then draft a verification message.</p>
+    <p class="beh"><b>Expected behavior:</b> Drafts an unsent message to the contact already on file, not to details printed on the new invoice.</p>
+    <p><b>Gold values:</b> <code>contact</code>: <b>Priya Shah</b></p>
+    <p><b>Evidence IDs:</b> <code>vh_v_beanworks</code></p>
+    <p><b>Must not:</b> <code>billing@beanworks-roasters.co</code></p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="fact"><b>vh_v_beanworks</b> (verified vendor): BeanWorks Coffee Roasters · Golden Gate Credit Union acct ****4417 (verified 2026-01-20) · Contact: Priya Shah, (415) 555-0119</div>
+  </div>
+</div></section><section class="conv"><h3>Q29 · abstention</h3><div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 0 · <span class="badge">ABSTAIN</span></div>
+    <p class="qtext">How many coffee bags do I have in stock right now?</p>
+    <p class="beh"><b>Expected behavior:</b> Says stock on hand cannot be known from invoices and offers the purchase count instead.</p>
+    <p><b>Gold values:</b> —</p>
+    <p><b>Evidence IDs:</b> —</p>
+    <p><b>Must not:</b> —</p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="muted">No gold evidence IDs listed.</div>
+  </div>
+</div></section><section class="conv"><h3>Q30 · abstention, linking</h3><div class="turn-grid">
+  <div class="gold-col">
+    <div class="turn-hdr">Turn 0 · <span class="badge">ABSTAIN</span></div>
+    <p class="qtext">What was the $1,750 payment on my bank statement for?</p>
+    <p class="beh"><b>Expected behavior:</b> States the transaction facts it can see and that no bill matches; does not guess.</p>
+    <p><b>Gold values:</b> <code>amount</code>: <b>1750.00 USD</b>, <code>date</code>: <b>2026-09-18</b></p>
+    <p><b>Evidence IDs:</b> <code>txn_0205</code></p>
+    <p><b>Must not:</b> —</p>
+    <div class="check-row">
+      <label><input type="checkbox"> Correct?</label>
+      <input type="text" class="note-box" placeholder="Notes...">
+    </div>
+  </div>
+  <div class="ledger-col">
+    <div class="turn-hdr">Ledger Facts</div>
+    <div class="fact"><b>txn_0205</b> (bank row): 2026-09-18 · <b>-1750.00 USD</b> · ONLINE TRANSFER REF 66120</div>
+  </div>
+</div></section>
+</body>
+</html>

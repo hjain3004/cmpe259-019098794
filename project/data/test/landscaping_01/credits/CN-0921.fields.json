@@ -1,0 +1,26 @@
+{
+  "doc_id": "cn_CN-0921",
+  "fields": {
+    "vendor_name": {
+      "text": "Meadowlark Nursery & Sod",
+      "page": 1
+    },
+    "credit_id": {
+      "text": "CN-0921",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "09/11/2026",
+      "page": 1
+    },
+    "invoice_ref": {
+      "text": "PL-314",
+      "page": 1
+    },
+    "total": {
+      "text": "$115.00",
+      "page": 1
+    }
+  },
+  "lines": []
+}

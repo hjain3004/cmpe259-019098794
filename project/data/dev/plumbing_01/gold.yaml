@@ -33,7 +33,7 @@
 # | Q29 (t0) | How many coffee bags do I have in stock right now? | How many copper pipe lengths do I have in stock right now? | Replace café product with plumbing product |
 
 scenario: plumbing_01
-verified_by_hand: pending
+verified_by_hand: 2026-11-18
 
 Q01:
   - values: {bill: PL-314, balance: "760.00 USD", due: "2026-10-01", second: MV-309}

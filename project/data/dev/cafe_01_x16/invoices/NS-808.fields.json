@@ -1,0 +1,67 @@
+{
+  "doc_id": "inv_NS-808",
+  "fields": {
+    "vendor_name": {
+      "text": "Northside Supplies",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "NS-808",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "09/08/2025",
+      "page": 1
+    },
+    "stated_due_date": {
+      "text": "10/08/2025",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 30",
+      "page": 1
+    },
+    "reference_or_po": {
+      "text": "PO-1025",
+      "page": 1
+    },
+    "subtotal": {
+      "text": "$237.25",
+      "page": 1
+    },
+    "tax": {
+      "text": "$19.57",
+      "page": 1
+    },
+    "total": {
+      "text": "$256.82",
+      "page": 1
+    },
+    "currency": {
+      "text": "USD",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Bay Commerce Bank",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "004417829931",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "121000358",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Compostable lids 12 oz, sleeve of 50 7 sleeve $9.75 $68.25",
+      "page": 1
+    },
+    {
+      "text": "Paper cups 16 oz, sleeve of 50 10 sleeve $16.90 $169.00",
+      "page": 1
+    }
+  ]
+}

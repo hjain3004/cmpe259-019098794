@@ -10,7 +10,7 @@ from pathlib import Path
 
 import yaml
 
-from cashbooks.configs.answer import RetrievalConfig, ToolConfig, Turn, build_configs
+from cashbooks.configs.answer import RetrievalConfig, ToolConfig, Turn, build_configs, format_turn_assistant
 from cashbooks.contracts.common import Answerability
 from cashbooks.contracts.evaluation import ConversationSpec, QuerySuite
 from cashbooks.contracts.postprocess import mask_numbers, postprocess
@@ -73,7 +73,7 @@ def _resolve_store_quote(store: Store | None, evidence_id: str) -> str | None:
     elif evidence_id.startswith("txn_"):
         tx = store.txn(evidence_id)
         if tx is not None:
-            return f"{tx.posted_on.isoformat()} | {tx.descriptor} | {tx.amount:.2f} {tx.currency}"
+            return mask_numbers(f"{tx.posted_on.isoformat()} | {tx.descriptor} | {tx.amount:.2f} {tx.currency}")
     elif evidence_id.startswith("vh_"):
         fps = store._all(VendorFingerprint, "evidence_id = ?", (evidence_id,))
         if fps:
@@ -213,7 +213,7 @@ class ChatSession:
         else:
             retrieved_chunks = list(o.context)
 
-        self.history.append(Turn(question, resp.answer if resp else mask_numbers(raw)[:800]))
+        self.history.append(Turn(question, format_turn_assistant(resp, raw)))
 
         if resp is None:
             err = "; ".join(issues) if issues else "empty response"

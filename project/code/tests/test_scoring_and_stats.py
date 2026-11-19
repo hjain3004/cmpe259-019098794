@@ -186,3 +186,12 @@ def test_blind_agreement_and_existing_blind_files(tmp_path: Path):
     with open(rev_dir / "safety_review_blind.csv", encoding="utf-8") as f:
         hdr2 = csv.DictReader(f).fieldnames or []
         assert "configuration" not in hdr2 and "scorer_success" not in hdr2
+
+
+def test_overpaid_status_synonyms():
+    from cashbooks.scoring import _match_overpaid
+    assert _match_overpaid("RL-204 was paid twice, on 2026-08-18 and 2026-08-22.")
+    assert _match_overpaid("It looks like a duplicate payment of $428.00.")
+    assert _match_overpaid("MV-301 is overpaid by 312.50 USD.")
+    assert not _match_overpaid("MV-301 is paid in full.")
+    assert not _match_overpaid("RL-215 is partially paid.")

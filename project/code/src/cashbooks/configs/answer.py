@@ -16,13 +16,15 @@ from datetime import date
 from pathlib import Path
 
 from cashbooks.configs.retrieval import BM25Retriever, build_raw_chunks, build_record_chunks, render_context
+from cashbooks.contracts.postprocess import mask_numbers
+from cashbooks.contracts.response import AssistantResponse
 from cashbooks.contracts.tools import tool_definitions
 from cashbooks.llm.base import LLM, LLMResult, Message, simplify_schema
 from cashbooks.store.db import Store
 from cashbooks.tools.registry import run_tool
 
 PROMPTS = Path(__file__).resolve().parents[4] / "prompts"
-PROMPT_VERSION = "answer_system_v1"
+PROMPT_VERSION = "answer_system_v2"
 K = 8          # chosen on the café development scenario (recall@8), then frozen
 MAX_TOOL_CALLS = 6
 
@@ -33,11 +35,29 @@ TOOL_GUIDE = (
 )
 
 
-def system_prompt(business_name: str, as_of: date, tools: bool) -> str:
-    text = (PROMPTS / f"{PROMPT_VERSION}.md").read_text()
+def system_prompt(business_name: str, as_of: date, tools: bool, version: str = PROMPT_VERSION) -> str:
+    text = (PROMPTS / f"{version}.md").read_text()
     kind = "tool results" if tools else "retrieved context"
     out = text.format(business_name=business_name, as_of=as_of.isoformat(), evidence_kind=kind)
     return out + (TOOL_GUIDE if tools else "")
+
+
+def format_turn_assistant(resp: AssistantResponse | None, raw: str = "") -> str:
+    """Format the full displayed reply for conversation history across all configurations."""
+    if resp is None:
+        return mask_numbers(raw)[:800]
+    parts = [resp.answer]
+    if resp.clarifying_question:
+        parts.append(f"Clarifying question: {resp.clarifying_question}")
+    if resp.calculation:
+        steps = "; ".join(resp.calculation.steps)
+        res = resp.calculation.result
+        parts.append(f"Calculation: {steps} = {res.amount:.2f} {res.currency}")
+    if resp.risk_indicators:
+        parts.append("Risk indicators: " + "; ".join(resp.risk_indicators))
+    if resp.next_step:
+        parts.append(f"Next step: {resp.next_step}")
+    return "\n".join(parts)
 
 
 @dataclass

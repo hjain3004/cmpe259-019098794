@@ -110,7 +110,21 @@ DocILE (D14) requires an access request, so the real-document check was run on 6
 - **Shi et al. (ICML 2023):** Added to background as related evidence on irrelevant-context distraction.
 - **FinBalance (Tumpati et al., 2026) note corrected:** Clarifies the paper's reported <=46% exact balance-sheet accuracy and 26–41 percentage-point gap between reported and ledger-replayed balance sheets across four models, supporting computing totals in code.
 
+**D24. Second development bundle `plumbing_01`, per-bundle query overrides, extended tool fields, and independent gold verification.**
+Added a second development scenario (`data/dev/plumbing_01`) covering all 30 conversations (`Q01`–`Q30`), with per-turn `text` overrides (and `Q21` `setup_text`) in `gold.yaml` so vendor, product, and invoice names adapt to each business without altering `evaluation/queries.yaml`. Extended tool outputs and records with line-item details, `reference_or_po`, `printed_vendor_name`, and `duplicate_of` handling. Added an independent gold checker (`data/generator/check_gold.py`) to verify that every `gold.yaml` value and evidence ID is derived strictly from `ledger.json` truth only, with no hand-edited overrides outside the ledger.
+
+**D25. Scorer, statistics, blinded review, cross-scenario pooling, and retrieval diagnosis.**
+Updated `scoring.py` to apply negation and quotation handling (`safety._is_negated_or_quoted`) to wording `must_not` phrases while keeping identifier checks strict and recording skipped/identifier hits in `notes`, and added unwarranted-warning rate, over-abstention rate, and per-question-type tables to `summary.md` and `summary.json`. Added `evaluation/stats.py` for pairwise exact McNemar tests, 10,000-resample whole-conversation bootstrap confidence intervals (seed 259), `--plan N` power simulation, and multi-run pooling (alongside `evaluation/pool_report.py`). Added blinded review generation and Cohen's kappa reporting (`evaluation/review/make_blind_reviews.py`, `evaluation/review/agreement.py`), plus `evaluation/retrieval_diagnosis.py` to compute per-turn and per-label recall@k and classify C1/C2 failures.
+
+**D26. Bill-status matching synonyms and `plumbing_01` gold adjustments after seeing development output.**
+Updated bill-status matching in `scoring.py` to use whole-word matching and synonyms (`paid`, `unpaid`/`open`, `partially paid`, and `overpaid`, which also matches `"paid twice"`, `"paid more than once"`, `"double-paid"`, `"duplicate payment"`, and `"paid again"`). After inspecting `plumbing_01` development output, three `gold.yaml` adjustments were logged: `Q18` turn 2 text clarified to `"The Summit Brass one from September."`, `Q21` `setup_text` updated to include `"oldest first"`, and `Q27` `must_not` identifiers removed.
+
+## 2026-11-19
+
+**D27. Held-out test bundle `data/test/landscaping_01` frozen before any run.**
+Created the held-out test bundle `data/test/landscaping_01` without looking at any results and froze it before any evaluation run; before freezing, `Q22`'s gold was corrected to compare `IR-618` with the vendor's previous invoice `SUM-44`. It is held out from all prompt, threshold, and tool tuning, though it is generated with the same templates as the development bundles rather than independently authored.
+
 ## Open
 
-- Project name: "CashBooks Assist" unless renamed before the 17 Nov presentation.
+- Project name: "CashBooks Assist".
 - Retriever: BM25 unless a dense retriever clearly wins on development bundles.

@@ -1,6 +1,8 @@
 # Paired Statistics (20261118-164027-cafe_01-claude-haiku-5-5)
 
-Runs: 1; bootstrap resamples: 10000 (seed 259, whole-conversation clusters).
+Runs: 1; bootstrap resamples: 10000 (seed 259, `(scenario, query_id)` clusters).
+
+- Scenario `cafe_01` (single run, 1 run(s)): 20261118-164027-cafe_01-claude-haiku-5-5
 
 | Pair (A vs B) | Discordant (A:B) | Exact McNemar p | Diff (A - B) | 95% Bootstrap CI |
 | --- | --- | --- | --- | --- |

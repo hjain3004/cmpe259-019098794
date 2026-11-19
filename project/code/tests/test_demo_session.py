@@ -122,3 +122,51 @@ def test_12_digit_number_is_masked_in_reply():
     assert not DIGIT_RUN.search(res.risk_indicators[0])
     assert not DIGIT_RUN.search(res.citations[0].supports)
     assert not DIGIT_RUN.search(res.citations[0].quote)
+
+
+def test_c3_default_cafe_multi_turn_headless(monkeypatch):
+    import importlib.util
+    import sys
+    import types
+
+    fake_st = types.ModuleType("streamlit")
+    monkeypatch.setitem(sys.modules, "streamlit", fake_st)
+    monkeypatch.setenv("CASHBOOKS_DEMO_LLM", "scripted")
+
+    spec = importlib.util.spec_from_file_location("demo_app_headless", PROJECT / "demo" / "app.py")
+    assert spec and spec.loader
+    app_mod = importlib.util.module_from_spec(spec)
+    sys.modules["demo_app_headless"] = app_mod
+    spec.loader.exec_module(app_mod)
+
+    assert app_mod.DEFAULT_CONFIG == "C3"
+    assert app_mod.BUNDLE == CAFE
+
+    llm = app_mod._make_demo_llm()
+    sess = ChatSession(app_mod.BUNDLE, app_mod.DEFAULT_CONFIG, llm)
+    assert sess.business_name == "Ember & Oat Cafe"
+    assert sess.config_name == "C3"
+
+    r1 = sess.ask("What bills are due in the next seven days?")
+    assert r1.answerability == Answerability.ANSWER
+    assert len(r1.citations) == 2
+    assert any("10/01/2026" in c.quote for c in r1.citations)
+    assert len(r1.tool_calls) == 1
+    assert r1.tool_calls[0].name == "list_open_bills"
+
+    r2 = sess.ask("Did I already pay invoice NS-1048?")
+    assert r2.answerability == Answerability.ANSWER
+    assert len(r2.citations) == 2
+    assert any("842.00" in c.quote for c in r2.citations)
+
+    r3 = sess.ask("Did the payment details on BW-771 change?")
+    assert r3.answerability == Answerability.WARN
+    assert "****5507" in r3.answer
+    assert "****4417" in r3.answer
+    for r in (r1, r2, r3):
+        assert not DIGIT_RUN.search(r.answer)
+        for c in r.citations:
+            assert not DIGIT_RUN.search(c.quote)
+            assert not DIGIT_RUN.search(c.supports)
+        for tc in r.tool_calls:
+            assert not DIGIT_RUN.search(tc.result_preview)

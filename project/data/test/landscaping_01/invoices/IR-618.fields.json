@@ -1,0 +1,67 @@
+{
+  "doc_id": "inv_IR-618",
+  "fields": {
+    "vendor_name": {
+      "text": "Ironridge Equipment Rental",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "IR-618",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "2026-09-09",
+      "page": 1
+    },
+    "stated_due_date": {
+      "text": "2026-10-09",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 30",
+      "page": 1
+    },
+    "subtotal": {
+      "text": "$2,480.00",
+      "page": 1
+    },
+    "tax": {
+      "text": "$0.00",
+      "page": 1
+    },
+    "total": {
+      "text": "$2,480.00",
+      "page": 1
+    },
+    "currency": {
+      "text": "USD",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Summit National Bank",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "009561204813",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "071000013",
+      "page": 1
+    },
+    "memo": {
+      "text": "Updated remittance banking on file for September equipment rentals.",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Compact track loader rental, 2 weeks 2 week $1,120.00 $2,240.00",
+      "page": 1
+    },
+    {
+      "text": "Brush-cutter attachment, 2 weeks 2 week $120.00 $240.00",
+      "page": 1
+    }
+  ]
+}

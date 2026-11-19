@@ -1,0 +1,673 @@
+{
+  "dev": {
+    "cafe_01": {
+      "C4": {
+        "expected": 13,
+        "found": 13,
+        "tp": 11,
+        "missed": [
+          [
+            "duplicate_payment",
+            "NS-1031"
+          ],
+          [
+            "partial_payment",
+            "GP-228"
+          ]
+        ],
+        "spurious": [
+          [
+            "candidate_payment_link",
+            "GP-228:txn_0181"
+          ],
+          [
+            "candidate_payment_link",
+            "NS-1031:txn_0109"
+          ]
+        ],
+        "precision": 0.846,
+        "recall": 0.846,
+        "by_type": {
+          "overdue_bill": {
+            "expected": 2,
+            "found": 2,
+            "tp": 2,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "duplicate_bill": {
+            "expected": 0,
+            "found": 0,
+            "tp": 0,
+            "missed": [],
+            "spurious": [],
+            "precision": null,
+            "recall": null
+          },
+          "duplicate_payment": {
+            "expected": 1,
+            "found": 0,
+            "tp": 0,
+            "missed": [
+              "NS-1031"
+            ],
+            "spurious": [],
+            "precision": null,
+            "recall": 0.0
+          },
+          "partial_payment": {
+            "expected": 1,
+            "found": 0,
+            "tp": 0,
+            "missed": [
+              "GP-228"
+            ],
+            "spurious": [],
+            "precision": null,
+            "recall": 0.0
+          },
+          "candidate_payment_link": {
+            "expected": 0,
+            "found": 2,
+            "tp": 0,
+            "missed": [],
+            "spurious": [
+              "GP-228:txn_0181",
+              "NS-1031:txn_0109"
+            ],
+            "precision": 0.0,
+            "recall": null
+          },
+          "unmatched_bank_debit": {
+            "expected": 7,
+            "found": 7,
+            "tp": 7,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "bank_detail_mismatch": {
+            "expected": 1,
+            "found": 1,
+            "tp": 1,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "total_mismatch": {
+            "expected": 0,
+            "found": 0,
+            "tp": 0,
+            "missed": [],
+            "spurious": [],
+            "precision": null,
+            "recall": null
+          },
+          "due_date_conflict": {
+            "expected": 0,
+            "found": 0,
+            "tp": 0,
+            "missed": [],
+            "spurious": [],
+            "precision": null,
+            "recall": null
+          },
+          "message_conflict": {
+            "expected": 1,
+            "found": 1,
+            "tp": 1,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          }
+        }
+      },
+      "C3": {
+        "expected": 13,
+        "found": 13,
+        "tp": 11,
+        "missed": [
+          [
+            "duplicate_payment",
+            "NS-1031"
+          ],
+          [
+            "partial_payment",
+            "GP-228"
+          ]
+        ],
+        "spurious": [
+          [
+            "candidate_payment_link",
+            "GP-228:txn_0181"
+          ],
+          [
+            "candidate_payment_link",
+            "NS-1031:txn_0109"
+          ]
+        ],
+        "precision": 0.846,
+        "recall": 0.846,
+        "by_type": {
+          "overdue_bill": {
+            "expected": 2,
+            "found": 2,
+            "tp": 2,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "duplicate_bill": {
+            "expected": 0,
+            "found": 0,
+            "tp": 0,
+            "missed": [],
+            "spurious": [],
+            "precision": null,
+            "recall": null
+          },
+          "duplicate_payment": {
+            "expected": 1,
+            "found": 0,
+            "tp": 0,
+            "missed": [
+              "NS-1031"
+            ],
+            "spurious": [],
+            "precision": null,
+            "recall": 0.0
+          },
+          "partial_payment": {
+            "expected": 1,
+            "found": 0,
+            "tp": 0,
+            "missed": [
+              "GP-228"
+            ],
+            "spurious": [],
+            "precision": null,
+            "recall": 0.0
+          },
+          "candidate_payment_link": {
+            "expected": 0,
+            "found": 2,
+            "tp": 0,
+            "missed": [],
+            "spurious": [
+              "GP-228:txn_0181",
+              "NS-1031:txn_0109"
+            ],
+            "precision": 0.0,
+            "recall": null
+          },
+          "unmatched_bank_debit": {
+            "expected": 7,
+            "found": 7,
+            "tp": 7,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "bank_detail_mismatch": {
+            "expected": 1,
+            "found": 1,
+            "tp": 1,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "total_mismatch": {
+            "expected": 0,
+            "found": 0,
+            "tp": 0,
+            "missed": [],
+            "spurious": [],
+            "precision": null,
+            "recall": null
+          },
+          "due_date_conflict": {
+            "expected": 0,
+            "found": 0,
+            "tp": 0,
+            "missed": [],
+            "spurious": [],
+            "precision": null,
+            "recall": null
+          },
+          "message_conflict": {
+            "expected": 1,
+            "found": 1,
+            "tp": 1,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          }
+        }
+      }
+    },
+    "plumbing_01": {
+      "C4": {
+        "expected": 15,
+        "found": 15,
+        "tp": 13,
+        "missed": [
+          [
+            "duplicate_payment",
+            "MV-301"
+          ],
+          [
+            "partial_payment",
+            "MV-309"
+          ]
+        ],
+        "spurious": [
+          [
+            "candidate_payment_link",
+            "MV-301:txn_0308"
+          ],
+          [
+            "candidate_payment_link",
+            "MV-309:txn_0322"
+          ]
+        ],
+        "precision": 0.867,
+        "recall": 0.867,
+        "by_type": {
+          "overdue_bill": {
+            "expected": 3,
+            "found": 3,
+            "tp": 3,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "duplicate_bill": {
+            "expected": 1,
+            "found": 1,
+            "tp": 1,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "duplicate_payment": {
+            "expected": 1,
+            "found": 0,
+            "tp": 0,
+            "missed": [
+              "MV-301"
+            ],
+            "spurious": [],
+            "precision": null,
+            "recall": 0.0
+          },
+          "partial_payment": {
+            "expected": 2,
+            "found": 1,
+            "tp": 1,
+            "missed": [
+              "MV-309"
+            ],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 0.5
+          },
+          "candidate_payment_link": {
+            "expected": 0,
+            "found": 2,
+            "tp": 0,
+            "missed": [],
+            "spurious": [
+              "MV-301:txn_0308",
+              "MV-309:txn_0322"
+            ],
+            "precision": 0.0,
+            "recall": null
+          },
+          "unmatched_bank_debit": {
+            "expected": 4,
+            "found": 4,
+            "tp": 4,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "bank_detail_mismatch": {
+            "expected": 1,
+            "found": 1,
+            "tp": 1,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "total_mismatch": {
+            "expected": 1,
+            "found": 1,
+            "tp": 1,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "due_date_conflict": {
+            "expected": 1,
+            "found": 1,
+            "tp": 1,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "message_conflict": {
+            "expected": 1,
+            "found": 1,
+            "tp": 1,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          }
+        }
+      },
+      "C3": {
+        "expected": 15,
+        "found": 15,
+        "tp": 13,
+        "missed": [
+          [
+            "duplicate_payment",
+            "MV-301"
+          ],
+          [
+            "partial_payment",
+            "MV-309"
+          ]
+        ],
+        "spurious": [
+          [
+            "candidate_payment_link",
+            "MV-301:txn_0308"
+          ],
+          [
+            "candidate_payment_link",
+            "MV-309:txn_0322"
+          ]
+        ],
+        "precision": 0.867,
+        "recall": 0.867,
+        "by_type": {
+          "overdue_bill": {
+            "expected": 3,
+            "found": 3,
+            "tp": 3,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "duplicate_bill": {
+            "expected": 1,
+            "found": 1,
+            "tp": 1,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "duplicate_payment": {
+            "expected": 1,
+            "found": 0,
+            "tp": 0,
+            "missed": [
+              "MV-301"
+            ],
+            "spurious": [],
+            "precision": null,
+            "recall": 0.0
+          },
+          "partial_payment": {
+            "expected": 2,
+            "found": 1,
+            "tp": 1,
+            "missed": [
+              "MV-309"
+            ],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 0.5
+          },
+          "candidate_payment_link": {
+            "expected": 0,
+            "found": 2,
+            "tp": 0,
+            "missed": [],
+            "spurious": [
+              "MV-301:txn_0308",
+              "MV-309:txn_0322"
+            ],
+            "precision": 0.0,
+            "recall": null
+          },
+          "unmatched_bank_debit": {
+            "expected": 4,
+            "found": 4,
+            "tp": 4,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "bank_detail_mismatch": {
+            "expected": 1,
+            "found": 1,
+            "tp": 1,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "total_mismatch": {
+            "expected": 1,
+            "found": 1,
+            "tp": 1,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "due_date_conflict": {
+            "expected": 1,
+            "found": 1,
+            "tp": 1,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "message_conflict": {
+            "expected": 1,
+            "found": 1,
+            "tp": 1,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          }
+        }
+      }
+    }
+  },
+  "held_out": {
+    "landscaping_01": {
+      "C4": {
+        "expected": 15,
+        "found": 19,
+        "tp": 12,
+        "missed": [
+          [
+            "duplicate_payment",
+            "RL-204"
+          ],
+          [
+            "partial_payment",
+            "PL-314"
+          ],
+          [
+            "partial_payment",
+            "RL-215"
+          ]
+        ],
+        "spurious": [
+          [
+            "candidate_payment_link",
+            "CT-88:txn_0516"
+          ],
+          [
+            "candidate_payment_link",
+            "ML-090:txn_0512"
+          ],
+          [
+            "candidate_payment_link",
+            "ML-90:txn_0512"
+          ],
+          [
+            "candidate_payment_link",
+            "MN-480:txn_0516"
+          ],
+          [
+            "candidate_payment_link",
+            "PL-314:txn_0516"
+          ],
+          [
+            "candidate_payment_link",
+            "RL-204:txn_0506"
+          ],
+          [
+            "candidate_payment_link",
+            "RL-215:txn_0512"
+          ]
+        ],
+        "precision": 0.632,
+        "recall": 0.8,
+        "by_type": {
+          "overdue_bill": {
+            "expected": 3,
+            "found": 3,
+            "tp": 3,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "duplicate_bill": {
+            "expected": 1,
+            "found": 1,
+            "tp": 1,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "duplicate_payment": {
+            "expected": 1,
+            "found": 0,
+            "tp": 0,
+            "missed": [
+              "RL-204"
+            ],
+            "spurious": [],
+            "precision": null,
+            "recall": 0.0
+          },
+          "partial_payment": {
+            "expected": 2,
+            "found": 0,
+            "tp": 0,
+            "missed": [
+              "PL-314",
+              "RL-215"
+            ],
+            "spurious": [],
+            "precision": null,
+            "recall": 0.0
+          },
+          "candidate_payment_link": {
+            "expected": 0,
+            "found": 7,
+            "tp": 0,
+            "missed": [],
+            "spurious": [
+              "CT-88:txn_0516",
+              "ML-090:txn_0512",
+              "ML-90:txn_0512",
+              "MN-480:txn_0516",
+              "PL-314:txn_0516",
+              "RL-204:txn_0506",
+              "RL-215:txn_0512"
+            ],
+            "precision": 0.0,
+            "recall": null
+          },
+          "unmatched_bank_debit": {
+            "expected": 4,
+            "found": 4,
+            "tp": 4,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "bank_detail_mismatch": {
+            "expected": 1,
+            "found": 1,
+            "tp": 1,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "total_mismatch": {
+            "expected": 1,
+            "found": 1,
+            "tp": 1,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "due_date_conflict": {
+            "expected": 1,
+            "found": 1,
+            "tp": 1,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "message_conflict": {
+            "expected": 1,
+            "found": 1,
+            "tp": 1,
+            "missed": [],
+            "spurious": [],
+            "precision": 1.0,
+            "recall": 1.0
+          }
+        }
+      },
+      "C3": null
+    }
+  }
+}

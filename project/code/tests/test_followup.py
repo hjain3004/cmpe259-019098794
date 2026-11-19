@@ -178,3 +178,107 @@ def test_demo_logging_and_peer_queries(tmp_path: Path, monkeypatch):
     assert drafts[0]["question"] == "What is BeanWorks' bank?"
     loaded = yaml.safe_load(out_yaml.read_text(encoding="utf-8"))
     assert loaded["count"] == 1
+
+
+def test_session_log_feedback_and_peer_summary(tmp_path: Path, monkeypatch):
+    from cashbooks.contracts.evaluation import QuerySuite
+
+    fake_st = types.ModuleType("streamlit")
+    monkeypatch.setitem(sys.modules, "streamlit", fake_st)
+    app_mod = _load_module("demo_app_fb", PROJECT / "demo" / "app.py")
+    ps_mod = _load_module("peer_summary", PROJECT / "evaluation" / "peer_summary.py")
+
+    sessions_dir = tmp_path / "sessions"
+    now = datetime(2026, 11, 18, 19, 0, tzinfo=timezone.utc)
+
+    res1 = ChatTurnResult(
+        config_name="C3",
+        response=None,
+        answerability=Answerability.ANSWER,
+        answer="Invoice NS-1048 was paid ($842.00) from account 002299104417.",
+        citations=[ResolvedCitation(evidence_id="txn_0119", supports="payment", quote="842.00 USD")],
+        latency_ms=250,
+    )
+    res2 = ChatTurnResult(
+        config_name="C3",
+        response=None,
+        answerability=Answerability.WARN,
+        answer="BW-771 remittance account ends in 5507 vs verified 4417.",
+        citations=[ResolvedCitation(evidence_id="vh_v_beanworks", supports="verified", quote="****4417")],
+        latency_ms=310,
+    )
+
+    p_alex = app_mod.log_demo_turn(
+        "Alex Rivera",
+        "Was NS-1048 paid from account 123456789012?",
+        res1,
+        sessions_dir=sessions_dir,
+        now=now,
+        bundle="cafe_01",
+    )
+    app_mod.update_turn_feedback(p_alex, 0, thumbs="up", comment="Clear citation for 123456789012.")
+
+    app_mod.log_demo_turn(
+        "Alex Rivera",
+        "Is BW-771 safe to pay to the new bank?",
+        res2,
+        sessions_dir=sessions_dir,
+        now=now,
+        bundle="cafe_01",
+    )
+    app_mod.update_turn_feedback(p_alex, 1, thumbs="down", comment="Wanted shorter warning.")
+
+    p_priya = app_mod.log_demo_turn(
+        "Priya Patel",
+        "How much credit is applied to NS-1062?",
+        res1,
+        sessions_dir=sessions_dir,
+        now=now,
+        bundle="cafe_01",
+        thumbs="up",
+        comment="Helpful breakdown",
+    )
+
+    alex_lines = [json.loads(ln) for ln in p_alex.read_text(encoding="utf-8").splitlines() if ln.strip()]
+    assert len(alex_lines) == 2
+    rec0 = alex_lines[0]
+    for required_key in ("tester", "timestamp", "bundle", "configuration", "question", "reply", "thumbs", "comment"):
+        assert required_key in rec0
+    assert rec0["tester"] == "Alex Rivera"
+    assert rec0["bundle"] == "cafe_01"
+    assert rec0["configuration"] == "C3"
+    assert rec0["thumbs"] == "up"
+    assert "****9012" in rec0["question"]
+    assert "****4417" in rec0["reply"]
+    assert "****9012" in rec0["comment"]
+    assert not re.search(r"\b\d{6,}\b", p_alex.read_text(encoding="utf-8"))
+    assert not re.search(r"\b\d{6,}\b", p_priya.read_text(encoding="utf-8"))
+
+    summary_out = tmp_path / "summary.md"
+    yaml_out = tmp_path / "peer_queries.yaml"
+    tester_rows, suite_payload = ps_mod.write_peer_summary(
+        sessions_dir=sessions_dir,
+        summary_out=summary_out,
+        yaml_out=yaml_out,
+    )
+
+    assert len(tester_rows) == 2
+    by_name = {r["tester"]: r for r in tester_rows}
+    assert by_name["Alex Rivera"]["questions"] == 2
+    assert by_name["Alex Rivera"]["thumbs_up"] == 1
+    assert by_name["Alex Rivera"]["thumbs_down"] == 1
+    assert len(by_name["Alex Rivera"]["comments"]) == 2
+    assert by_name["Priya Patel"]["questions"] == 1
+    assert by_name["Priya Patel"]["thumbs_up"] == 1
+    assert by_name["Priya Patel"]["thumbs_down"] == 0
+
+    md = summary_out.read_text(encoding="utf-8")
+    assert "| Alex Rivera | cafe_01 | C3 | 2 | 1 | 1 |" in md
+    assert "| Priya Patel | cafe_01 | C3 | 1 | 1 | 0 |" in md
+    assert "Wanted shorter warning." in md
+
+    loaded_suite = QuerySuite.model_validate(yaml.safe_load(yaml_out.read_text(encoding="utf-8")))
+    assert len(loaded_suite.conversations) == 3
+    assert loaded_suite.conversations[0].id == "Q01"
+    assert "Was NS-1048 paid" in loaded_suite.conversations[0].turns[0].text
+    assert loaded_suite.conversations[1].turns[0].expected == Answerability.WARN
