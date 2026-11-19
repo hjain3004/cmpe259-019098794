@@ -1,0 +1,64 @@
+[
+  {
+    "vendor_id": "v_medvet",
+    "canonical_name": "MedVet Diagnostics Inc.",
+    "aliases": [
+      {
+        "alias": "MedVet Lab Services",
+        "verified": true
+      }
+    ],
+    "verified_payment": {
+      "bank_name": "First Valley Bank",
+      "account_number": "004185293014",
+      "routing_number": "121000358",
+      "verified_on": "2026-02-01"
+    },
+    "trusted_contact": "Dr. Priya Nair, (408) 555-0155",
+    "date_order": "MDY"
+  },
+  {
+    "vendor_id": "v_biopet",
+    "canonical_name": "BioPet Pharma Supply",
+    "aliases": [],
+    "verified_payment": {
+      "bank_name": "Sierra Commerce Bank",
+      "account_number": "007392014822",
+      "routing_number": "121042882",
+      "verified_on": "2026-03-14"
+    },
+    "trusted_contact": "Carlos Mendez, (510) 555-0171",
+    "date_order": "MDY"
+  },
+  {
+    "vendor_id": "v_alpine",
+    "canonical_name": "Alpine Vet Equipment AG",
+    "aliases": [
+      {
+        "alias": "Alpine Vet AG",
+        "verified": true
+      }
+    ],
+    "verified_payment": {
+      "bank_name": "Zurich Trade Bank",
+      "account_number": "009641203389",
+      "routing_number": "026009593",
+      "verified_on": "2026-04-10"
+    },
+    "trusted_contact": "Stefan Keller, +41 44 5550188",
+    "date_order": "DMY"
+  },
+  {
+    "vendor_id": "v_linens",
+    "canonical_name": "Pacific Vet Linens",
+    "aliases": [],
+    "verified_payment": {
+      "bank_name": "Coastline Credit Union",
+      "account_number": "002847195501",
+      "routing_number": "321175261",
+      "verified_on": "2026-01-18"
+    },
+    "trusted_contact": "Rachel Kim, (650) 555-0190",
+    "date_order": "MDY"
+  }
+]

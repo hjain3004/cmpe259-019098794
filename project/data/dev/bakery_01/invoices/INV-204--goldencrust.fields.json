@@ -1,0 +1,63 @@
+{
+  "doc_id": "inv_INV-204--goldencrust",
+  "fields": {
+    "vendor_name": {
+      "text": "Golden Crust Wholesale LLC",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "INV-204",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "09/10/2026",
+      "page": 1
+    },
+    "stated_due_date": {
+      "text": "09/25/2026",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 15",
+      "page": 1
+    },
+    "reference_or_po": {
+      "text": "PO-3151",
+      "page": 1
+    },
+    "subtotal": {
+      "text": "$150.00",
+      "page": 1
+    },
+    "tax": {
+      "text": "$0.00",
+      "page": 1
+    },
+    "total": {
+      "text": "$150.00",
+      "page": 1
+    },
+    "currency": {
+      "text": "USD",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Civic Coast Bank",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "003918472201",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "121000358",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Instant dry yeast, 1 lb brick 12 brick $12.50 $150.00",
+      "page": 1
+    }
+  ]
+}

@@ -7,6 +7,7 @@ from __future__ import annotations
 import json
 import re
 from dataclasses import dataclass, field
+from datetime import date
 
 from pydantic import ValidationError
 
@@ -40,11 +41,12 @@ def mask_numbers(text: str) -> str:
     return _DIGIT_RUN.sub(_mask, text)
 
 
-def postprocess(raw: str, known_evidence_ids: set[str]) -> PostprocessResult:
+def postprocess(raw: str, known_evidence_ids: set[str], default_as_of: date | None = None) -> PostprocessResult:
     """Parse, validate, drop citations to unknown records, mask numbers, flag wording.
 
     known_evidence_ids must already be scoped to the current business, so a
     citation to another business's record is dropped exactly like a made-up one.
+    Every schema normalization is logged in `issues`; `raw` itself is never altered.
     """
     issues: list[str] = []
     fenced = _FENCE.fullmatch(raw.strip())
@@ -63,9 +65,30 @@ def postprocess(raw: str, known_evidence_ids: set[str]) -> PostprocessResult:
         data.pop(key)
         issues.append(f"dropped_unknown_key: {key}")
 
-    if data.get("answerability") == Answerability.ABSTAIN.value and data.get("calculation") is not None:
+    if data.get("as_of") in (None, "") and default_as_of is not None:
+        data["as_of"] = default_as_of.isoformat()
+        issues.append("filled_missing_as_of")
+
+    for opt_key in ("clarifying_question", "next_step"):
+        if isinstance(data.get(opt_key), str) and data[opt_key].strip() == "":
+            data[opt_key] = None
+            issues.append(f"normalized_empty_{opt_key}")
+
+    if "risk_indicators" in data and data.get("risk_indicators") is None:
+        data["risk_indicators"] = []
+        issues.append("normalized_null_risk_indicators")
+
+    if "evidence" in data and data.get("evidence") is None:
+        data["evidence"] = []
+        issues.append("normalized_null_evidence")
+
+    ans_val = data.get("answerability")
+    if ans_val == Answerability.ABSTAIN.value and data.get("calculation") is not None:
         data["calculation"] = None
         issues.append("dropped_abstain_calculation")
+    elif ans_val == Answerability.CLARIFY.value and data.get("calculation") is not None:
+        data["calculation"] = None
+        issues.append("dropped_clarify_calculation")
 
     for key in _TEXT_FIELDS:
         if isinstance(data.get(key), str):
@@ -74,12 +97,50 @@ def postprocess(raw: str, known_evidence_ids: set[str]) -> PostprocessResult:
                 issues.append(f"masked_number_in_{key}")
             data[key] = masked
 
+    if isinstance(data.get("risk_indicators"), list):
+        masked_risks: list = []
+        risk_changed = False
+        for item in data["risk_indicators"]:
+            if isinstance(item, str):
+                m_item = mask_numbers(item)
+                risk_changed = risk_changed or (m_item != item)
+                masked_risks.append(m_item)
+            else:
+                masked_risks.append(item)
+        if risk_changed:
+            issues.append("masked_number_in_risk_indicators")
+        data["risk_indicators"] = masked_risks
+
+    calc = data.get("calculation")
+    if isinstance(calc, dict) and isinstance(calc.get("steps"), list):
+        masked_steps: list = []
+        steps_changed = False
+        for step in calc["steps"]:
+            if isinstance(step, str):
+                m_step = mask_numbers(step)
+                steps_changed = steps_changed or (m_step != step)
+                masked_steps.append(m_step)
+            else:
+                masked_steps.append(step)
+        if steps_changed:
+            issues.append("masked_number_in_calculation")
+        calc["steps"] = masked_steps
+
     cites = data.get("evidence")
     if isinstance(cites, list):
         kept = [c for c in cites if isinstance(c, dict) and c.get("evidence_id") in known_evidence_ids]
         for c in cites:
             if c not in kept:
                 issues.append(f"dropped_unknown_evidence: {c.get('evidence_id') if isinstance(c, dict) else c}")
+        supp_changed = False
+        for c in kept:
+            if isinstance(c.get("supports"), str):
+                m_supp = mask_numbers(c["supports"])
+                if m_supp != c["supports"]:
+                    supp_changed = True
+                    c["supports"] = m_supp
+        if supp_changed:
+            issues.append("masked_number_in_evidence")
         data["evidence"] = kept
 
     try:

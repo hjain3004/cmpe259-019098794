@@ -1,0 +1,26 @@
+{
+  "doc_id": "cn_CN-301",
+  "fields": {
+    "vendor_name": {
+      "text": "Golden Crust Wholesale LLC",
+      "page": 1
+    },
+    "credit_id": {
+      "text": "CN-301",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "09/16/2026",
+      "page": 1
+    },
+    "invoice_ref": {
+      "text": "GC-125",
+      "page": 1
+    },
+    "total": {
+      "text": "$75.00",
+      "page": 1
+    }
+  },
+  "lines": []
+}

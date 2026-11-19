@@ -1,0 +1,171 @@
+scenario: bakery_01
+verified_by_hand: '2026-11-18'
+D101:
+- values:
+    first: INV-204
+    second: MC-220
+    due: '2026-09-25'
+  evidence:
+  - inv_INV-204--goldencrust
+  - inv_MC-220
+  must_not:
+  - GC-125
+  - AC-88
+D102:
+- values:
+    total: 829.00 USD
+  evidence:
+  - inv_GC-118
+  - inv_GC-125
+  - inv_INV-204--goldencrust
+  - vh_v_goldencrust
+  must_not:
+  - '1209.00'
+  - 1,209.00
+D103:
+- values:
+    remaining: 275.00 USD
+    payment: '300.00'
+    credit: '75.00'
+  evidence:
+  - inv_GC-125
+  - txn_5008
+  - cn_CN-301
+D104:
+- values:
+    amount: 404.00 USD
+    second: MC-214
+  evidence:
+  - inv_MC-209
+  - inv_MC-214
+  - txn_5010
+D105:
+- values:
+    first: Golden Crust
+    second: Solstice
+  evidence: []
+D106:
+- values:
+    bill: INV-204
+    new_last4: '6611'
+    old_last4: '9063'
+    contact: Hannah Cho
+  evidence:
+  - inv_INV-204--packaging
+  - vh_v_packaging
+D107:
+- values:
+    status: unpaid
+    remaining: 200.00 USD
+  evidence:
+  - inv_MC-220
+  - msg_m03
+D108:
+- values: {}
+  evidence: []
+D109:
+- values:
+    eur_total: 700.00 EUR
+  evidence:
+  - inv_AC-88
+  - txn_5009
+D110:
+- values:
+    answer: 'no'
+    last4: '2201'
+  evidence:
+  - msg_m02
+  - vh_v_goldencrust
+D111:
+- values:
+    spend: 272.00 USD
+  evidence:
+  - inv_GC-118
+  must_not:
+  - '1152.00'
+  - 1,152.00
+D112:
+- values: {}
+  evidence: []
+D113:
+- values:
+    first: Golden Crust
+    second: Solstice
+  evidence: []
+- values:
+    bill: INV-204
+    total: 150.00 USD
+    status: unpaid
+  evidence:
+  - inv_INV-204--goldencrust
+- values:
+    new_last4: '6611'
+    old_last4: '9063'
+    contact: Hannah Cho
+  evidence:
+  - inv_INV-204--packaging
+  - vh_v_packaging
+D114:
+- values:
+    remaining: 275.00 USD
+  evidence:
+  - inv_GC-125
+  - txn_5008
+  - cn_CN-301
+- values:
+    payment: '300.00'
+    credit: '75.00'
+  evidence:
+  - txn_5008
+  - cn_CN-301
+- values:
+    remaining: 350.00 USD
+  evidence:
+  - inv_GC-125
+  - txn_5008
+D115:
+- values:
+    first: MC-209
+    second: MC-214
+  evidence:
+  - inv_MC-209
+  - inv_MC-214
+  - txn_5010
+- values:
+    due_1: '2026-08-25'
+    due_2: '2026-09-23'
+  evidence:
+  - inv_MC-209
+  - inv_MC-214
+D116:
+- values:
+    answer: 'yes'
+    alias: Harbor Flour & Grain
+  evidence:
+  - vh_v_goldencrust
+- values:
+    first: GC-118
+    second: GC-125
+    third: INV-204
+  evidence:
+  - inv_GC-118
+  - inv_GC-125
+  - inv_INV-204--goldencrust
+- values:
+    answer: 'no'
+  evidence:
+  - vh_v_goldencrust
+D117:
+- values: {}
+  evidence: []
+- values:
+    due: '2026-10-06'
+  evidence:
+  - inv_SB-305
+D118:
+- values: {}
+  evidence: []
+- values:
+    contact: Hannah Cho
+  evidence:
+  - vh_v_packaging

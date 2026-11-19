@@ -1,0 +1,67 @@
+[
+  {
+    "vendor_id": "v_goldencrust",
+    "canonical_name": "Golden Crust Wholesale LLC",
+    "aliases": [
+      {
+        "alias": "Harbor Flour & Grain",
+        "verified": true
+      },
+      {
+        "alias": "Golden Crust West",
+        "verified": false
+      }
+    ],
+    "verified_payment": {
+      "bank_name": "Civic Coast Bank",
+      "account_number": "003918472201",
+      "routing_number": "121000358",
+      "verified_on": "2026-02-15"
+    },
+    "trusted_contact": "Nadia Patel, (415) 555-0134",
+    "date_order": "MDY"
+  },
+  {
+    "vendor_id": "v_dairy",
+    "canonical_name": "Meadowbrook Creamery",
+    "aliases": [],
+    "verified_payment": {
+      "bank_name": "Pacific Foothills Bank",
+      "account_number": "006120948315",
+      "routing_number": "121042882",
+      "verified_on": "2026-03-11"
+    },
+    "trusted_contact": "Owen Brooks, (510) 555-0162",
+    "date_order": "MDY"
+  },
+  {
+    "vendor_id": "v_cocoa",
+    "canonical_name": "Alpen Cocoa & Spice GmbH",
+    "aliases": [
+      {
+        "alias": "Alpen Cocoa",
+        "verified": true
+      }
+    ],
+    "verified_payment": {
+      "bank_name": "Rhine Commerce Bank",
+      "account_number": "008451209712",
+      "routing_number": "026009593",
+      "verified_on": "2026-04-05"
+    },
+    "trusted_contact": "Lukas Weber, +49 30 5550144",
+    "date_order": "DMY"
+  },
+  {
+    "vendor_id": "v_packaging",
+    "canonical_name": "Solstice Box & Packaging",
+    "aliases": [],
+    "verified_payment": {
+      "bank_name": "Bayview Credit Union",
+      "account_number": "005274819063",
+      "routing_number": "322271627",
+      "verified_on": "2026-05-01"
+    },
+    "trusted_contact": "Hannah Cho, (650) 555-0129"
+  }
+]

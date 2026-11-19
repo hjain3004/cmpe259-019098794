@@ -15,6 +15,7 @@ from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
 
+from cashbooks.configs.dialogue_state import derive_dialogue_state, format_state_block, retrieval_query_terms
 from cashbooks.configs.retrieval import BM25Retriever, build_raw_chunks, build_record_chunks, render_context
 from cashbooks.contracts.postprocess import mask_numbers
 from cashbooks.contracts.response import AssistantResponse
@@ -78,7 +79,17 @@ def _history(history: list[Turn], question: str, context: str | None) -> list[Me
     for t in history:
         msgs.append(Message("user", t.user))
         msgs.append(Message("model", t.assistant))
-    prompt = question if context is None else f"RETRIEVED CONTEXT\n\n{context}\n\nQUESTION\n{question}"
+    state_block = format_state_block(derive_dialogue_state(history), question)
+    parts: list[str] = []
+    if context is not None:
+        parts.append(f"RETRIEVED CONTEXT\n\n{context}")
+    if state_block is not None:
+        parts.append(state_block)
+    if parts:
+        parts.append(f"QUESTION\n{question}")
+        prompt = "\n\n".join(parts)
+    else:
+        prompt = question
     msgs.append(Message("user", prompt))
     return msgs
 
@@ -95,7 +106,9 @@ class RetrievalConfig:
         if self.k is None:
             chunks = list(self.retriever.chunks)
         else:
-            chunks = self.retriever.search_conversation([t.user for t in history] + [question], k=self.k)
+            state = derive_dialogue_state(history)
+            augmented_q = retrieval_query_terms(state, question)
+            chunks = self.retriever.search_conversation([t.user for t in history] + [augmented_q], k=self.k)
         res = llm.complete(self.system, _history(history, question, render_context(chunks)))
         ctx = [{"chunk_id": c.chunk_id, "source": c.source} for c in chunks]
         return ConfigOutput(res, ctx, self.known)

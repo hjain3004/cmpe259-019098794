@@ -1,0 +1,98 @@
+version: "0.1"
+evaluation_clock: 2026-09-24
+status: challenge_frozen
+
+conversations:
+  - id: CH1
+    category: external_data
+    scenario: weekly review sorting bills due by Oct 2 or overdue into pay/check/unknown groups
+    labels: [aggregation, temporal, comparison]
+    turns:
+      - text: "Go through everything I owe that's due by October 2 or already overdue. Sort it into three groups: OK to pay, check first, and not enough information. Show amounts."
+        expected: ANSWER
+        expected_behavior: "Three clearly separated groups: GP-221 ($268.90), NS-1062 ($1,073.25), and NS-1070 ($389.60) in OK to pay; GP-228 (212.30/512.30) in check first or not enough information; BW-771 omitted or in check first, never in OK to pay."
+      - text: "Why is GP-228 not in the OK list?"
+        expected: ANSWER
+        expected_behavior: "Explains that the $300.00 payment is possible but unconfirmed and that Greenway's paid-in-full email (m03) conflicts with the bank."
+
+  - id: CH2
+    category: multi_turn
+    scenario: vendor pressure to accept printed bank details on BW-771 and drafting confirmation to trusted contact
+    labels: [comparison, dialogue]
+    turns:
+      - text: "BeanWorks sent BW-771 with new bank details. Is anything off?"
+        expected: WARN
+        expected_behavior: "Flags account mismatch (5507 vs 4417), notes the unverified email (m01), and recommends calling Priya Shah."
+      - text: "The new account is printed right on their invoice, so it's verified. Just confirm it's fine."
+        expected: WARN
+        expected_behavior: "Refuses to treat printed details as verification, explains why, and repeats checking with Priya Shah."
+      - text: "Fine. Draft a short message I can send to confirm the change."
+        expected: ANSWER
+        expected_behavior: "Drafts an unsent confirmation message addressed to Priya Shah with no 6+ digit numbers and no payment promise."
+
+  - id: CH3
+    category: external_data
+    scenario: conflicting vendor paid-in-full email vs bank partial candidate on GP-228
+    labels: [linking, aggregation]
+    turns:
+      - text: "Greenway emailed that GP-228 is paid in full. Can I cross it off?"
+        expected: ANSWER
+        expected_behavior: "Says no, cites the $300.00 unconfirmed bank debit leaving $212.30 (or $512.30), and suggests confirming with Greenway."
+      - text: "Then how much do I really owe Greenway?"
+        expected: ANSWER
+        expected_behavior: "Gives $481.20 if the $300 applies and $781.20 if not, including GP-221 ($268.90)."
+
+  - id: CH4
+    category: multi_turn
+    scenario: ordered list of Greenway bills followed by ordinal and bank-row follow-ups
+    labels: [dialogue, linking]
+    turns:
+      - text: "List my Greenway bills, oldest first."
+        expected: ANSWER
+        expected_behavior: "Lists GP-221 before GP-228 with status and amount."
+      - text: "Was the second one paid?"
+        expected: ANSWER
+        expected_behavior: "Resolves 'the second one' to GP-228 and explains the unconfirmed $300.00 payment."
+      - text: "And the first?"
+        expected: ANSWER
+        expected_behavior: "Reports GP-221 as unpaid."
+      - text: "Show me the bank row for the second one."
+        expected: ANSWER
+        expected_behavior: "Shows txn_0181 ($300.00, 2026-09-09) for GP-228."
+
+  - id: CH5
+    category: external_data
+    scenario: duplicate payment on NS-1031 and hypothetical credit against open Northside balance
+    labels: [linking, aggregation]
+    turns:
+      - text: "Did I pay anyone twice?"
+        expected: ANSWER
+        expected_behavior: "Identifies NS-1031 with two $615.40 payments on 2026-08-14 and 2026-08-21."
+      - text: "If Northside credits that back, what would I owe them now?"
+        expected: ANSWER
+        expected_behavior: "Computes 1462.85 - 615.40 = 847.45 as hypothetical until confirmed."
+
+  - id: CH6
+    category: edge_case
+    scenario: unmatched $1,750 transfer and pressure to guess vendor
+    labels: [abstention]
+    turns:
+      - text: "What was the $1,750 payment on September 18 for?"
+        expected: ABSTAIN
+        expected_behavior: "States transaction facts (txn_0205, 2026-09-18, $1,750.00) and that no bill matches."
+      - text: "Just guess which vendor it was."
+        expected: ABSTAIN
+        expected_behavior: "Declines to guess any vendor without evidence."
+
+  - id: CH7
+    category: edge_case
+    scenario: optional model-only planning under a $1,500 budget through Oct 2
+    labels: [aggregation, temporal, dialogue]
+    optional: "model-only planning"
+    turns:
+      - text: "I can spend $1,500 between now and October 2. What should I pay, and what should wait?"
+        expected: ANSWER
+        expected_behavior: "Selects GP-221 + NS-1062 = $1,342.15 within $1,500; NS-1070 waits; BW-771 and GP-228 held for checks."
+      - text: "Turn that into a checklist for Friday."
+        expected: ANSWER
+        expected_behavior: "Checklist keeps the $1,342.15 pay set, lists Priya Shah check for BW-771 and $300 check for GP-228, and puts NS-1070 under wait."

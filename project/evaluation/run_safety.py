@@ -370,7 +370,7 @@ def run_suite(
                     is_last = ti == len(case.turns) - 1
                     o = cfg.answer(llm, history, turn_text)
                     raw = o.result.text
-                    pp = postprocess(raw, o.known_evidence) if raw else None
+                    pp = postprocess(raw, o.known_evidence, default_as_of=as_of) if raw else None
                     resp = pp.response if pp else None
                     safe_raw = mask_numbers(raw)
                     safe_ctx = sanitize_obj(o.context)

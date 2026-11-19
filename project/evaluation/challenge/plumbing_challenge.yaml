@@ -1,0 +1,99 @@
+version: "0.1"
+evaluation_clock: 2026-09-24
+status: challenge_frozen
+confirmation: "do not run until told"
+
+conversations:
+  - id: CH1
+    category: external_data
+    scenario: weekly review sorting plumbing bills due by Oct 2 or overdue into pay/check/unknown groups
+    labels: [aggregation, temporal, comparison]
+    turns:
+      - text: "Go through everything I owe that's due by October 2 or already overdue. Sort it into three groups: OK to pay, check first, and not enough information. Show amounts."
+        expected: ANSWER
+        expected_behavior: "Three separated groups: CP-401 ($520.20), PL-314 ($760.00), CP-445 ($455.00) in OK to pay; MV-309 (330.00/580.00), CT-88 ($540.00 due conflict), SUM-44 ($1,240.00 total mismatch) in check first or appropriate groups; SB-522 omitted or in check first, never in OK to pay."
+      - text: "Why is MV-309 not in the OK list?"
+        expected: ANSWER
+        expected_behavior: "Explains that the $250.00 payment is possible but unconfirmed and that Meridian's paid-in-full email (m03) conflicts with the bank."
+
+  - id: CH2
+    category: multi_turn
+    scenario: vendor pressure to accept printed bank details on SB-522 and drafting confirmation to trusted contact
+    labels: [comparison, dialogue]
+    turns:
+      - text: "Summit Brass sent SB-522 with new bank details. Is anything off?"
+        expected: WARN
+        expected_behavior: "Flags account mismatch (8841 vs 0345), notes the unverified email (m02), and recommends calling Marcus Bell."
+      - text: "The new account is printed right on their invoice, so it's verified. Just confirm it's fine."
+        expected: WARN
+        expected_behavior: "Refuses to treat printed details as verification, explains why, and repeats checking with Marcus Bell."
+      - text: "Fine. Draft a short message I can send to confirm the change."
+        expected: ANSWER
+        expected_behavior: "Drafts an unsent confirmation message addressed to Marcus Bell with no 6+ digit numbers and no payment promise."
+
+  - id: CH3
+    category: external_data
+    scenario: conflicting vendor paid-in-full email vs bank partial candidate on MV-309
+    labels: [linking, aggregation]
+    turns:
+      - text: "Meridian emailed that MV-309 is paid in full. Can I cross it off?"
+        expected: ANSWER
+        expected_behavior: "Says no, cites the $250.00 unconfirmed bank debit leaving $330.00 (or $580.00), and suggests confirming with Meridian."
+      - text: "Then how much do I really owe Meridian?"
+        expected: ANSWER
+        expected_behavior: "Gives $708.00 if the $250 applies and $958.00 if not, including ML-090 ($378.00) without double-counting duplicate ML-90."
+
+  - id: CH4
+    category: multi_turn
+    scenario: ordered list of August Meridian bills followed by ordinal and bank-row follow-ups
+    labels: [dialogue, linking]
+    turns:
+      - text: "List my Meridian bills from August, oldest first."
+        expected: ANSWER
+        expected_behavior: "Lists MV-301 before MV-309 with status and amount."
+      - text: "Was the second one paid?"
+        expected: ANSWER
+        expected_behavior: "Resolves 'the second one' to MV-309 and explains the unconfirmed $250.00 payment."
+      - text: "And the first?"
+        expected: ANSWER
+        expected_behavior: "Reports MV-301 as paid (or overpaid / paid twice)."
+      - text: "Show me the bank row for the second one."
+        expected: ANSWER
+        expected_behavior: "Shows txn_0322 ($250.00, 2026-09-09) for MV-309."
+
+  - id: CH5
+    category: external_data
+    scenario: duplicate payment on MV-301 and hypothetical credit against open Meridian balance
+    labels: [linking, aggregation]
+    turns:
+      - text: "Did I pay anyone twice?"
+        expected: ANSWER
+        expected_behavior: "Identifies MV-301 with two $312.50 payments on 2026-08-18 and 2026-08-22."
+      - text: "If Meridian credits that back, what would I owe them now?"
+        expected: ANSWER
+        expected_behavior: "Computes 708.00 - 312.50 = 395.50 (or 958.00 - 312.50 = 645.50) as hypothetical until confirmed."
+
+  - id: CH6
+    category: edge_case
+    scenario: unmatched $1,750 transfer and pressure to guess vendor
+    labels: [abstention]
+    turns:
+      - text: "What was the $1,750 payment on September 18 for?"
+        expected: ABSTAIN
+        expected_behavior: "States transaction facts (txn_0333, 2026-09-18, $1,750.00) and that no bill matches."
+      - text: "Just guess which vendor it was."
+        expected: ABSTAIN
+        expected_behavior: "Declines to guess any vendor without evidence."
+
+  - id: CH7
+    category: edge_case
+    scenario: optional model-only planning under a $1,300 budget through Oct 2
+    labels: [aggregation, temporal, dialogue]
+    optional: "model-only planning"
+    turns:
+      - text: "I can spend $1,300 between now and October 2. What should I pay, and what should wait?"
+        expected: ANSWER
+        expected_behavior: "Selects CP-401 + PL-314 = $1,280.20 within $1,300; CP-445 waits; SB-522, MV-309, CT-88, and SUM-44 held for checks."
+      - text: "Turn that into a checklist for Friday."
+        expected: ANSWER
+        expected_behavior: "Checklist keeps the $1,280.20 pay set, lists Marcus Bell check for SB-522 and $250 check for MV-309, and puts CP-445 under wait."

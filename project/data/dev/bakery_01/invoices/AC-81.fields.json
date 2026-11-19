@@ -1,0 +1,63 @@
+{
+  "doc_id": "inv_AC-81",
+  "fields": {
+    "vendor_name": {
+      "text": "Alpen Cocoa & Spice GmbH",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "AC-81",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "05/08/2026",
+      "page": 1
+    },
+    "stated_due_date": {
+      "text": "04/09/2026",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 30",
+      "page": 1
+    },
+    "reference_or_po": {
+      "text": "PO-3115",
+      "page": 1
+    },
+    "subtotal": {
+      "text": "\u20ac390.00",
+      "page": 1
+    },
+    "tax": {
+      "text": "\u20ac0.00",
+      "page": 1
+    },
+    "total": {
+      "text": "\u20ac390.00",
+      "page": 1
+    },
+    "currency": {
+      "text": "EUR",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Rhine Commerce Bank",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "008451209712",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "026009593",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Single-origin couverture 70%, 5 kg block 6 block \u20ac65.00 \u20ac390.00",
+      "page": 1
+    }
+  ]
+}

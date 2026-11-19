@@ -1,0 +1,45 @@
+- generic [active] [ref=f1e1]:
+  - link "Skip to question" [ref=f1e2] [cursor=pointer]:
+    - /url: "#question"
+  - banner [ref=f1e3]:
+    - link "CashBooks Assist home" [ref=f1e4] [cursor=pointer]:
+      - /url: /
+      - generic [aria-hidden] [ref=f1e5]: cb
+      - generic [ref=f1e6]: CashBooks Assist
+    - generic [ref=f1e7]:
+      - generic [ref=f1e8]: Live Claude API
+      - button "How it works" [ref=f1e9] [cursor=pointer]
+  - main [ref=f1e10]:
+    - generic [ref=f1e11]:
+      - generic [ref=f1e12]:
+        - generic [aria-hidden] [ref=f1e13]: ☷
+        - generic [ref=f1e14]:
+          - strong [ref=f1e15]: Ember & Oat Cafe
+          - generic [ref=f1e16]: Synthetic records as of Sep 24, 2026
+      - button "New conversation" [disabled] [ref=f1e17]
+    - region "Ask about your bills and payments." [ref=f1e18]:
+      - paragraph [ref=f1e19]: A little clarity for your books
+      - heading "Ask about your bills and payments." [level=1] [ref=f1e20]: Ask about your billsand payments.
+      - paragraph [ref=f1e21]: Get a clear answer from your business records. See what supports it, and what still needs checking.
+    - region "Ask CashBooks" [ref=f1e22]:
+      - generic [ref=f1e23]:
+        - generic [ref=f1e24]: Your question about bills or payments
+        - textbox "Your question about bills or payments" [disabled] [ref=f1e25]:
+          - /placeholder: Ask a question about your bills or payments…
+        - generic [ref=f1e26]:
+          - generic [ref=f1e27]: Follow-up questions stay in this conversation.
+          - button "Ask CashBooks" [disabled] [ref=f1e28]
+      - generic [ref=f1e31]:
+        - generic [ref=f1e32]: Read-only. It cannot pay bills or change records.
+        - button "Tools + records" [ref=f1e36] [cursor=pointer]
+    - region "Suggested questions" [ref=f1e37]:
+      - button "Check a payment Did I already pay invoice NS-1048?" [disabled] [ref=f1e38]:
+        - generic [ref=f1e39]: Check a payment
+        - strong [ref=f1e40]: Did I already pay invoice NS-1048?
+      - button "Review payment details Did the payment details on BW-771 change?" [disabled] [ref=f1e41]:
+        - generic [ref=f1e42]: Review payment details
+        - strong [ref=f1e43]: Did the payment details on BW-771 change?
+      - button "Plan the week What bills are due in the next seven days?" [disabled] [ref=f1e44]:
+        - generic [ref=f1e45]: Plan the week
+        - strong [ref=f1e46]: What bills are due in the next seven days?
+    - generic [ref=f1e47]: Answers reflect the records available, which may be incomplete. Check important payment decisions.

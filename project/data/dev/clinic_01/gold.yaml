@@ -1,0 +1,175 @@
+scenario: clinic_01
+verified_by_hand: '2026-11-18'
+D201:
+- values:
+    first: INV-902
+    second: AV-79
+    due_linens: '2026-09-29'
+    due_other: '2026-09-30'
+  evidence:
+  - inv_INV-902--linens
+  - inv_INV-902--biopet
+  - inv_AV-79
+  must_not:
+  - MV-119
+  - MV-121
+D202:
+- values:
+    due: '2026-09-30'
+    issue: '2026-09-12'
+  evidence:
+  - inv_AV-79
+D203:
+- values:
+    answer: 'no'
+    remaining: 0.00 USD
+  evidence:
+  - inv_BP-301
+  - txn_6005
+  - cn_CN-410
+D204:
+- values:
+    answer: 'yes'
+    payment: 550.00 USD
+  evidence:
+  - inv_PV-401
+  - inv_PV-402
+  - txn_6006
+D205:
+- values:
+    first: MV-112
+    second: MV-121
+    third: MV-119
+  evidence:
+  - txn_6008
+  - inv_MV-112
+  - inv_MV-119
+  - inv_MV-121
+D206:
+- values:
+    first: BioPet
+    second: Pacific Vet Linens
+  evidence: []
+D207:
+- values:
+    status: unpaid
+    total: 215.00 USD
+  evidence:
+  - inv_INV-902--linens
+D208:
+- values:
+    status: partial
+    remaining: 250.00 EUR
+  evidence:
+  - inv_AV-71
+  - txn_6007
+  - cn_CN-415
+  - msg_m03
+D209:
+- values:
+    eur_total: 670.00 EUR
+  evidence:
+  - inv_AV-71
+  - inv_AV-79
+D210:
+- values:
+    answer: 'no'
+    last4: '4822'
+  evidence:
+  - inv_INV-902--biopet
+  - vh_v_biopet
+  - msg_m02
+D211:
+- values:
+    bill: BP-310
+    new_last4: '2233'
+    old_last4: '4822'
+    contact: Carlos Mendez
+  evidence:
+  - inv_BP-310
+  - vh_v_biopet
+D212:
+- values:
+    packs: '20'
+    spend: 340.00 USD
+  evidence:
+  - inv_INV-902--biopet
+D213:
+- values:
+    first: BioPet
+    second: Pacific Vet Linens
+  evidence: []
+- values:
+    total: 340.00 USD
+    due: '2026-09-30'
+    status: unpaid
+  evidence:
+  - inv_INV-902--biopet
+- values:
+    answer: 'yes'
+    last4: '4822'
+  evidence:
+  - inv_INV-902--biopet
+  - vh_v_biopet
+D214:
+- values:
+    amount: 550.00 USD
+    date: '2026-09-08'
+  evidence:
+  - txn_6006
+- values:
+    answer: 'yes'
+    total: 550.00 USD
+  evidence:
+  - inv_PV-401
+  - inv_PV-402
+  - txn_6006
+- values:
+    remaining: 215.00 USD
+    bill: INV-902
+  evidence:
+  - inv_INV-902--linens
+D215:
+- values:
+    first: MV-112
+    second: MV-121
+  evidence:
+  - txn_6008
+  - inv_MV-112
+  - inv_MV-119
+  - inv_MV-121
+- values:
+    total: 1700.00 USD
+  evidence:
+  - inv_MV-112
+  - inv_MV-119
+  - inv_MV-121
+D216:
+- values:
+    answer: 'yes'
+    alias: Alpine Vet AG
+  evidence:
+  - vh_v_alpine
+- values:
+    bill: AV-71
+    remaining: 250.00 EUR
+  evidence:
+  - inv_AV-71
+  - txn_6007
+  - cn_CN-415
+D217:
+- values:
+    subtotal: '570.00'
+    tax: '50.00'
+    total: 620.00 USD
+  evidence:
+  - inv_MV-101
+- values: {}
+  evidence: []
+D218:
+- values: {}
+  evidence: []
+- values:
+    contact: Carlos Mendez
+  evidence:
+  - vh_v_biopet

@@ -63,10 +63,12 @@ def main() -> int:
     ap.add_argument("--queries", nargs="*", help="conversation IDs to run (default: all with gold)")
     ap.add_argument("--llm", choices=["claude", "gemini", "scripted"], default="claude")
     ap.add_argument("--model", help="override LLM_MODEL")
+    ap.add_argument("--queries-file", type=Path, help="query manifest YAML (default evaluation/queries.yaml)")
     ap.add_argument("--out", type=Path, help="results folder (default evaluation/results/<timestamp>)")
     a = ap.parse_args()
 
-    suite = QuerySuite.model_validate(yaml.safe_load((PROJECT / "evaluation" / "queries.yaml").read_text()))
+    qpath = a.queries_file or (PROJECT / "evaluation" / "queries.yaml")
+    suite = QuerySuite.model_validate(yaml.safe_load(qpath.read_text()))
     gold = yaml.safe_load((a.bundle / "gold.yaml").read_text())
     ledger = json.loads((a.bundle / "ledger.json").read_text())
     biz = ledger["business"]
@@ -108,7 +110,7 @@ def main() -> int:
                     t_text = str(setup_text or turn.text)
                 o = cfg.answer(llm, history, t_text)
                 raw = o.result.text
-                pp = postprocess(raw, o.known_evidence) if raw else None
+                pp = postprocess(raw, o.known_evidence, default_as_of=as_of) if raw else None
                 resp = pp.response if pp else None
                 notes = []
                 if o.result.error:
@@ -138,8 +140,10 @@ def main() -> int:
                       f"{(resp.answer if resp else raw)[:90]!r}")
                 history.append(Turn(t_text, format_turn_assistant(resp, raw)))
 
+    qlabels = {c.id: list(c.labels) for c in suite.conversations}
     lines = write_run_outputs(rows, out, run_id, llm.model, commit, str(a.bundle), [c.id for c in convs],
-                              sum(1 for c in convs for t in c.turns if t.scored), PROMPT_VERSION)
+                              sum(1 for c in convs for t in c.turns if t.scored), PROMPT_VERSION,
+                              query_labels=qlabels)
     print(f"\nwrote {out}")
     print("\n".join(lines[4:4 + len(configs) + 2]))
     return 0

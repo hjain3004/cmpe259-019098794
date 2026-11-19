@@ -270,7 +270,7 @@ def extract_bundle(bundle: Path, llm: LLM, db_path: Path | None = None) -> Extra
         acct, rout = _value(head.remit_account), _value(head.remit_routing)
         ah, a4 = fingerprint(acct) if acct and len(re.sub(r"\D", "", acct)) >= 4 else (None, None)
         rh, r4 = fingerprint(rout) if rout and len(re.sub(r"\D", "", rout)) >= 4 else (None, None)
-        bill_id = _id("bill", number)
+        bill_id = _id("bill", pdf.stem)
         bills_by_number[number.upper()] = bill_id
         records.append(Document(business_id=biz, doc_id=doc_id, kind=DocumentKind.INVOICE,
                                 path=str(pdf.relative_to(bundle)), received_on=issue))
@@ -389,7 +389,10 @@ def extract_bundle(bundle: Path, llm: LLM, db_path: Path | None = None) -> Extra
 
 def score_extraction(bundle: Path, extracted: dict) -> dict:
     """Field-level accuracy of normalized extracted values against the ledger."""
+    from collections import Counter
+
     ledger = json.loads((bundle / "ledger.json").read_text())
+    inv_counts = Counter(i["invoice_number"] for i in ledger["invoices"])
     rows = []
 
     def add(doc, fieldname, gold, got):
@@ -397,7 +400,8 @@ def score_extraction(bundle: Path, extracted: dict) -> dict:
 
     for inv in ledger["invoices"]:
         num = inv["invoice_number"]
-        got = extracted["invoices"].get(num)
+        stem = num if inv_counts[num] == 1 else f"{num}--{inv['vendor_id'].removeprefix('v_')}"
+        got = extracted["invoices"].get(stem) or extracted["invoices"].get(num)
         due = None
         if inv.get("print_due_date"):
             due = inv.get("stated_due_date") or _ledger_due(inv)
@@ -425,6 +429,7 @@ def score_extraction(bundle: Path, extracted: dict) -> dict:
 
 
 def _ledger_due(inv: dict) -> str:
-    from datetime import timedelta
-    days = int(re.search(r"\d+", inv["payment_terms"]).group())
-    return (date.fromisoformat(inv["issue_date"]) + timedelta(days=days)).isoformat()
+    due, _ = derive_due_date(date.fromisoformat(inv["issue_date"]), parse_terms(inv.get("payment_terms")))
+    if due is None:
+        raise ValueError(f"cannot derive due date from {inv.get('payment_terms')!r}")
+    return due.isoformat()

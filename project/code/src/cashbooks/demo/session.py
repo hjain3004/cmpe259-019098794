@@ -11,6 +11,7 @@ from pathlib import Path
 import yaml
 
 from cashbooks.configs.answer import RetrievalConfig, ToolConfig, Turn, build_configs, format_turn_assistant
+from cashbooks.configs.dialogue_state import DialogueState, derive_dialogue_state
 from cashbooks.contracts.common import Answerability
 from cashbooks.contracts.evaluation import ConversationSpec, QuerySuite
 from cashbooks.contracts.postprocess import mask_numbers, postprocess
@@ -152,6 +153,11 @@ class ChatSession:
             self._configs[name] = built[name]
         return self._configs[name]
 
+    @property
+    def dialogue_state(self) -> DialogueState:
+        """Structured conversation state derived strictly from displayed turns."""
+        return derive_dialogue_state(self.history)
+
     def reset(self) -> None:
         """Clear conversation history."""
         self.history.clear()
@@ -193,7 +199,7 @@ class ChatSession:
         """Run one user turn against the active configuration and update history."""
         o = self.config.answer(self.llm, self.history, question)
         raw = o.result.text
-        pp = postprocess(raw, o.known_evidence) if raw else None
+        pp = postprocess(raw, o.known_evidence, default_as_of=self.as_of) if raw else None
         resp = pp.response if pp else None
 
         issues: list[str] = []

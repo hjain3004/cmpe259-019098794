@@ -1,0 +1,59 @@
+{
+  "doc_id": "inv_SB-305",
+  "fields": {
+    "vendor_name": {
+      "text": "Solstice Box & Packaging",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "SB-305",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "06/09/2026",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 30",
+      "page": 1
+    },
+    "reference_or_po": {
+      "text": "PO-3146",
+      "page": 1
+    },
+    "subtotal": {
+      "text": "$240.00",
+      "page": 1
+    },
+    "tax": {
+      "text": "$0.00",
+      "page": 1
+    },
+    "total": {
+      "text": "$240.00",
+      "page": 1
+    },
+    "currency": {
+      "text": "USD",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Bayview Credit Union",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "005274819063",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "322271627",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Kraft bread bag, bundle of 250 12 bundle $20.00 $240.00",
+      "page": 1
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "doc_id": "inv_BP-310",
+  "fields": {
+    "vendor_name": {
+      "text": "BioPet Pharma Supply",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "BP-310",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "Sep 01, 2026",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Due on receipt",
+      "page": 1
+    },
+    "stated_due_date": {
+      "text": "Sep 01, 2026",
+      "page": 1
+    },
+    "total": {
+      "text": "$460.00",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Apex Digital Bank",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "008844112233",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "091000019",
+      "page": 1
+    },
+    "memo": {
+      "text": "Updated settlement account: please remit BP-310 to Apex Digital Bank account ending 2233.",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Flea and tick chewable, 12-pack 10 pack $46.00 $460.00",
+      "page": 1
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "doc_id": "inv_INV-902--linens",
+  "fields": {
+    "vendor_name": {
+      "text": "Pacific Vet Linens",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "INV-902",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "09/14/2026",
+      "page": 1
+    },
+    "stated_due_date": {
+      "text": "09/29/2026",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 15",
+      "page": 1
+    },
+    "reference_or_po": {
+      "text": "PO-4138",
+      "page": 1
+    },
+    "subtotal": {
+      "text": "$215.00",
+      "page": 1
+    },
+    "tax": {
+      "text": "$0.00",
+      "page": 1
+    },
+    "total": {
+      "text": "$215.00",
+      "page": 1
+    },
+    "currency": {
+      "text": "USD",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Coastline Credit Union",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "002847195501",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "321175261",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Autoclavable surgical drape pack 10 pack $21.50 $215.00",
+      "page": 1
+    }
+  ]
+}

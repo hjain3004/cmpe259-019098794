@@ -1,0 +1,47 @@
+{
+  "doc_id": "inv_MC-214",
+  "fields": {
+    "vendor_name": {
+      "text": "Meadowbrook Creamery",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "MC-214",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "Aug 24, 2026",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 30",
+      "page": 1
+    },
+    "total": {
+      "text": "$404.00",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Pacific Foothills Bank",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "006120948315",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "121042882",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Heavy whipping cream, 1 gal 20 gal $14.20 $284.00",
+      "page": 1
+    },
+    {
+      "text": "Whole milk, 1 gal 24 gal $5.00 $120.00",
+      "page": 1
+    }
+  ]
+}

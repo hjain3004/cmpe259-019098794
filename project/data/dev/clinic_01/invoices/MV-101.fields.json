@@ -1,0 +1,67 @@
+{
+  "doc_id": "inv_MV-101",
+  "fields": {
+    "vendor_name": {
+      "text": "MedVet Diagnostics Inc.",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "MV-101",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "07/22/2026",
+      "page": 1
+    },
+    "stated_due_date": {
+      "text": "08/21/2026",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 30",
+      "page": 1
+    },
+    "reference_or_po": {
+      "text": "PO-4101",
+      "page": 1
+    },
+    "subtotal": {
+      "text": "$570.00",
+      "page": 1
+    },
+    "tax": {
+      "text": "$50.00",
+      "page": 1
+    },
+    "total": {
+      "text": "$620.00",
+      "page": 1
+    },
+    "currency": {
+      "text": "USD",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "First Valley Bank",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "004185293014",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "121000358",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Canine snap test kit, box of 30 4 box $110.00 $440.00",
+      "page": 1
+    },
+    {
+      "text": "Hematology reagent pack 2 pack $65.00 $130.00",
+      "page": 1
+    }
+  ]
+}

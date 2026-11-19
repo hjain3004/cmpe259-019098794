@@ -1,0 +1,48 @@
+- generic [ref=e1]:
+  - link "Skip to question" [ref=e2] [cursor=pointer]:
+    - /url: "#question"
+  - banner [ref=e3]:
+    - link "CashBooks Assist home" [ref=e4] [cursor=pointer]:
+      - /url: /
+      - generic [aria-hidden] [ref=e5]: cb
+      - generic [ref=e6]: CashBooks Assist
+    - generic [ref=e7]:
+      - generic [ref=e8]: Offline rehearsal
+      - button "How it works" [ref=e9] [cursor=pointer]
+  - main [ref=e10]:
+    - generic [ref=e11]:
+      - generic [ref=e12]:
+        - generic [aria-hidden] [ref=e13]: ☷
+        - generic [ref=e14]:
+          - strong [ref=e15]: Ember & Oat Cafe
+          - generic [ref=e16]: Synthetic records as of Sep 24, 2026
+      - button "New conversation" [ref=e17] [cursor=pointer]
+    - region "Conversation" [ref=e49]:
+      - article [ref=e50]:
+        - paragraph [ref=e51]: Did I already pay invoice NS-1048?
+      - article [ref=e52]:
+        - generic [ref=e53]:
+          - generic [ref=e54]: cb
+          - generic [ref=e55]: CashBooks
+          - generic [ref=e56]: Answer
+        - paragraph [ref=e58]: Yes. Invoice NS-1048 for $842.00 USD was paid in full on September 12, 2026. The remaining balance is $0.00 USD.
+        - generic [ref=e59]:
+          - button "2 sources cited" [ref=e60] [cursor=pointer]
+          - button "How it answered" [ref=e61] [cursor=pointer]
+        - generic [ref=e62]:
+          - button "What date was it paid?" [ref=e63] [cursor=pointer]
+          - button "Pay it now." [ref=e64] [cursor=pointer]
+    - region "Ask CashBooks" [ref=e22]:
+      - generic [ref=e23]:
+        - generic [ref=e24]: Your question about bills or payments
+        - textbox "Your question about bills or payments" [active] [ref=e25]:
+          - /placeholder: Ask a question about your bills or payments…
+          - text: What date was it paid?
+        - generic [ref=e26]:
+          - generic [ref=e27]: Follow-up questions stay in this conversation.
+          - button "Ask CashBooks" [ref=e28] [cursor=pointer]
+      - generic [ref=e31]:
+        - generic [ref=e32]: Read-only. It cannot pay bills or change records.
+        - button "Tools + records" [ref=e36] [cursor=pointer]
+    - paragraph [ref=e47]: Offline rehearsal uses scripted answers and real local tools. Start live mode to record Claude answering your questions.
+    - generic [ref=e48]: Answers reflect the records available, which may be incomplete. Check important payment decisions.

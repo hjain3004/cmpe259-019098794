@@ -1,0 +1,47 @@
+{
+  "doc_id": "inv_MC-220",
+  "fields": {
+    "vendor_name": {
+      "text": "Meadowbrook Creamery",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "MC-220",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "Sep 10, 2026",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 15",
+      "page": 1
+    },
+    "total": {
+      "text": "$200.00",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Pacific Foothills Bank",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "006120948315",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "121042882",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Cultured buttermilk, 1 gal 10 gal $12.00 $120.00",
+      "page": 1
+    },
+    {
+      "text": "Whole milk, 1 gal 16 gal $5.00 $80.00",
+      "page": 1
+    }
+  ]
+}

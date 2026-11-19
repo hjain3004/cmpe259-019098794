@@ -17,10 +17,12 @@ and exits non-zero if anything is off.
 
 from __future__ import annotations
 
+import calendar
 import csv
 import json
 import re
 import sys
+from collections import Counter
 from datetime import date, timedelta
 from decimal import Decimal
 from pathlib import Path
@@ -44,15 +46,28 @@ def money(s: str, currency: str = "USD") -> str:
 DATE_FORMATS = {"northside": "%m/%d/%Y", "greenway": "%b %d, %Y", "beanworks": "%Y-%m-%d"}
 
 
-def fmt_date(iso: str, template: str) -> str:
-    return date.fromisoformat(iso).strftime(DATE_FORMATS.get(template, "%Y-%m-%d"))
+def fmt_date(iso: str, template: str, fmt_override: str | None = None) -> str:
+    return date.fromisoformat(iso).strftime(fmt_override or DATE_FORMATS.get(template, "%Y-%m-%d"))
+
+
+def _derived_due_date(issue_iso: str, payment_terms: str) -> str:
+    issue = date.fromisoformat(issue_iso)
+    raw = (payment_terms or "").strip()
+    low = raw.lower()
+    if "receipt" in low or low in ("cod", "cash on delivery"):
+        return issue.isoformat()
+    m = re.search(r"\d+", raw)
+    days = int(m.group()) if m else 0
+    if "eom" in low or "end of month" in low or "end of the month" in low:
+        eom = issue.replace(day=calendar.monthrange(issue.year, issue.month)[1])
+        return (eom + timedelta(days=days)).isoformat()
+    return (issue + timedelta(days=days)).isoformat()
 
 
 def due_date(inv: dict) -> str:
     if inv.get("stated_due_date"):
         return inv["stated_due_date"]
-    days = int(re.search(r"\d+", inv["payment_terms"]).group())
-    return (date.fromisoformat(inv["issue_date"]) + timedelta(days=days)).isoformat()
+    return _derived_due_date(inv["issue_date"], inv["payment_terms"])
 
 
 # ---------------------------------------------------------------- validation
@@ -77,8 +92,7 @@ def validate_ledger(ledger: dict) -> None:
         if Decimal(inv["subtotal"]) + Decimal(inv["tax"]) != Decimal(inv["total"]) and not planted.get("stated_total_mismatch"):
             errs.append(f"{n}: subtotal + tax != total")
         if inv.get("stated_due_date") and not planted.get("due_date_conflict"):
-            days = int(re.search(r"\d+", inv["payment_terms"]).group())
-            derived = (date.fromisoformat(inv["issue_date"]) + timedelta(days=days)).isoformat()
+            derived = _derived_due_date(inv["issue_date"], inv["payment_terms"])
             if inv["stated_due_date"] != derived:
                 errs.append(f"{n}: stated_due_date {inv['stated_due_date']} != derived {derived}")
     txns = {t["txn_id"]: t for t in ledger["bank"]}
@@ -175,14 +189,16 @@ def _draw_memo(p: Page, inv: dict, y: float, label: str = "Memo:") -> None:
 def layout_northside(p: Page, inv: dict, vendor: dict, biz: dict) -> None:
     t = "northside"
     cur = inv.get("currency", "USD")
+    dfmt = inv.get("date_format") or vendor.get("date_format")
+    tagline = vendor.get("tagline") or "1450 Harbor Way, Oakland, CA 94607  |  (415) 555-0142"
     p.text(54, 740, inv["printed_vendor_name"], size=18, bold=True, field="vendor_name")
-    p.text(54, 724, "1450 Harbor Way, Oakland, CA 94607  |  (415) 555-0142")
+    p.text(54, 724, tagline)
     p.text(420, 740, "INVOICE", size=16, bold=True)
     p.text(420, 720, f"Invoice No: {inv['invoice_number']}", field="invoice_number", value=inv["invoice_number"])
-    issue = fmt_date(inv["issue_date"], t)
+    issue = fmt_date(inv["issue_date"], t, dfmt)
     p.text(420, 706, f"Invoice Date: {issue}", field="issue_date", value=issue)
     if inv["print_due_date"]:
-        due = fmt_date(due_date(inv), t)
+        due = fmt_date(due_date(inv), t, dfmt)
         p.text(420, 692, f"Due Date: {due}", field="stated_due_date", value=due)
     p.text(420, 678, f"Terms: {inv['payment_terms']}", field="payment_terms", value=inv["payment_terms"])
     if inv.get("reference_or_po"):
@@ -213,15 +229,17 @@ def layout_northside(p: Page, inv: dict, vendor: dict, biz: dict) -> None:
 def layout_greenway(p: Page, inv: dict, vendor: dict, biz: dict) -> None:
     t = "greenway"
     cur = inv.get("currency", "USD")
+    dfmt = inv.get("date_format") or vendor.get("date_format")
+    tagline = vendor.get("tagline") or "Fresh produce, delivered daily  |  Hayward, CA  |  (510) 555-0187"
     p.text(54, 742, inv["printed_vendor_name"], size=20, bold=True, field="vendor_name")
-    p.text(54, 726, "Fresh produce, delivered daily  |  Hayward, CA  |  (510) 555-0187", size=9)
+    p.text(54, 726, tagline, size=9)
     p.rule(712)
     p.text(54, 694, f"Invoice # {inv['invoice_number']}", size=12, bold=True, field="invoice_number", value=inv["invoice_number"])
-    issue = fmt_date(inv["issue_date"], t)
+    issue = fmt_date(inv["issue_date"], t, dfmt)
     p.text(54, 678, f"Date: {issue}", field="issue_date", value=issue)
     p.text(54, 664, f"Payment terms: {inv['payment_terms']}", field="payment_terms", value=inv["payment_terms"])
     if inv.get("print_due_date"):
-        due = fmt_date(due_date(inv), t)
+        due = fmt_date(due_date(inv), t, dfmt)
         p.text(54, 650, f"Due date: {due}", field="stated_due_date", value=due)
     if inv.get("reference_or_po"):
         p.text(330, 664, f"Ref: {inv['reference_or_po']}", field="reference_or_po", value=inv["reference_or_po"])
@@ -244,14 +262,16 @@ def layout_greenway(p: Page, inv: dict, vendor: dict, biz: dict) -> None:
 def layout_beanworks(p: Page, inv: dict, vendor: dict, biz: dict) -> None:
     t = "beanworks"
     cur = inv.get("currency", "USD")
+    dfmt = inv.get("date_format") or vendor.get("date_format")
+    tagline = vendor.get("tagline") or "Small-batch roasters  |  2210 Third St, San Francisco, CA"
     p.text(54, 742, "TAX INVOICE", size=10, bold=True)
     p.text(54, 722, inv["printed_vendor_name"], size=16, bold=True, field="vendor_name")
-    p.text(54, 708, "Small-batch roasters  |  2210 Third St, San Francisco, CA", size=9)
-    issue = fmt_date(inv["issue_date"], t)
+    p.text(54, 708, tagline, size=9)
+    issue = fmt_date(inv["issue_date"], t, dfmt)
     p.text(360, 742, f"Number: {inv['invoice_number']}", field="invoice_number", value=inv["invoice_number"])
     p.text(360, 728, f"Issued: {issue}", field="issue_date", value=issue)
     if inv["print_due_date"]:
-        due = fmt_date(due_date(inv), t)
+        due = fmt_date(due_date(inv), t, dfmt)
         p.text(360, 714, f"Due: {due}", field="stated_due_date", value=due)
     p.text(360, 700, f"Terms: {inv['payment_terms']}", field="payment_terms", value=inv["payment_terms"])
     if inv.get("reference_or_po"):
@@ -280,17 +300,18 @@ def layout_beanworks(p: Page, inv: dict, vendor: dict, biz: dict) -> None:
 LAYOUTS = {"northside": layout_northside, "greenway": layout_greenway, "beanworks": layout_beanworks}
 
 
-def render_credit(path: Path, cr: dict, vendor: dict, biz: dict) -> Page:
+def render_credit(path: Path, cr: dict, vendor: dict, biz: dict, currency: str = "USD") -> Page:
     p = Page(path)
     p.text(54, 740, vendor["canonical_name"], size=18, bold=True, field="vendor_name")
     p.text(400, 740, "CREDIT NOTE", size=14, bold=True)
     p.text(400, 722, f"Credit No: {cr['credit_id']}", field="credit_id", value=cr["credit_id"])
-    p.text(400, 708, f"Date: {fmt_date(cr['issued_on'], vendor['template'])}", field="issue_date",
-           value=fmt_date(cr["issued_on"], vendor["template"]))
+    dfmt = vendor.get("date_format")
+    p.text(400, 708, f"Date: {fmt_date(cr['issued_on'], vendor['template'], dfmt)}", field="issue_date",
+           value=fmt_date(cr["issued_on"], vendor["template"], dfmt))
     p.text(54, 690, f"Customer: {biz['name']}")
     p.text(54, 660, f"Applies to invoice: {cr['invoice_number']}", field="invoice_ref", value=cr["invoice_number"])
     p.text(54, 646, f"Reason: {cr['reason']}")
-    p.text(54, 620, f"Credit amount: {money(cr['amount'])}", bold=True, field="total", value=money(cr["amount"]))
+    p.text(54, 620, f"Credit amount: {money(cr['amount'], currency)}", bold=True, field="total", value=money(cr["amount"], currency))
     p.save()
     return p
 
@@ -332,28 +353,35 @@ def render_bundle(bundle: Path) -> list[str]:
     out = []
     (bundle / "invoices").mkdir(exist_ok=True)
     (bundle / "credits").mkdir(exist_ok=True)
+    inv_counts = Counter(i["invoice_number"] for i in ledger["invoices"])
     for inv in ledger["invoices"]:
         v = vendors[inv["vendor_id"]]
-        pdf = bundle / "invoices" / f"{inv['invoice_number']}.pdf"
+        num = inv["invoice_number"]
+        stem = num if inv_counts[num] == 1 else f"{num}--{inv['vendor_id'].removeprefix('v_')}"
+        pdf = bundle / "invoices" / f"{stem}.pdf"
         mf_path = pdf.with_suffix(".fields.json")
         old_mf = mf_path.read_text() if mf_path.exists() else None
         old_pdf = pdf.read_bytes() if pdf.exists() else None
         p = Page(pdf)
         LAYOUTS[v["template"]](p, inv, v, biz)
         p.save()
-        m = manifest(pdf, p, f"inv_{inv['invoice_number']}")
+        m = manifest(pdf, p, f"inv_{stem}")
         new_mf = json.dumps(m, indent=2) + "\n"
         mf_path.write_text(new_mf)
         if old_mf == new_mf and old_pdf is not None:
             pdf.write_bytes(old_pdf)
-        out.append(f"invoice {inv['invoice_number']:8} {v['template']:9} {len(m['fields'])} fields, {len(m['lines'])} lines")
+        out.append(f"invoice {stem:18} {v['template']:9} {len(m['fields'])} fields, {len(m['lines'])} lines")
     for cr in ledger.get("credits", []):
-        inv = next(i for i in ledger["invoices"] if i["invoice_number"] == cr["invoice_number"])
+        inv = next(
+            i for i in ledger["invoices"]
+            if i["invoice_number"] == cr["invoice_number"]
+            and (not cr.get("vendor_id") or i["vendor_id"] == cr["vendor_id"])
+        )
         pdf = bundle / "credits" / f"{cr['credit_id']}.pdf"
         mf_path = pdf.with_suffix(".fields.json")
         old_mf = mf_path.read_text() if mf_path.exists() else None
         old_pdf = pdf.read_bytes() if pdf.exists() else None
-        p = render_credit(pdf, cr, vendors[inv["vendor_id"]], biz)
+        p = render_credit(pdf, cr, vendors[inv["vendor_id"]], biz, inv.get("currency", "USD"))
         m = manifest(pdf, p, f"cn_{cr['credit_id']}")
         new_mf = json.dumps(m, indent=2) + "\n"
         mf_path.write_text(new_mf)
@@ -369,8 +397,12 @@ def render_bundle(bundle: Path) -> list[str]:
         w.writeheader()
         w.writerows(ledger["bank"])
     out.append(f"bank rows {len(ledger['bank'])}")
-    history = [{k: v[k] for k in ("vendor_id", "canonical_name", "aliases", "verified_payment", "trusted_contact")}
-               for v in ledger["vendors"]]
+    history = []
+    for v in ledger["vendors"]:
+        entry = {k: v[k] for k in ("vendor_id", "canonical_name", "aliases", "verified_payment", "trusted_contact")}
+        if v.get("date_order") is not None:
+            entry["date_order"] = v["date_order"]
+        history.append(entry)
     (bundle / "vendor_history.json").write_text(json.dumps(history, indent=2) + "\n")
     out.append(f"vendors {len(history)}")
     return out

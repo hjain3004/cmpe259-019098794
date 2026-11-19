@@ -34,7 +34,19 @@ class ReferenceExtractor:
 
     def _doc(self, text: str, sub: str = "invoices") -> str:
         """The document's own number is printed before any number it refers to."""
-        hits = [(text.find(k), k) for k in self.manifests if self.kind[k] == sub and k in text]
+        hits = []
+        for k, mf in self.manifests.items():
+            if self.kind[k] != sub:
+                continue
+            num = k.split("--", 1)[0]
+            pos = text.find(num)
+            if pos == -1:
+                continue
+            if "--" in k:
+                vname = (mf.get("fields", {}).get("vendor_name") or {}).get("text", "")
+                if vname and vname not in text:
+                    continue
+            hits.append((pos, k))
         return min(hits)[1]
 
     def complete(self, system: str, messages: list[Message], json_schema: dict | None = None) -> LLMResult:
@@ -64,9 +76,14 @@ class ReferenceExtractor:
         return out
 
     def _lines(self, text: str) -> dict:
-        num = self._doc(text)
-        inv = next(i for i in self.ledger["invoices"] if i["invoice_number"] == num)
-        printed = self.manifests[num].get("lines", [])
+        stem = self._doc(text)
+        num = stem.split("--", 1)[0]
+        vname = (self.manifests[stem].get("fields", {}).get("vendor_name") or {}).get("text")
+        inv = next(
+            i for i in self.ledger["invoices"]
+            if i["invoice_number"] == num and ("--" not in stem or i.get("printed_vendor_name") == vname)
+        )
+        printed = self.manifests[stem].get("lines", [])
         items = []
         for i, ln in enumerate(inv["lines"]):
             src = printed[i] if i < len(printed) else {"text": ln["description"], "page": 1}

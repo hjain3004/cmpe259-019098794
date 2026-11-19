@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#254d88">
+  <title>CashBooks Assist</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#question">Skip to question</a>
+  <header class="site-header">
+    <a href="/" class="brand" aria-label="CashBooks Assist home"><span class="brand-mark" aria-hidden="true">cb</span><span>CashBooks <span class="brand-light">Assist</span></span></a>
+    <div class="header-actions"><span id="mode-label" class="mode-label">Connecting…</span><button id="about-button" class="quiet-button">How it works</button></div>
+  </header>
+  <main id="workspace" class="workspace">
+    <div class="workspace-bar">
+      <div class="business"><span class="business-icon" aria-hidden="true">☷</span><div><strong id="business-name">Ember &amp; Oat Cafe</strong><span id="record-date">Synthetic business records</span></div></div>
+      <button id="reset-button" class="quiet-button" disabled>New conversation</button>
+    </div>
+    <section id="welcome" class="welcome" aria-labelledby="welcome-title">
+      <p class="intro-label">A little clarity for your books</p>
+      <h1 id="welcome-title">Ask about your bills<br>and payments.</h1>
+      <p class="welcome-copy">Get a clear answer from your business records. <br>See what supports it, and what still needs checking.</p>
+    </section>
+    <section id="conversation" class="conversation" aria-label="Conversation" aria-live="polite" aria-relevant="additions"></section>
+    <div id="pending" class="pending" role="status" hidden><span class="loading-dot" aria-hidden="true"></span><span id="pending-text">Waiting for the assistant’s response…</span></div>
+    <div id="page-error" class="page-error" role="alert" hidden></div>
+    <section class="composer-area" aria-label="Ask CashBooks">
+      <form id="question-form" class="composer">
+        <label for="question" class="sr-only">Your question about bills or payments</label>
+        <textarea id="question" rows="2" maxlength="2000" placeholder="Ask a question about your bills or payments…" disabled></textarea>
+        <div class="composer-bottom"><span class="composer-hint">Follow-up questions stay in this conversation.</span><button id="send-button" class="primary-button" type="submit" disabled>Ask CashBooks <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></button></div>
+      </form>
+      <div class="composer-caption"><span><svg class="lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="10" width="12" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Read-only. It cannot pay bills or change records.</span><button id="method-button" class="text-button" aria-haspopup="dialog">Tools + records</button></div>
+    </section>
+    <section id="suggestions" class="suggestions" aria-label="Suggested questions"></section>
+    <p id="rehearsal-note" class="rehearsal-note" hidden>Offline rehearsal uses scripted answers and real local tools. Start live mode to record Claude answering your questions.</p>
+    <footer class="page-footer">Answers reflect the records available, which may be incomplete. Check important payment decisions.</footer>
+  </main>
+  <dialog id="details-dialog" class="details-dialog" aria-labelledby="details-title">
+    <div class="dialog-heading"><h2 id="details-title">How it works</h2><button id="close-details" class="icon-button" aria-label="Close details">×</button></div>
+    <div id="details-content"></div>
+  </dialog>
+  <dialog id="evidence-dialog" class="evidence-dialog" aria-labelledby="evidence-title">
+    <div class="ev-header">
+      <h2 id="evidence-title">Supporting evidence</h2>
+      <div id="ev-controls" class="ev-controls">
+        <button id="ev-jump" class="ev-tool-button" type="button" hidden>Jump to highlight</button>
+        <button id="ev-zoom-out" class="ev-tool-button" type="button" aria-label="Zoom out" hidden>−</button>
+        <span id="ev-zoom-readout" class="ev-zoom-readout" hidden>100%</span>
+        <button id="ev-zoom-in" class="ev-tool-button" type="button" aria-label="Zoom in" hidden>+</button>
+        <button id="ev-zoom-reset" class="ev-tool-button" type="button" hidden>Reset</button>
+        <button id="ev-fullscreen" class="ev-tool-button" type="button" aria-pressed="false" hidden>Full screen</button>
+        <button id="close-evidence" class="icon-button" type="button" aria-label="Close evidence viewer">×</button>
+      </div>
+    </div>
+    <div id="ev-stage" class="ev-stage"></div>
+    <div id="ev-hint" class="ev-hint" hidden>Click page to toggle full screen · Scroll or pinch to zoom · Drag to pan</div>
+    <div id="ev-claim" class="ev-claim" hidden>
+      <span class="ev-claim-label">Assistant's claim</span>
+      <p id="ev-claim-text"></p>
+    </div>
+  </dialog>
+</body>
+</html>

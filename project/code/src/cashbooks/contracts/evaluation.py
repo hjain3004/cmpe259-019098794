@@ -31,7 +31,7 @@ class TurnSpec(Strict):
 
 
 class ConversationSpec(Strict):
-    id: str = Field(pattern=r"^Q\d{2}$")
+    id: str = Field(pattern=r"^(?:Q\d{2}|D\d{3})$")
     category: Category
     scenario: str = Field(description="Scenario family the bundle must contain.")
     labels: list[ReasoningLabel] = Field(min_length=1)

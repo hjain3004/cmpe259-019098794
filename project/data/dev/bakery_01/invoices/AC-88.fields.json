@@ -1,0 +1,67 @@
+{
+  "doc_id": "inv_AC-88",
+  "fields": {
+    "vendor_name": {
+      "text": "Alpen Cocoa",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "AC-88",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "03/09/2026",
+      "page": 1
+    },
+    "stated_due_date": {
+      "text": "03/10/2026",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 30",
+      "page": 1
+    },
+    "reference_or_po": {
+      "text": "PO-3140",
+      "page": 1
+    },
+    "subtotal": {
+      "text": "\u20ac700.00",
+      "page": 1
+    },
+    "tax": {
+      "text": "\u20ac0.00",
+      "page": 1
+    },
+    "total": {
+      "text": "\u20ac700.00",
+      "page": 1
+    },
+    "currency": {
+      "text": "EUR",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Rhine Commerce Bank",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "008451209712",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "026009593",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Dutch-process cocoa powder, 5 kg bag 10 bag \u20ac48.00 \u20ac480.00",
+      "page": 1
+    },
+    {
+      "text": "Madagascar vanilla bean paste, 1 kg 2 jar \u20ac110.00 \u20ac220.00",
+      "page": 1
+    }
+  ]
+}

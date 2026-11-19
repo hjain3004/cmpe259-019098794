@@ -1,0 +1,63 @@
+{
+  "doc_id": "inv_AV-79",
+  "fields": {
+    "vendor_name": {
+      "text": "Alpine Vet Equipment AG",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "AV-79",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "12/09/2026",
+      "page": 1
+    },
+    "stated_due_date": {
+      "text": "30/09/2026",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "EOM",
+      "page": 1
+    },
+    "reference_or_po": {
+      "text": "PO-4133",
+      "page": 1
+    },
+    "subtotal": {
+      "text": "\u20ac420.00",
+      "page": 1
+    },
+    "tax": {
+      "text": "\u20ac0.00",
+      "page": 1
+    },
+    "total": {
+      "text": "\u20ac420.00",
+      "page": 1
+    },
+    "currency": {
+      "text": "EUR",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Zurich Trade Bank",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "009641203389",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "026009593",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Portable pulse oximeter sensor kit 2 kit \u20ac210.00 \u20ac420.00",
+      "page": 1
+    }
+  ]
+}

@@ -33,9 +33,11 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("run", type=Path)
     ap.add_argument("bundle", type=Path)
+    ap.add_argument("--queries-file", type=Path, help="query manifest YAML (default evaluation/queries.yaml)")
     a = ap.parse_args()
 
-    suite = QuerySuite.model_validate(yaml.safe_load((PROJECT / "evaluation" / "queries.yaml").read_text()))
+    qpath = a.queries_file or (PROJECT / "evaluation" / "queries.yaml")
+    suite = QuerySuite.model_validate(yaml.safe_load(qpath.read_text()))
     specs = {c.id: c for c in suite.conversations}
     gold = yaml.safe_load((a.bundle / "gold.yaml").read_text())
     ledger = json.loads((a.bundle / "ledger.json").read_text())
@@ -45,8 +47,9 @@ def main() -> int:
     conn.row_factory = sqlite3.Row
     rows = read_log(a.run / "log.jsonl")
     names = sorted({r.configuration for r in rows})
+    as_of = date.fromisoformat(biz["evaluation_clock"])
     known = {n: c.known for n, c in build_configs(a.bundle, gold_store, Store(conn, biz["business_id"]), biz["name"],
-                                                  date.fromisoformat(biz["evaluation_clock"]), names).items()}
+                                                  as_of, names).items()}
 
     out = a.run / "rescored"
     out.mkdir(exist_ok=True)
@@ -63,7 +66,7 @@ def main() -> int:
         gold_entry = gold[r.query_id]
         gold_turns = list(gold_entry.get("turns", []) if isinstance(gold_entry, dict) else gold_entry)
         g = gold_turns[gi] if gi < len(gold_turns) else {}
-        pp = postprocess(r.raw_response, known[r.configuration]) if r.raw_response else None
+        pp = postprocess(r.raw_response, known[r.configuration], default_as_of=as_of) if r.raw_response else None
         resp = pp.response if pp else None
         sc = score_turn(resp, turn.expected, g.get("values", {}), g.get("evidence", []),
                         list(turn.must_not) + list(g.get("must_not", [])))
@@ -81,7 +84,8 @@ def main() -> int:
     conv_ids = [q for q in gold if q in specs and q in {r.query_id for r in rows}]
     qlabels = {c.id: list(c.labels) for c in suite.conversations}
     lines = write_run_outputs(scored, out, meta["run"] + " (rescored)", meta["model"], meta["commit"], str(a.bundle),
-                              conv_ids, len(scored) // len(names), PROMPT_VERSION, query_labels=qlabels)
+                              conv_ids, len(scored) // len(names), meta.get("prompt_version", PROMPT_VERSION),
+                              query_labels=qlabels)
     print(f"{changed} turn verdicts changed; wrote {out}")
     print("\n".join(lines[4:4 + len(names) + 2]))
     return 0

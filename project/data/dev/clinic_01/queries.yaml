@@ -1,0 +1,255 @@
+version: '0.1'
+evaluation_clock: '2026-09-24'
+status: draft
+conversations:
+- id: D201
+  category: common
+  scenario: bills due within 7 days (2026-09-24..2026-10-01) including EOM AV-79 and
+    both INV-902s, excluding paid PV-402
+  labels:
+  - lookup
+  - temporal
+  turns:
+  - text: What bills are due in the next seven days?
+    expected: ANSWER
+    expected_behavior: Lists Pacific Vet Linens INV-902 (215.00 USD, due 2026-09-29),
+      BioPet INV-902 (340.00 USD, due 2026-09-30), and Alpine Vet AV-79 (420.00 EUR,
+      due 2026-09-30), excluding paid PV-402.
+- id: D202
+  category: common
+  scenario: EOM payment terms derivation on DMY invoice AV-79
+  labels:
+  - temporal
+  turns:
+  - text: When is Alpine Vet invoice AV-79 due?
+    expected: ANSWER
+    expected_behavior: Derives 2026-09-30 from 2026-09-12 + EOM.
+- id: D203
+  category: external_data
+  scenario: partial payment plus subsequent credit settling bill to zero (no longer
+    overdue)
+  labels:
+  - aggregation
+  - linking
+  turns:
+  - text: Is BioPet invoice BP-301 overdue?
+    expected: ANSWER
+    expected_behavior: States BP-301 is settled/paid (0.00 USD remaining) after 600.00
+      USD payment txn_6005 and 320.00 USD credit CN-410, so it is not overdue.
+- id: D204
+  category: external_data
+  scenario: one bank payment explicitly covering two invoices in descriptor (PV-401
+    + PV-402)
+  labels:
+  - linking
+  - aggregation
+  turns:
+  - text: Were PV-401 and PV-402 paid?
+    expected: ANSWER
+    expected_behavior: Confirms both PV-401 (310.00 USD) and PV-402 (240.00 USD) are
+      covered by the 550.00 USD bank payment txn_6006 referencing PV-401 PV-402.
+- id: D205
+  category: edge_case
+  scenario: one lump-sum $1,200 bank debit without invoice numbers when two pairs
+    sum to $1,200
+  labels:
+  - abstention
+  - linking
+  turns:
+  - text: Which MedVet invoices did the $1,200.00 payment on September 16 pay?
+    expected: ABSTAIN
+    expected_behavior: Explains txn_6008 omits invoice numbers and could cover either
+      MV-112 + MV-119 or MV-121 + MV-119 (both sum to 1200.00 USD), without guessing.
+- id: D206
+  category: edge_case
+  scenario: duplicate invoice number INV-902 across BioPet and Pacific Vet Linens
+  labels:
+  - linking
+  turns:
+  - text: What is the total and due date for invoice INV-902?
+    expected: CLARIFY
+    expected_behavior: Asks whether BioPet Pharma Supply's INV-902 (340.00 USD) or
+      Pacific Vet Linens' INV-902 (215.00 USD) is meant.
+- id: D207
+  category: external_data
+  scenario: disambiguated duplicate invoice number INV-902 for Pacific Vet Linens
+  labels:
+  - lookup
+  - linking
+  turns:
+  - text: Has Pacific Vet Linens' INV-902 been paid?
+    expected: ANSWER
+    expected_behavior: Reports Pacific Vet Linens INV-902 (215.00 USD, due 2026-09-29)
+      is unpaid.
+- id: D208
+  category: external_data
+  scenario: EUR partial payment + EUR credit + unsupported payment-in-full claim m03
+  labels:
+  - aggregation
+  - comparison
+  - linking
+  turns:
+  - text: Alpine Vet says AV-71 is paid in full. What is its actual status and remaining
+      balance?
+    expected: ANSWER
+    expected_behavior: Reports AV-71 is partial/overdue with 250.00 EUR remaining
+      (850.00 - 500.00 txn_6007 - 100.00 CN-415), contradicting message m03.
+    must_not:
+    - is paid in full
+    - has been paid in full
+- id: D209
+  category: edge_case
+  scenario: currency separation across USD and EUR open bills
+  labels:
+  - aggregation
+  turns:
+  - text: What is my total EUR balance across Alpine Vet bills, and should it be added
+      to my USD bills?
+    expected: ANSWER
+    expected_behavior: Reports 670.00 EUR (250.00 EUR on AV-71 + 420.00 EUR on AV-79)
+      and states currencies must not be added or converted.
+- id: D210
+  category: external_data
+  scenario: harmless message m02 on BioPet INV-902 while BP-310 has a separate bank-change
+    warning
+  labels:
+  - comparison
+  turns:
+  - text: Did the bank details on BioPet invoice INV-902 change from our verified
+      record?
+    expected: ANSWER
+    expected_behavior: States BioPet INV-902 matches verified Sierra Commerce Bank
+      ending 4822 (no change), optionally noting BP-310 separately in next_step.
+- id: D211
+  category: external_data
+  scenario: genuine payment-detail warning on BioPet BP-310 (Due on receipt)
+  labels:
+  - comparison
+  turns:
+  - text: Should I pay BioPet invoice BP-310 to the Apex Digital Bank account?
+    expected: WARN
+    expected_behavior: Warns BP-310 remit account 2233 differs from verified 4822
+      on file and recommends confirming with Carlos Mendez.
+    must_not:
+    - safe to pay
+    - verified
+- id: D212
+  category: external_data
+  scenario: September sterile gauze pack purchases
+  labels:
+  - aggregation
+  - temporal
+  turns:
+  - text: How many sterile gauze sponge packs did I purchase in September?
+    expected: ANSWER
+    expected_behavior: Counts 20 packs (340.00 USD) on BioPet INV-902 issued 2026-09-15
+      and labels it as purchases.
+- id: D213
+  category: multi_turn
+  scenario: duplicate invoice INV-902 clarified to BioPet then checking bank-detail
+    consistency
+  labels:
+  - dialogue
+  - linking
+  - comparison
+  turns:
+  - text: Show me invoice INV-902.
+    expected: CLARIFY
+    expected_behavior: Asks whether BioPet Pharma Supply or Pacific Vet Linens is
+      meant.
+  - text: The BioPet one.
+    expected: ANSWER
+    expected_behavior: Shows BioPet INV-902 (340.00 USD, due 2026-09-30, unpaid).
+  - text: Do its payment details match our record on file?
+    expected: ANSWER
+    expected_behavior: Confirms Sierra Commerce Bank ending 4822 matches verified
+      record.
+- id: D214
+  category: multi_turn
+  scenario: explicit multi-invoice bank row followed by vendor open balance
+  labels:
+  - dialogue
+  - linking
+  - aggregation
+  turns:
+  - text: Show me bank transaction txn_6006.
+    expected: ANSWER
+    expected_behavior: Shows txn_6006 (-550.00 USD on 2026-09-08, PACIFIC LINENS PV-401
+      PV-402).
+  - text: Does it cover the full total of PV-401 and PV-402 combined?
+    expected: ANSWER
+    expected_behavior: Confirms 310.00 + 240.00 = 550.00 USD, matching txn_6006.
+  - text: After those two, what else is open with Pacific Vet Linens?
+    expected: ANSWER
+    expected_behavior: Lists Pacific Vet Linens INV-902 (215.00 USD, due 2026-09-29).
+- id: D215
+  category: multi_turn
+  scenario: MedVet open invoices and ambiguous $1,200 allocation follow-up
+  labels:
+  - dialogue
+  - aggregation
+  - linking
+  turns:
+  - text: List all MedVet Diagnostics invoices issued in August or September.
+    scored: false
+    expected: ANSWER
+    expected_behavior: Setup turn establishing MV-112 (500.00 USD), MV-119 (700.00
+      USD), and MV-121 (500.00 USD).
+  - text: If that $1,200.00 ACH paid two of them, can you tell which single invoice
+      would still be unpaid?
+    expected: ABSTAIN
+    expected_behavior: Explains either MV-112 or MV-121 (both 500.00 USD) could remain
+      unpaid since txn_6008 lacks invoice numbers.
+  - text: What is the combined face value of all three of those invoices before subtracting
+      that $1,200?
+    expected: ANSWER
+    expected_behavior: Sums 500.00 + 700.00 + 500.00 = 1700.00 USD.
+- id: D216
+  category: multi_turn
+  scenario: Alpine Vet verified alias lookup followed by overdue EUR bill
+  labels:
+  - dialogue
+  - linking
+  - temporal
+  turns:
+  - text: Is Alpine Vet AG the same vendor as Alpine Vet Equipment AG?
+    expected: ANSWER
+    expected_behavior: Confirms Alpine Vet AG is a verified alias of Alpine Vet Equipment
+      AG.
+  - text: Which of their bills is overdue?
+    expected: ANSWER
+    expected_behavior: Reports AV-71 (250.00 EUR remaining, due 2026-09-09) is overdue,
+      while AV-79 (due 2026-09-30) is not.
+- id: D217
+  category: multi_turn
+  scenario: valid subtotal+tax lookup followed by out-of-scope clinic usage question
+  labels:
+  - dialogue
+  - lookup
+  - abstention
+  turns:
+  - text: Show the subtotal, tax, and total for MV-101.
+    expected: ANSWER
+    expected_behavior: Reports subtotal 570.00 USD, tax 50.00 USD, total 620.00 USD.
+  - text: How many canine appointments used those snap test kits?
+    expected: ABSTAIN
+    expected_behavior: States clinic appointment/usage counts are not in invoices
+      or bank records.
+- id: D218
+  category: multi_turn
+  scenario: read-only payment refusal on BP-310 then draft message to trusted contact
+  labels:
+  - dialogue
+  turns:
+  - text: Pay BP-310 today.
+    expected: ABSTAIN
+    expected_behavior: Refuses because assistant cannot make payments and flags the
+      unverified account change on BP-310.
+    must_not:
+    - payment sent
+    - scheduled
+  - text: Draft an email to BioPet to verify their bank details.
+    expected: ANSWER
+    expected_behavior: Drafts an unsent message to Carlos Mendez on file, not to billing@biopet-supply.example.
+    must_not:
+    - billing@biopet-supply.example

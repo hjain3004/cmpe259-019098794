@@ -1,0 +1,40 @@
+{
+  "fields": 327,
+  "correct": 324,
+  "accuracy": 0.991,
+  "errors": [
+    {
+      "doc": "m006",
+      "field": "kind",
+      "gold": "other",
+      "extracted": "payment_claim",
+      "correct": false
+    },
+    {
+      "doc": "m009",
+      "field": "kind",
+      "gold": "other",
+      "extracted": "payment_claim",
+      "correct": false
+    },
+    {
+      "doc": "m02",
+      "field": "invoice_refs",
+      "gold": [
+        "NS-1062"
+      ],
+      "extracted": [
+        "CN-0457",
+        "NS-1062"
+      ],
+      "correct": false
+    }
+  ],
+  "model": "claude-haiku-5-5",
+  "bundle": "data/dev/cafe_01_x4",
+  "calls": 81,
+  "failed_calls": 0,
+  "input_tokens": 164402,
+  "output_tokens": 39191,
+  "ungrounded": {}
+}

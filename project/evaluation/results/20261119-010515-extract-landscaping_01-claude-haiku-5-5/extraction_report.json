@@ -1,0 +1,33 @@
+{
+  "fields": 126,
+  "correct": 124,
+  "accuracy": 0.984,
+  "errors": [
+    {
+      "doc": "m02",
+      "field": "kind",
+      "gold": "reminder",
+      "extracted": "correction",
+      "correct": false
+    },
+    {
+      "doc": "m02",
+      "field": "invoice_refs",
+      "gold": [
+        "PL-314"
+      ],
+      "extracted": [
+        "CN-0921",
+        "PL-314"
+      ],
+      "correct": false
+    }
+  ],
+  "model": "claude-haiku-5-5",
+  "bundle": "data/test/landscaping_01",
+  "calls": 31,
+  "failed_calls": 0,
+  "input_tokens": 63653,
+  "output_tokens": 15174,
+  "ungrounded": {}
+}

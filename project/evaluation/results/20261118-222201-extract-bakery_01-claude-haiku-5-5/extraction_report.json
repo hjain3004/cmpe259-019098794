@@ -1,0 +1,84 @@
+{
+  "fields": 104,
+  "correct": 95,
+  "accuracy": 0.913,
+  "errors": [
+    {
+      "doc": "SB-305",
+      "field": "invoice_number",
+      "gold": "SB-305",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "SB-305",
+      "field": "vendor_id",
+      "gold": "v_packaging",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "SB-305",
+      "field": "issue_date",
+      "gold": "2026-09-06",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "SB-305",
+      "field": "total",
+      "gold": "240.00",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "SB-305",
+      "field": "remit_account_last4",
+      "gold": "9063",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "SB-305",
+      "field": "line_count",
+      "gold": 1,
+      "extracted": 0,
+      "correct": false
+    },
+    {
+      "doc": "SB-305",
+      "field": "line1.line_total",
+      "gold": "240.00",
+      "extracted": null,
+      "correct": false
+    },
+    {
+      "doc": "m02",
+      "field": "kind",
+      "gold": "reminder",
+      "extracted": "correction",
+      "correct": false
+    },
+    {
+      "doc": "m02",
+      "field": "invoice_refs",
+      "gold": [
+        "GC-125",
+        "INV-204"
+      ],
+      "extracted": [
+        "CN-301",
+        "GC-125",
+        "INV-204"
+      ],
+      "correct": false
+    }
+  ],
+  "model": "claude-haiku-5-5",
+  "bundle": "data/dev/bakery_01",
+  "calls": 27,
+  "failed_calls": 0,
+  "input_tokens": 54918,
+  "output_tokens": 12843,
+  "ungrounded": {}
+}

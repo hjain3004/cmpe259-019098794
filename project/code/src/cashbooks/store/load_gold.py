@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import re
 import sqlite3
+from collections import Counter
 from datetime import date
 from decimal import Decimal
 from pathlib import Path
@@ -79,15 +80,25 @@ def _spans_from_manifest(business_id: str, doc_id: str, pdf: Path, manifest: dic
     return spans, ungrounded
 
 
+def _invoice_stem(inv: dict, inv_counts: Counter[str]) -> str:
+    num = inv["invoice_number"]
+    if inv_counts[num] <= 1:
+        return num
+    return f"{num}--{inv['vendor_id'].removeprefix('v_')}"
+
+
 def gold_links(bundle_dir: str | Path) -> list[PaymentLink]:
     """Return the ground-truth payment links from ledger.json (for scoring and reports only, never stored in C4)."""
     bundle = Path(bundle_dir)
     ledger = read_ledger(bundle)
     biz = ledger["business"]["business_id"]
+    counts = Counter(i["invoice_number"] for i in ledger["invoices"])
+    by_num = {i["invoice_number"]: _invoice_stem(i, counts) for i in ledger["invoices"]}
+    by_vendor = {(i["vendor_id"], i["invoice_number"]): _invoice_stem(i, counts) for i in ledger["invoices"]}
     return [
         PaymentLink(
             business_id=biz,
-            bill_id=_id("bill", p["invoice_number"]),
+            bill_id=_id("bill", by_vendor.get((p.get("vendor_id"), p["invoice_number"])) or by_num[p["invoice_number"]]),
             txn_id=p["txn_id"],
             amount_applied=_m(p["amount_applied"]),
             status=LinkStatus.CONFIRMED,
@@ -125,14 +136,18 @@ def load_gold(bundle_dir: str | Path, conn: sqlite3.Connection | None = None) ->
             ))
 
     # ---- invoices
+    inv_counts = Counter(i["invoice_number"] for i in ledger["invoices"])
     bill_ids: dict[str, str] = {}
+    bill_ids_by_vendor: dict[tuple[str, str], str] = {}
     for inv in ledger["invoices"]:
         num = inv["invoice_number"]
-        pdf = bundle / "invoices" / f"{num}.pdf"
+        stem = _invoice_stem(inv, inv_counts)
+        pdf = bundle / "invoices" / f"{stem}.pdf"
         manifest = read_fields_manifest(pdf)
-        doc_id = manifest.get("doc_id", _id("inv", num))
-        bill_id = _id("bill", num)
+        doc_id = manifest.get("doc_id", _id("inv", stem))
+        bill_id = _id("bill", stem)
         bill_ids[num] = bill_id
+        bill_ids_by_vendor[(inv["vendor_id"], num)] = bill_id
         issue = date.fromisoformat(inv["issue_date"])
         records.append(Document(business_id=biz, doc_id=doc_id, kind=DocumentKind.INVOICE,
                                 path=str(pdf.relative_to(bundle)), received_on=issue))
@@ -188,7 +203,12 @@ def load_gold(bundle_dir: str | Path, conn: sqlite3.Connection | None = None) ->
                 if key in spans:
                     evidence = spans[key].span_id
                     break
-        records.append(Credit(business_id=biz, credit_id=cr["credit_id"], bill_id=bill_ids[cr["invoice_number"]],
+        cr_bill_id = (
+            bill_ids_by_vendor[(cr["vendor_id"], cr["invoice_number"])]
+            if cr.get("vendor_id")
+            else bill_ids[cr["invoice_number"]]
+        )
+        records.append(Credit(business_id=biz, credit_id=cr["credit_id"], bill_id=cr_bill_id,
                               amount=_m(cr["amount"]), issued_on=date.fromisoformat(cr["issued_on"]), evidence_id=evidence))
         report.add("credits", 1)
 
