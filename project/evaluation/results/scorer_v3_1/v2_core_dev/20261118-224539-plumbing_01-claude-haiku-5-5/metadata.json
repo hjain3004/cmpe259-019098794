@@ -1,0 +1,114 @@
+{
+  "stratum": "v2_core_dev",
+  "original_run_path": "evaluation/results/20261118-224539-plumbing_01-claude-haiku-5-5",
+  "baseline_log_compared": "evaluation/results/20261118-224539-plumbing_01-claude-haiku-5-5/log.jsonl",
+  "baseline_source": "orig",
+  "bundle": "data/dev/plumbing_01",
+  "queries_file": "evaluation/queries.yaml",
+  "model_version": "claude-haiku-5-5",
+  "prompt_version": "answer_system_v2",
+  "original_code_commit": "7a5dd10",
+  "scorer_version": "scorer_v3_1",
+  "code_hashes": {
+    "scoring.py": "204198e75620e78f4408329a167f22a7131f0e1243f88ef91e7a1b17a081a646",
+    "postprocess.py": "3850a577c753d61c4a26718bf8647db304c3fa961fe315c88c0b19255eda691d",
+    "rescore_v3_1.py": "31bde3ee73c671d1009130312848fe9fa1e4f347d734825badbfd08d522b7b6a",
+    "specs_v3_1_overrides.yaml": "66ff8f7643d592e735fda6d64b646e2ce54f2347f17533b00c5f90610d6d36f0"
+  },
+  "spec_hashes": {
+    "gold_yaml": "88c1d7aa287611a7aaca516ed5b8172328d9b1b31d193d0681f45d3509651405",
+    "queries_yaml": "854791fa81567b616de8396df1327ea6549f907851caa49990f994d5a4d30a8f",
+    "specs_v3_1_overrides": "66ff8f7643d592e735fda6d64b646e2ce54f2347f17533b00c5f90610d6d36f0"
+  },
+  "git_head": "4f23435",
+  "git_dirty": true,
+  "comparison_a_scorer_only": {
+    "C0": {
+      "turns": 40,
+      "legacy_ok": 26,
+      "v3_1_strict_ok": 26,
+      "v3_1_with_specs_ok": 26,
+      "p2f": 0,
+      "f2p": 0,
+      "policy_review": 0
+    },
+    "C1": {
+      "turns": 40,
+      "legacy_ok": 14,
+      "v3_1_strict_ok": 14,
+      "v3_1_with_specs_ok": 14,
+      "p2f": 0,
+      "f2p": 0,
+      "policy_review": 0
+    },
+    "C2": {
+      "turns": 40,
+      "legacy_ok": 24,
+      "v3_1_strict_ok": 24,
+      "v3_1_with_specs_ok": 24,
+      "p2f": 0,
+      "f2p": 0,
+      "policy_review": 0
+    },
+    "C3": {
+      "turns": 40,
+      "legacy_ok": 31,
+      "v3_1_strict_ok": 31,
+      "v3_1_with_specs_ok": 31,
+      "p2f": 0,
+      "f2p": 0,
+      "policy_review": 0
+    },
+    "C4": {
+      "turns": 40,
+      "legacy_ok": 33,
+      "v3_1_strict_ok": 33,
+      "v3_1_with_specs_ok": 33,
+      "p2f": 0,
+      "f2p": 0,
+      "policy_review": 0
+    }
+  },
+  "comparison_b_historical_vs_current_pipeline": {
+    "C0": {
+      "turns": 40,
+      "hist_ok": 26,
+      "v3_1_strict_ok": 26,
+      "parse_recovery": 0,
+      "scorer_p2f": 0,
+      "scorer_f2p": 0
+    },
+    "C1": {
+      "turns": 40,
+      "hist_ok": 14,
+      "v3_1_strict_ok": 14,
+      "parse_recovery": 0,
+      "scorer_p2f": 0,
+      "scorer_f2p": 0
+    },
+    "C2": {
+      "turns": 40,
+      "hist_ok": 24,
+      "v3_1_strict_ok": 24,
+      "parse_recovery": 0,
+      "scorer_p2f": 0,
+      "scorer_f2p": 0
+    },
+    "C3": {
+      "turns": 40,
+      "hist_ok": 31,
+      "v3_1_strict_ok": 31,
+      "parse_recovery": 0,
+      "scorer_p2f": 0,
+      "scorer_f2p": 0
+    },
+    "C4": {
+      "turns": 40,
+      "hist_ok": 33,
+      "v3_1_strict_ok": 33,
+      "parse_recovery": 0,
+      "scorer_p2f": 0,
+      "scorer_f2p": 0
+    }
+  }
+}

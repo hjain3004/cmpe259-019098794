@@ -98,10 +98,16 @@ def match_payments(store: Store, args: MatchPaymentsArgs) -> MatchPaymentsResult
         note = "possible payment, not confirmed" if outcome == "candidate" else None
         return MatchPaymentsResult(outcome=outcome, candidates=cands, possible_payments=poss, why_undecided=note)
     if not linked:
-        return MatchPaymentsResult(outcome="ambiguous" if len(cands) > 1 else "no_candidates",
-                                   candidates=cands if len(cands) > 1 else [],
-                                   why_undecided="; ".join(f"{c.txn_id}: {c.reasons_against[0]}" for c in cands)
-                                   if len(cands) > 1 else f"{cands[0].txn_id} ({cands[0].reasons_for[0]}): no bill matches")
+        return MatchPaymentsResult(
+            outcome="ambiguous" if len(cands) > 1 else "no_candidates",
+            candidates=cands,
+            why_undecided="; ".join(f"{c.txn_id}: {c.reasons_against[0]}" for c in cands)
+            if len(cands) > 1
+            else (
+                f"{cands[0].txn_id} ({cands[0].reasons_for[0]}, "
+                f"amount {cands[0].txn_amount.amount:.2f} {cands[0].txn_amount.currency}): no bill matches"
+            ),
+        )
     return MatchPaymentsResult(outcome="ambiguous", candidates=cands, possible_payments=poss,
                                why_undecided="more than one transaction or bill fits")
 

@@ -1,0 +1,48 @@
+[
+  {
+    "vendor_id": "v_northside",
+    "canonical_name": "Northside Supplies",
+    "aliases": [
+      {
+        "alias": "Northside Supply Co.",
+        "verified": true
+      }
+    ],
+    "verified_payment": {
+      "bank_name": "Bay Commerce Bank",
+      "account_number": "004417829931",
+      "routing_number": "121000358",
+      "verified_on": "2026-03-02"
+    },
+    "trusted_contact": "Dana Ruiz, (415) 555-0142"
+  },
+  {
+    "vendor_id": "v_greenway",
+    "canonical_name": "Greenway Produce",
+    "aliases": [],
+    "verified_payment": {
+      "bank_name": "Pacific Western Bank",
+      "account_number": "007733210456",
+      "routing_number": "121042882",
+      "verified_on": "2026-02-11"
+    },
+    "trusted_contact": "Miguel Ortega, (510) 555-0187"
+  },
+  {
+    "vendor_id": "v_beanworks",
+    "canonical_name": "BeanWorks Coffee Roasters",
+    "aliases": [
+      {
+        "alias": "BeanWorks",
+        "verified": true
+      }
+    ],
+    "verified_payment": {
+      "bank_name": "Golden Gate Credit Union",
+      "account_number": "002299104417",
+      "routing_number": "322271627",
+      "verified_on": "2026-01-20"
+    },
+    "trusted_contact": "Priya Shah, (415) 555-0119"
+  }
+]

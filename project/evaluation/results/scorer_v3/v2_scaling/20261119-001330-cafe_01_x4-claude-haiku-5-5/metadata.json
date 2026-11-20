@@ -1,0 +1,83 @@
+{
+  "stratum": "v2_scaling",
+  "original_run_path": "evaluation/results/20261119-001330-cafe_01_x4-claude-haiku-5-5",
+  "baseline_log_compared": "evaluation/results/20261119-001330-cafe_01_x4-claude-haiku-5-5/log.jsonl",
+  "baseline_source": "orig",
+  "bundle": "data/dev/cafe_01_x4",
+  "queries_file": "evaluation/queries.yaml",
+  "model_version": "claude-haiku-5-5",
+  "prompt_version": "answer_system_v2",
+  "original_code_commit": "7a5dd10",
+  "scorer_version": "scorer_v3",
+  "code_hashes": {
+    "scoring.py": "4017f9734d4843ca9b0527f7d3ee716ba712a6cda5d7fb517afe328413f29627",
+    "postprocess.py": "3850a577c753d61c4a26718bf8647db304c3fa961fe315c88c0b19255eda691d",
+    "rescore_v3.py": "d200e4a9cdda61ba8c39448a9ee6013f3bd2071c2ae052ba8e4d832bc1050c8a"
+  },
+  "git_head": "4f23435",
+  "git_dirty": true,
+  "total_scored_turns_all_configs": 140,
+  "verdict_changes_count": 0,
+  "per_config": {
+    "C0": {
+      "turns": 28,
+      "old_successes": 22,
+      "old_rate": 0.786,
+      "new_successes": 22,
+      "new_rate": 0.786,
+      "delta_turns": 0,
+      "pass_to_fail": 0,
+      "fail_to_pass": 0,
+      "old_parsed": 28,
+      "new_parsed": 28
+    },
+    "C1": {
+      "turns": 28,
+      "old_successes": 11,
+      "old_rate": 0.393,
+      "new_successes": 11,
+      "new_rate": 0.393,
+      "delta_turns": 0,
+      "pass_to_fail": 0,
+      "fail_to_pass": 0,
+      "old_parsed": 28,
+      "new_parsed": 28
+    },
+    "C2": {
+      "turns": 28,
+      "old_successes": 6,
+      "old_rate": 0.214,
+      "new_successes": 6,
+      "new_rate": 0.214,
+      "delta_turns": 0,
+      "pass_to_fail": 0,
+      "fail_to_pass": 0,
+      "old_parsed": 28,
+      "new_parsed": 28
+    },
+    "C3": {
+      "turns": 28,
+      "old_successes": 24,
+      "old_rate": 0.857,
+      "new_successes": 24,
+      "new_rate": 0.857,
+      "delta_turns": 0,
+      "pass_to_fail": 0,
+      "fail_to_pass": 0,
+      "old_parsed": 28,
+      "new_parsed": 28
+    },
+    "C4": {
+      "turns": 28,
+      "old_successes": 23,
+      "old_rate": 0.821,
+      "new_successes": 23,
+      "new_rate": 0.821,
+      "delta_turns": 0,
+      "pass_to_fail": 0,
+      "fail_to_pass": 0,
+      "old_parsed": 28,
+      "new_parsed": 28
+    }
+  }
+}

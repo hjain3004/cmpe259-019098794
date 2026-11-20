@@ -67,8 +67,23 @@
 
 | Bundle | Store | Expected | Found | TP | Missed | Spurious | Precision | Recall |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| landscaping_01 | C3 | — | n/a (no extracted.sqlite) | — | — | — | — | — |
+| landscaping_01 | C3 | 15 | 19 | 12 | 3 | 7 | 63.2% | 80.0% |
 | landscaping_01 | C4 | 15 | 19 | 12 | 3 | 7 | 63.2% | 80.0% |
+
+### landscaping_01 (C3) by item type
+
+| Item type | Expected | Found | Missed | Spurious | Precision | Recall |
+| --- | --- | --- | --- | --- | --- | --- |
+| overdue_bill | 3 | 3 | — | — | 100% | 100% |
+| duplicate_bill | 1 | 1 | — | — | 100% | 100% |
+| duplicate_payment | 1 | 0 | RL-204 | — | n/a | 0% |
+| partial_payment | 2 | 0 | PL-314, RL-215 | — | n/a | 0% |
+| candidate_payment_link | 0 | 7 | — | CT-88:txn_0516, ML-090:txn_0512, ML-90:txn_0512, MN-480:txn_0516, PL-314:txn_0516, RL-204:txn_0506, RL-215:txn_0512 | 0% | n/a |
+| unmatched_bank_debit | 4 | 4 | — | — | 100% | 100% |
+| bank_detail_mismatch | 1 | 1 | — | — | 100% | 100% |
+| total_mismatch | 1 | 1 | — | — | 100% | 100% |
+| due_date_conflict | 1 | 1 | — | — | 100% | 100% |
+| message_conflict | 1 | 1 | — | — | 100% | 100% |
 
 ### landscaping_01 (C4) by item type
 

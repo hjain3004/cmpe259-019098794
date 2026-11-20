@@ -1,0 +1,120 @@
+{
+  "run_id": "20261119-001330-cafe_01_x4-claude-haiku-5-5 (scorer_v3_1:strict_historical)",
+  "bundle": "/Users/himanshu_jain/NLP_Project_Himanshu_Jain/cmpe259-019098794/project/data/dev/cafe_01_x4",
+  "bundle_name": "cafe_01_x4",
+  "resolved_scenario": "cafe_01_x4",
+  "scoring_policy": "strict_historical",
+  "scorer_version": "scorer_v3_1",
+  "eval_spec_path": null,
+  "eval_spec_version": null,
+  "model_version": "claude-haiku-5-5",
+  "prompt_version": "answer_system_v2",
+  "git_head": "4f23435",
+  "git_dirty": true,
+  "hashes": {
+    "scoring.py": "204198e75620e78f4408329a167f22a7131f0e1243f88ef91e7a1b17a081a646",
+    "postprocess.py": "3850a577c753d61c4a26718bf8647db304c3fa961fe315c88c0b19255eda691d",
+    "eval_specs.py": "cd5bf0478052406e26da1e3411c269e7905425b9b95ea6226a803a7211de92c9",
+    "gold.yaml": "76c7c12f89b116254243c1497c651bdf24a9a1163317e2a93e12caa88e1f4858",
+    "queries.yaml": "854791fa81567b616de8396df1327ea6549f907851caa49990f994d5a4d30a8f",
+    "rescore_v3_1.py": "0903674ae6cbbaa839996e1d5037e6a7ad990e46f72598b3b8d611cde49b7e3a"
+  },
+  "stratum": "v2_scaling",
+  "original_run_path": "/Users/himanshu_jain/NLP_Project_Himanshu_Jain/cmpe259-019098794/project/evaluation/results/20261119-001330-cafe_01_x4-claude-haiku-5-5",
+  "baseline_source": "orig",
+  "original_code_commit": "7a5dd10",
+  "comparison_a_scorer_only": {
+    "C0": {
+      "turns": 28,
+      "legacy_ok": 22,
+      "strict_ok": 22,
+      "with_specs_ok": 22,
+      "primary_ok": 22,
+      "primary_p2f": 0,
+      "primary_f2p": 0,
+      "policy_review": 0
+    },
+    "C1": {
+      "turns": 28,
+      "legacy_ok": 11,
+      "strict_ok": 11,
+      "with_specs_ok": 11,
+      "primary_ok": 11,
+      "primary_p2f": 0,
+      "primary_f2p": 0,
+      "policy_review": 0
+    },
+    "C2": {
+      "turns": 28,
+      "legacy_ok": 6,
+      "strict_ok": 6,
+      "with_specs_ok": 6,
+      "primary_ok": 6,
+      "primary_p2f": 0,
+      "primary_f2p": 0,
+      "policy_review": 0
+    },
+    "C3": {
+      "turns": 28,
+      "legacy_ok": 24,
+      "strict_ok": 24,
+      "with_specs_ok": 24,
+      "primary_ok": 24,
+      "primary_p2f": 0,
+      "primary_f2p": 0,
+      "policy_review": 0
+    },
+    "C4": {
+      "turns": 28,
+      "legacy_ok": 23,
+      "strict_ok": 23,
+      "with_specs_ok": 23,
+      "primary_ok": 23,
+      "primary_p2f": 0,
+      "primary_f2p": 0,
+      "policy_review": 0
+    }
+  },
+  "comparison_b_historical_vs_current_pipeline": {
+    "C0": {
+      "turns": 28,
+      "hist_ok": 22,
+      "primary_ok": 22,
+      "parse_recovery": 0,
+      "scorer_p2f": 0,
+      "scorer_f2p": 0
+    },
+    "C1": {
+      "turns": 28,
+      "hist_ok": 11,
+      "primary_ok": 11,
+      "parse_recovery": 0,
+      "scorer_p2f": 0,
+      "scorer_f2p": 0
+    },
+    "C2": {
+      "turns": 28,
+      "hist_ok": 6,
+      "primary_ok": 6,
+      "parse_recovery": 0,
+      "scorer_p2f": 0,
+      "scorer_f2p": 0
+    },
+    "C3": {
+      "turns": 28,
+      "hist_ok": 24,
+      "primary_ok": 24,
+      "parse_recovery": 0,
+      "scorer_p2f": 0,
+      "scorer_f2p": 0
+    },
+    "C4": {
+      "turns": 28,
+      "hist_ok": 23,
+      "primary_ok": 23,
+      "parse_recovery": 0,
+      "scorer_p2f": 0,
+      "scorer_f2p": 0
+    }
+  }
+}

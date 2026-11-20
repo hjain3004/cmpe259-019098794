@@ -1,0 +1,67 @@
+{
+  "doc_id": "inv_NS-844",
+  "fields": {
+    "vendor_name": {
+      "text": "Northside Supplies",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "NS-844",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "09/30/2025",
+      "page": 1
+    },
+    "stated_due_date": {
+      "text": "10/30/2025",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 30",
+      "page": 1
+    },
+    "reference_or_po": {
+      "text": "PO-1133",
+      "page": 1
+    },
+    "subtotal": {
+      "text": "$318.25",
+      "page": 1
+    },
+    "tax": {
+      "text": "$26.26",
+      "page": 1
+    },
+    "total": {
+      "text": "$344.51",
+      "page": 1
+    },
+    "currency": {
+      "text": "USD",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Bay Commerce Bank",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "004417829931",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "121000358",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Compostable lids 12 oz, sleeve of 50 5 sleeve $9.75 $48.75",
+      "page": 1
+    },
+    {
+      "text": "Sanitizer, gallon 7 gallon $38.50 $269.50",
+      "page": 1
+    }
+  ]
+}

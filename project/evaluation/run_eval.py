@@ -31,7 +31,14 @@ from cashbooks.configs.answer import PROMPT_VERSION, Turn, build_configs, format
 from cashbooks.contracts.common import Answerability
 from cashbooks.contracts.evaluation import LogRow, QuerySuite
 from cashbooks.contracts.postprocess import postprocess
-from cashbooks.scoring import score_turn, write_log, write_run_outputs
+from cashbooks.eval_specs import (
+    DEFAULT_POLICY,
+    EvaluationSpecError,
+    apply_turn_overrides,
+    build_run_metadata,
+    load_eval_spec,
+)
+from cashbooks.scoring import SCORER_VERSION, score_turn, write_log, write_run_outputs
 from cashbooks.store.db import Store
 from cashbooks.store.load_gold import load_gold
 
@@ -56,7 +63,7 @@ def make_llm(kind: str, model: str | None):
     return GeminiLLM(model=model)
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("bundle", type=Path)
     ap.add_argument("--configs", nargs="+", default=["C1", "C2", "C3", "C4"])
@@ -64,13 +71,27 @@ def main() -> int:
     ap.add_argument("--llm", choices=["claude", "gemini", "scripted"], default="claude")
     ap.add_argument("--model", help="override LLM_MODEL")
     ap.add_argument("--queries-file", type=Path, help="query manifest YAML (default evaluation/queries.yaml)")
+    ap.add_argument(
+        "--eval-spec",
+        type=Path,
+        default=None,
+        help="optional versioned evaluation spec YAML (e.g. evaluation/specs_v3_1/amount_semantics_overrides.yaml); omit for legacy strict_historical policy",
+    )
     ap.add_argument("--out", type=Path, help="results folder (default evaluation/results/<timestamp>)")
-    a = ap.parse_args()
+    a = ap.parse_args(argv)
 
     qpath = a.queries_file or (PROJECT / "evaluation" / "queries.yaml")
-    suite = QuerySuite.model_validate(yaml.safe_load(qpath.read_text()))
-    gold = yaml.safe_load((a.bundle / "gold.yaml").read_text())
-    ledger = json.loads((a.bundle / "ledger.json").read_text())
+    gold_path = a.bundle / "gold.yaml"
+    suite = QuerySuite.model_validate(yaml.safe_load(qpath.read_text(encoding="utf-8")))
+    gold = yaml.safe_load(gold_path.read_text(encoding="utf-8"))
+    eval_spec = None
+    if a.eval_spec is not None:
+        try:
+            eval_spec = load_eval_spec(a.eval_spec, a.bundle.name, suite, gold)
+        except EvaluationSpecError as exc:
+            print(f"ERROR: {exc}", file=sys.stderr)
+            return 2
+    ledger = json.loads((a.bundle / "ledger.json").read_text(encoding="utf-8"))
     biz = ledger["business"]
     as_of = date.fromisoformat(biz["evaluation_clock"])
     convs = [c for c in suite.conversations if c.id in gold and (not a.queries or c.id in a.queries)]
@@ -118,7 +139,8 @@ def main() -> int:
                 if pp:
                     notes += pp.issues + [f"wording: {w}" for w in pp.wording_flags]
                 if turn.scored:
-                    sc = score_turn(resp, turn.expected, g.get("values", {}), g.get("evidence", []),
+                    eff_values = apply_turn_overrides(g.get("values", {}), eval_spec, conv.id, ti)
+                    sc = score_turn(resp, turn.expected, eff_values, g.get("evidence", []),
                                     list(turn.must_not) + list(g.get("must_not", [])))
                     scores, success = sc.to_dict(), sc.success
                 else:
@@ -144,7 +166,57 @@ def main() -> int:
     lines = write_run_outputs(rows, out, run_id, llm.model, commit, str(a.bundle), [c.id for c in convs],
                               sum(1 for c in convs for t in c.turns if t.scored), PROMPT_VERSION,
                               query_labels=qlabels)
-    print(f"\nwrote {out}")
+    metadata = build_run_metadata(
+        project_root=PROJECT,
+        run_id=run_id,
+        bundle=a.bundle,
+        queries_path=qpath,
+        gold_path=gold_path,
+        model_version=llm.model,
+        prompt_version=PROMPT_VERSION,
+        loaded_spec=eval_spec,
+        rows=rows,
+    )
+    (out / "metadata.json").write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
+
+    # Append policy provenance and predeclared invariant-subset reporting (e.g. Q13 on scaled cafe bundles) to summary.md
+    extra_md = [
+        "",
+        "## Scoring Policy & Provenance",
+        "",
+        f"- Scorer version: `{SCORER_VERSION}`",
+        f"- Selected scoring policy: `{metadata['scoring_policy']}`"
+        + (f" (`{eval_spec.spec_path.name}`, scenario `{eval_spec.resolved_scenario}`)" if eval_spec else " (legacy default)"),
+        f"- Metadata & hashes: `metadata.json`",
+    ]
+    if "invariant_subset_summary" in metadata:
+        inv = metadata["invariant_subset_summary"]
+        excl = ", ".join(inv["excluded_corpus_sensitive_queries"])
+        extra_md += [
+            "",
+            f"## Predeclared Invariant-Task Subset vs. Corpus-Sensitive Queries (`{excl}`)",
+            "",
+        ]
+        for qid, qinfo in metadata.get("corpus_sensitive_queries", {}).items():
+            extra_md.append(f"- `{qid}`: {qinfo['reason']}")
+        extra_md += [
+            "",
+            f"| Config | All Turns | Invariant Subset (excl. {excl}) | Corpus-Sensitive ({excl}) |",
+            "| --- | --- | --- | --- |",
+        ]
+        for cname, st in inv["per_config"].items():
+            a_st = st["all_turns"]
+            i_st = st["invariant_subset"]
+            c_st = st["corpus_sensitive_subset"]
+            c_str = f"{c_st['successes']}/{c_st['turns']} ({c_st['rate']:.0%})" if c_st["turns"] else "0/0"
+            extra_md.append(
+                f"| {cname} | {a_st['successes']}/{a_st['turns']} ({a_st['rate']:.0%}) | "
+                f"{i_st['successes']}/{i_st['turns']} ({i_st['rate']:.0%}) | {c_str} |"
+            )
+    summary_md_path = out / "summary.md"
+    summary_md_path.write_text(summary_md_path.read_text(encoding="utf-8") + "\n".join(extra_md) + "\n", encoding="utf-8")
+
+    print(f"\nwrote {out} (policy={metadata['scoring_policy']})")
     print("\n".join(lines[4:4 + len(configs) + 2]))
     return 0
 

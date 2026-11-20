@@ -60,6 +60,11 @@ def postprocess(raw: str, known_evidence_ids: set[str], default_as_of: date | No
     if not isinstance(data, dict):
         return PostprocessResult(None, ["invalid_json: top level is not an object"])
 
+    calc_obj = data.get("calculation")
+    if "result" in data and isinstance(calc_obj, dict) and calc_obj.get("result") is None:
+        calc_obj["result"] = data.pop("result")
+        issues.append("moved_result_into_calculation")
+
     allowed_keys = set(AssistantResponse.model_fields.keys())
     for key in [k for k in list(data.keys()) if k not in allowed_keys]:
         data.pop(key)

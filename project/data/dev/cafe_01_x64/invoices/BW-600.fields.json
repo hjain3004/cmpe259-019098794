@@ -1,0 +1,63 @@
+{
+  "doc_id": "inv_BW-600",
+  "fields": {
+    "vendor_name": {
+      "text": "BeanWorks Coffee Roasters",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "BW-600",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "2026-01-26",
+      "page": 1
+    },
+    "stated_due_date": {
+      "text": "2026-02-25",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 30",
+      "page": 1
+    },
+    "subtotal": {
+      "text": "$351.00",
+      "page": 1
+    },
+    "tax": {
+      "text": "$0.00",
+      "page": 1
+    },
+    "total": {
+      "text": "$351.00",
+      "page": 1
+    },
+    "currency": {
+      "text": "USD",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Golden Gate Credit Union",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "002299104417",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "322271627",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Decaf House Blend, 2 lb bag 8 bag $18.00 $144.00",
+      "page": 1
+    },
+    {
+      "text": "Espresso Blend, 5 lb bag 6 bag $34.50 $207.00",
+      "page": 1
+    }
+  ]
+}

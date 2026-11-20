@@ -74,15 +74,66 @@ def classify_failure(row: LogRow, gold_evidence: list[str], missed_docs: list[st
     return "other"
 
 
+def _resolve_queries_path(bundle: Path, queries_path: Path | None) -> Path:
+    if queries_path is not None:
+        return queries_path
+    local = bundle / "queries.yaml"
+    return local if local.exists() else (PROJECT / "evaluation" / "queries.yaml")
+
+
+def compute_retrieval_at_rank(
+    turn_records: list[dict[str, Any]],
+    ks: tuple[int, ...] = (1, 3, 5, 8),
+) -> dict[str, dict[str, Any]]:
+    """Compute document-level precision@k, recall@k, and MRR for C1/C2 turns with gold evidence."""
+    by_cfg: dict[str, dict[str, Any]] = {}
+    for cfg in sorted({t["configuration"] for t in turn_records}):
+        ct = [t for t in turn_records if t["configuration"] == cfg and t.get("gold_evidence")]
+        n = len(ct)
+        if n == 0:
+            by_cfg[cfg] = {
+                "turns_with_gold": 0,
+                "precision_at_k": {k: None for k in ks},
+                "recall_at_k": {k: None for k in ks},
+                "mrr": None,
+            }
+            continue
+        p_sums = {k: 0.0 for k in ks}
+        r_sums = {k: 0.0 for k in ks}
+        rr_sum = 0.0
+        for t in ct:
+            gold_set = set(t["gold_evidence"])
+            ranked_docs = list(t.get("ranked_docs") or [])
+            for k in ks:
+                top_k = ranked_docs[:k]
+                hits = len(set(top_k) & gold_set)
+                p_sums[k] += hits / k
+                r_sums[k] += hits / len(gold_set)
+            rr = 0.0
+            for idx, doc_id in enumerate(ranked_docs, start=1):
+                if doc_id in gold_set:
+                    rr = 1.0 / idx
+                    break
+            rr_sum += rr
+        by_cfg[cfg] = {
+            "turns_with_gold": n,
+            "precision_at_k": {k: p_sums[k] / n for k in ks},
+            "recall_at_k": {k: r_sums[k] / n for k in ks},
+            "mrr": rr_sum / n,
+        }
+    return by_cfg
+
+
 def analyze_run(
     run_dir: Path,
-    queries_path: Path = PROJECT / "evaluation" / "queries.yaml",
+    queries_path: Path | None = None,
     bundle_override: Path | None = None,
 ) -> dict[str, Any]:
     log_path, bundle = _resolve_log_and_bundle(run_dir)
     if bundle_override is not None:
         bundle = bundle_override
-    suite = QuerySuite.model_validate(yaml.safe_load(queries_path.read_text(encoding="utf-8")))
+    qpath = _resolve_queries_path(bundle, queries_path)
+    suite = QuerySuite.model_validate(yaml.safe_load(qpath.read_text(encoding="utf-8")))
     specs = {c.id: c for c in suite.conversations}
     gold = yaml.safe_load((bundle / "gold.yaml").read_text(encoding="utf-8"))
 
@@ -108,7 +159,8 @@ def analyze_run(
 
         retrieved_chunks = [c.get("chunk_id", "") for c in (r.context or []) if isinstance(c, dict)]
         k = len(retrieved_chunks)
-        retrieved_docs = {doc_level(cid) for cid in retrieved_chunks if cid}
+        ranked_docs = list(dict.fromkeys(doc_level(cid) for cid in retrieved_chunks if cid))
+        retrieved_docs = set(ranked_docs)
         missed_docs = [g for g in gold_ev if g not in retrieved_docs]
         recall = (len(gold_ev) - len(missed_docs)) / len(gold_ev) if gold_ev else None
 
@@ -120,6 +172,7 @@ def analyze_run(
             "turn_text": r.turn_text,
             "labels": labels,
             "k": k,
+            "ranked_docs": ranked_docs,
             "gold_evidence": gold_ev,
             "missed_docs": missed_docs,
             "recall_at_k": recall,
@@ -232,6 +285,27 @@ def format_retrieval_md(analysis: dict[str, Any]) -> str:
         fc = t["failure_category"] or "-"
         lines.append(
             f"| {t['configuration']} | {t['query_id']} | {t['turn_index']} | {t['k']} | {r_str} | {t['success']} | {fc} |"
+        )
+
+    rank_stats = compute_retrieval_at_rank(turns)
+    lines += [
+        "",
+        "## Document-level retrieval at rank (QA lecture)",
+        "",
+        "| Config | Turns | P@1 | P@3 | P@5 | P@8 | R@1 | R@3 | R@5 | R@8 | MRR |",
+        "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |",
+    ]
+    for cfg in configs:
+        st = rank_stats.get(cfg)
+        if not st or not st["turns_with_gold"]:
+            lines.append(f"| {cfg} | 0 | n/a | n/a | n/a | n/a | n/a | n/a | n/a | n/a | n/a |")
+            continue
+        p_cells = [f"{st['precision_at_k'][k]:.3f}" for k in (1, 3, 5, 8)]
+        r_cells = [f"{st['recall_at_k'][k]:.3f}" for k in (1, 3, 5, 8)]
+        lines.append(
+            f"| {cfg} | {st['turns_with_gold']} | "
+            + " | ".join(p_cells + r_cells)
+            + f" | {st['mrr']:.3f} |"
         )
 
     return "\n".join(lines) + "\n"

@@ -24,6 +24,7 @@ EVAL_DIR = Path(__file__).resolve().parent
 if str(EVAL_DIR) not in sys.path:
     sys.path.insert(0, str(EVAL_DIR))
 
+from lecture_metrics import _load_gold_evidence_counts, compute_citation_f1  # noqa: E402
 from stats import describe_run_grouping, estimate_mde, format_run_grouping, pairwise_stats  # noqa: E402
 
 
@@ -141,24 +142,29 @@ def build_pool_report(
                 cells.append(f"{min(rates):.0%}–{max(rates):.0%}")
         lines.append(f"| {c} | " + " | ".join(cells) + " |")
 
+    cit_f1 = compute_citation_f1(all_rows, _load_gold_evidence_counts(resolved))
     lines += [
         "",
         "## Error rates and grounding (pooled)",
         "",
-        "| Config | Unwarranted-warning rate | Over-abstention rate | Citation recall | Citation precision |",
-        "| --- | --- | --- | --- | --- |",
+        "| Config | Unwarranted-warning rate | Over-abstention rate | Citation recall | Citation precision | Mean citation F1 | Micro citation F1 |",
+        "| --- | --- | --- | --- | --- | --- | --- |",
     ]
     for c in configs:
         s = pooled_summary[c]
+        cf = cit_f1.get(c, {})
         uwr = s["unwarranted_warning_rate"]
         oar = s["over_abstention_rate"]
         mr = s["mean_evidence_recall"]
         mp = s["mean_evidence_precision"]
+        mf1 = cf.get("mean_f1")
+        uf1 = cf.get("micro_f1")
         uw_str = "n/a" if uwr is None else f"{s['unwarranted_warnings']}/{s['unwarranted_warning_eligible']} ({uwr:.0%})"
         oa_str = "n/a" if oar is None else f"{s['over_abstentions']}/{s['over_abstention_eligible']} ({oar:.0%})"
         lines.append(
             f"| {c} | {uw_str} | {oa_str} | "
-            f"{'n/a' if mr is None else f'{mr:.3f}'} | {'n/a' if mp is None else f'{mp:.3f}'} |"
+            f"{'n/a' if mr is None else f'{mr:.3f}'} | {'n/a' if mp is None else f'{mp:.3f}'} | "
+            f"{'n/a' if mf1 is None else f'{mf1:.3f}'} | {'n/a' if uf1 is None else f'{uf1:.3f}'} |"
         )
 
     qlabels = query_labels if query_labels is not None else _load_query_labels()

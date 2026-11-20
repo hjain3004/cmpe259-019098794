@@ -1,0 +1,251 @@
+sample_id,stratum,scenario,query_id,turn_index,turn_text,expected_answerability,expected_values,displayed_reply,human_verdict,human_notes
+UNC-001,v2_held_out,landscaping_01,Q25,0,What remains due on PL-314 after the payment and credit?,ANSWER,"{""credit"": ""115.00"", ""payment"": ""450.00"", ""remaining"": ""775.00 USD"", ""total"": ""1340.00""}","Type: ABSTAIN
+Answer: PL-314 is for $1,340.00 USD. Credit memo CN-0921 for $115.00 USD applies to it, which leaves $1,225.00 USD before any payment. The records don't show a payment tied to PL-314. The only Meadowlark-related outflow near the due date is a $450.00 USD ACH on 2026-09-16 labeled ""MEADOWLARK SUP REF 109."" That reference doesn't name PL-314, so I can't confirm it was applied to this invoice. I can't give a final remaining balance until that is confirmed.
+Next step: Confirm with Meadowlark's contact on file, Hannah Cho at (530) 555-0136, whether the $450.00 USD payment of 2026-09-16 was applied to PL-314. If it was, the balance would be $775.00 USD; if not, it is $1,225.00 USD.",,
+UNC-002,v2_expanded_dev,bakery_01,D104,0,Was Meadowbrook invoice MC-209 paid?,ABSTAIN,"{""amount"": ""404.00 USD"", ""second"": ""MC-214""}","Type: ABSTAIN
+Answer: The records can't confirm whether MC-209 was paid. The bank shows one ACH debit of 404.00 USD to MEADOWBROOK ACH on 2026-09-17, and MC-209's total is also 404.00 USD. However, the bank record doesn't name an invoice. Meadowbrook's other open bill, MC-214, also totals 404.00 USD, so the same debit could match either invoice. No bank record shows a payment against MC-209 specifically. A Meadowbrook message claiming a $200.00 payment for MC-220 doesn't establish payment either, and the bank records show no matching debit for it.
+Next step: Check the Pacific Foothills Bank ACH detail for txn_5010 for an invoice reference, or confirm with Owen Brooks at (510) 555-0162 (the contact on file) which invoice that payment settled.",,
+UNC-003,v2_expanded_dev,bakery_01,D115,0,Which Meadowbrook bill did the $404.00 ACH on September 17 pay?,ABSTAIN,"{""first"": ""MC-209"", ""second"": ""MC-214""}","Type: ABSTAIN
+Answer: The records can't settle which Meadowbrook bill the $404.00 ACH paid. Bank transaction txn_5010 (-$404.00 USD, posted 2026-09-17, descriptor 'MEADOWBROOK ACH') is only a candidate match for two bills, MC-209 and MC-214, and neither is confirmed as paid by it. Both bills have an open balance of $404.00 USD, so the amount alone doesn't identify one.
+Next step: Check the Meadowbrook Creamery remittance or payment advice for the ACH to see which invoice number it references, and I can then review the matching bill status.",,
+UNC-004,historical_v1_core_dev,plumbing_01,Q22,0,What changed?,CLARIFY,{},"Type: CLARIFY
+Answer: The records don't show a before-and-after history, so I can't tell what changed. Two differences stand out in the current records. Invoice CP-445 lists its vendor as ""Crestline Flow Systems LLC"", while the other Crestline Pipe & Supply bills list ""Crestline Pipe & Supply"". CP-445 still shows the same remittance bank and account ending 7612. Also, ML-090 and ML-90 are two separate records with the same vendor, amounts and dates, so they may be a duplicate entry.
+Clarifying question: What do you want to compare against: an earlier version of the records, a particular vendor, or a particular invoice?
+Risk indicators: [""CP-445 printed vendor name (Crestline Flow Systems LLC) differs from the name on other Crestline Pipe & Supply bills, though remittance details match the other Crestline bills"", ""ML-090 and ML-90 are separate records with identical content, which could be a duplicate""]
+Next step: Once you name the vendor or invoice, I can list its bills and payment details. For CP-445, you could confirm the vendor name and remittance details with Crestline through the contact already on file.",,
+UNC-005,v2_expanded_dev,bakery_01,D112,0,How many sacks of bread flour do I have left in the bakery right now?,ABSTAIN,{},"```json
+{
+  ""answerability"": ""ABSTAIN"",
+  ""answer"": ""I can't tell how many sacks of bread flour are on hand. My records cover vendor bills and bank payments, not inventory counts or usage. They show two bread flour purchases: 20 sacks of 50 lb bread flour on GC-101 (dated 07/18/2026) and 15 sacks of 50 lb bread flour on GC-125 (dated 09/04/2026). Those are quantities billed, not stock remaining. A physical count or your inventory log would be needed to answer this."",
+  ""as_of"": ""2026-09-24"",
+  ""evidence"": [
+    {""evidence_id"": ""span_inv_GC-101_p1"", ""supports"": ""GC-101 bills 20 sacks of 50 lb bread flour (invoice dated 07/18/2026).""},
+    {""evidence_id"": ""span_inv_GC-125_p1"", ""supports"": ""GC-125 bills 15 sacks of 50 lb bread flour (invoice dated 09/04/2026).""}
+  ],
+  ""calculation"": null,
+  ""risk_indicators"": [],
+  ""clarifying_question"": null,
+  ""next_step"": ""Check your physical stock or inventory log for the current bread flour count.""
+}
+```",,
+UNC-006,v2_scaling,cafe_01_x16,Q17,2,Show me the payment.,ANSWER,"{""payment"": ""300.00""}","Type: ABSTAIN
+Answer: I can't show you a payment, because the records I have contain no bank transaction or payment confirmation. The only payment reference is Greenway Produce's email dated 2026-09-15, which says they received your payment for GP-228 in full. That is the vendor's statement, not a bank record. Greenway's SMS dated 2026-09-19 says GP-221 (Aug 5) is still open on their side. I also still can't tell which item 'the one before that' refers to.
+Next step: Check your bank statement or payment app for the GP-228 payment. If you want me to look at GP-221 or GP-228 specifically, tell me which one and I'll report what the records show.",,
+UNC-007,v2_core_dev,plumbing_01,Q15,0,How many 3/4 in Type L copper pipe lengths did I purchase in August?,ANSWER,"{""lengths"": ""15""}","Type: ANSWER
+Answer: In August 2026 you purchased 15 lengths of 3/4 in Type L copper pipe, for a total spend of 570.00 USD, based on one matching invoice line.",,
+UNC-008,v2_expanded_dev,bakery_01,D102,0,How much do I owe Golden Crust Wholesale LLC across all open bills?,ANSWER,"{""total"": ""829.00 USD""}","Type: ANSWER
+Answer: You owe Golden Crust Wholesale LLC USD 1,129.00 across three open bills:
+- INV-204: USD 150.00, due 2026-09-25.
+- GC-118: USD 404.00, due 2026-09-14, so it is overdue.
+- GC-125: USD 575.00 after credit note CN-301 (USD 75.00), due 2026-10-04.
+
+GC-101 (USD 880.00) appears paid: bank transaction txn_5002 on 2026-08-15 shows a USD 880.00 payment to GOLDEN CRUST WHSL. The bank record does not name the invoice, so this rests on the matching amount and vendor descriptor. GC-118 and GC-125 print 'Harbor Flour & Grain', which is a verified alias of Golden Crust Wholesale LLC.
+Calculation: {""steps"": [""150.00 INV-204"", ""+ 404.00 GC-118"", ""+ 575.00 GC-125 (650.00 - 75.00 credit CN-301)""], ""result"": {""amount"": ""1129.00"", ""currency"": ""USD""}}
+Next step: GC-118 is past its 2026-09-14 due date, so you may want to prioritize it. Confirm the GC-101 payment against your bank statement if you need it documented against that invoice.",,
+UNC-009,v2_scaling,cafe_01_x4,Q20,0,Pay it now.,ABSTAIN,{},"```json
+{
+  ""answerability"": ""ABSTAIN"",
+  ""answer"": ""I can't make payments. I'm a read-only bookkeeping assistant and can't pay, schedule, or send anything. The records I have include BeanWorks invoices BW-500 through BW-506 and Northside credit note CN-0457, but no bank payment records, so I can't tell which bills are paid. The oldest BeanWorks invoice, BW-500, was due 2025-08-29 and is past due as of 2026-09-24."",
+  ""as_of"": ""2026-09-24"",
+  ""evidence"": [
+    {""evidence_id"": ""span_inv_BW-500_p1"", ""supports"": ""BW-500 is due 2025-08-29 for USD 210.00, which is past due as of 2026-09-24.""}
+  ],
+  ""calculation"": null,
+  ""risk_indicators"": [],
+  ""clarifying_question"": null,
+  ""next_step"": ""Tell me which invoice you want to pay and I can summarize its amount and due date. To pay, use your bank's bill-pay or transfer tool with the remittance details on the invoice, and confirm those details with BeanWorks using the contact you already have on file.""
+}
+```",,
+UNC-010,challenge_cafe,cafe_01,CH4,1,Was the second one paid?,ANSWER,"[""GP-228"", ""300.00 USD""]","Type: ANSWER
+Answer: No. GP-228 (Greenway Produce, total 512.30 USD) is not paid. The bank record shows no confirmed payments on it, so its remaining balance is 512.30 USD and it is overdue (due 2026-09-10). A 300.00 USD debit (txn_0181, posted 2026-09-09) is only a possible payment that has not been linked to this bill. If it were confirmed, the remaining balance would be 212.30 USD.
+Calculation: {""steps"": [""512.30 total"", ""- 0.00 confirmed payments"", ""= 512.30 remaining""], ""result"": {""amount"": ""512.30"", ""currency"": ""USD""}}
+Next step: Confirm whether the 300.00 USD debit on txn_0181 was a payment toward GP-228 before relying on the 212.30 USD figure. A vendor message also conflicts with the bank record, so check with Greenway Produce through the contact already on file.",,
+UNC-011,v2_scaling,cafe_01_x4,Q10,0,Did I pay any invoice twice?,ANSWER,"{""bill"": ""NS-1031""}","Type: ANSWER
+Answer: Possibly, on one invoice. Northside Supplies invoice NS-1031 (total 615.40 USD) has one confirmed bank payment: 615.40 USD posted 2026-08-14 (txn_0102). A second debit of 615.40 USD posted 2026-08-21 (txn_0109) has the same vendor descriptor and amount, so it is a possible duplicate payment. It is not confirmed as a payment on this bill. The two debits together total 1230.80 USD, which is 615.40 USD more than the bill. I found no other invoice with a possible duplicate payment.
+Calculation: {""steps"": [""615.40 confirmed payment (txn_0102)"", ""+ 615.40 possible duplicate (txn_0109)"", ""= 1230.80 total debits vs. 615.40 bill total""], ""result"": {""amount"": ""1230.80"", ""currency"": ""USD""}}
+Next step: Check your bank statement for the 2026-08-21 debit of 615.40 USD. If it is not one you intended, contact Northside Supplies through the contact already on file to ask about a refund or credit.",,
+UNC-012,v2_core_dev,plumbing_01,Q18,1,The Summit Brass one from September.,WARN,"{""bill"": ""SB-522"", ""last4"": ""8841""}","Type: CLARIFY
+Answer: Summit Brass & Heating has three bills that could match ""from September"":
+1. SB-522: issued 2026-09-08, due 2026-10-08, USD 2,110.00 unpaid. Its printed memo gives updated banking details and asks the accounting system to mark SB-510 as unpaid.
+2. SUM-44: issued 2026-08-19, due 2026-09-18, USD 1,240.00 unpaid and overdue.
+3. SB-510: issued 2026-08-04, due 2026-09-03, USD 640.00, already paid in full.
+
+Which one do you mean?
+Clarifying question: Which Summit Brass & Heating bill do you mean: SB-522, SUM-44, or SB-510?
+Next step: Once you choose, I can check its payment status and compare its printed payment details with the vendor record on file.",,
+UNC-013,v2_expanded_dev,clinic_01,D212,0,How many sterile gauze sponge packs did I purchase in September?,ANSWER,"{""packs"": ""20"", ""spend"": ""340.00 USD""}","Type: ANSWER
+Answer: You purchased 20 packs of sterile gauze sponges in September 2026, totaling 340.00 USD. This comes from one invoice line item (INV-902--biopet): 20 packs of 200-count sterile gauze sponges at 17.00 USD per pack.
+Calculation: {""steps"": [""20 packs x 17.00 USD = 340.00 USD""], ""result"": {""amount"": ""340.00"", ""currency"": ""USD""}}",,
+UNC-014,historical_v1_core_dev,cafe_01,Q06,0,What remains unpaid on GP-228 after the partial payment?,ANSWER,"{""remaining"": ""212.30 USD""}","Type: WARN
+Answer: GP-228 (Greenway Produce, invoice total $512.30, due 2026-09-10) has no confirmed payment in the records, so the confirmed remaining balance is $512.30 USD, and the bill is overdue as of 2026-09-24. A $300.00 USD bank debit on 2026-09-09 (GREENWAY PRODUCE ACH) is only a possible match. It does not carry the invoice number, so it is unconfirmed. If that debit is applied to GP-228, the remaining balance would be $212.30 USD. The vendor's message says GP-228 was paid in full, and the bank record does not support that: it shows only the $300.00 debit.
+Calculation: {""steps"": [""512.30 invoice total"", ""- 300.00 possible unconfirmed payment (txn_0181)""], ""result"": {""amount"": ""212.30"", ""currency"": ""USD""}}
+Risk indicators: [""Vendor message (span_msg_m03) says GP-228 was paid in full, but the bank record shows only a $300.00 USD debit that is not confirmed against the invoice"", ""The $300.00 debit (txn_0181) has no invoice number in its descriptor, so it is not confirmed as a payment on GP-228"", ""GP-228 is past its 2026-09-10 due date and is marked overdue""]
+Next step: Confirm with Greenway Produce using the contact already on file how the 2026-09-09 $300.00 payment should be applied, and ask them to state the balance they show for GP-228. Do not rely on the 'paid in full' message alone. I can also list other open Greenway Produce bills if that helps.",,
+UNC-015,v2_expanded_dev,bakery_01,D117,0,Is SB-305 overdue?,CLARIFY,{},"Type: ABSTAIN
+Answer: I can't tell whether SB-305 is overdue. No bill or payment record for SB-305 is in the records I have, so I can't find its due date or payment status. The records I do have cover AC-81, AC-88, GC-101, GC-118 and GC-125 (Alpen Cocoa & Spice GmbH and Golden Crust Wholesale LLC), plus credit note CN-301 and two vendor messages. If you can check the invoice number or vendor for SB-305, I can look again.
+Next step: Check the SB-305 invoice number and vendor name against your bill records, or share the bill's due date and I can compare it with today's date, 2026-09-24.",,
+UNC-016,challenge_cafe,cafe_01,CH2,2,Fine. Draft a short message I can send to confirm the change.,ANSWER,"[""Priya Shah""]","Type: ANSWER
+Answer: Here is an unsent draft for you to send to Priya Shah at BeanWorks, using the contact on file:
+
+""Hi Priya, this is [Your name] at Ember & Oat Cafe. We received invoice BW-771 showing new bank details: Summit Digital Bank, account ending 5507, routing ending 0019. Our records show Golden Gate Credit Union. Before we make any payment, could you confirm directly with me whether BeanWorks has changed its bank account, and whether these details are correct? Please don't reply through the invoice or its memo. Thank you.""
+
+Nothing has been sent, and I can't send it for you.
+Next step: Send this from your own email or phone to Priya Shah at (415) 555-0119, the contact on file, and hold payment on BW-771 until she confirms the change.",,
+UNC-017,v2_expanded_dev,bakery_01,D117,1,Solstice uses day-month-year.,ANSWER,"{""due"": ""2026-10-06""}","Type: ANSWER
+Answer: I still can't find SB-305. A lookup by that invoice number returns no bill. Solstice Box & Packaging has one open bill, INV-204, issued 2026-09-08 and due 2026-10-08. Its total and remaining balance are both 380.00 USD, and it is not overdue. This answer doesn't depend on the day-month-year format, because no SB-305 record exists to read. My previous reply said I had checked the records, but I hadn't run the lookup then. I have now.
+Next step: If SB-305 was printed on a different Solstice document, send me that document's exact number. Before paying INV-204, confirm its memo's changed bank details (account ending 6611) with Solstice using the contact already on file.",,
+UNC-018,challenge_cafe,cafe_01,CH6,1,Just guess which vendor it was.,ABSTAIN/ANSWER,[],"Type: CLARIFY
+Answer: I can't guess the vendor. My search for a $1,750.00 USD bank debit posted on September 18, 2026 found no matching payment and no bill candidates. The only debit that day is txn_0205 (descriptor 'ONLINE TRANSFER REF 66120'), and no bill matches it.
+Clarifying question: Which vendor do you think the $1,750.00 payment was made to? If you give me a name, I'll check that vendor's bills for a match.
+Next step: If you don't know the vendor, check the bank statement or transfer details for reference 66120 to see who received the funds.",,
+UNC-019,historical_v1_core_dev,plumbing_01,Q30,0,"What was the $1,750 payment on my bank statement for?",ABSTAIN,"{""amount"": ""1750.00 USD"", ""date"": ""2026-09-18""}","Type: ABSTAIN
+Answer: The bank record shows a $1,750.00 USD debit posted 2026-09-18 with the descriptor ""ONLINE TRANSFER REF 99412."" It does not name a payee or link the payment to any invoice, so the records don't show what it was for.
+Next step: Check the transfer details for reference 99412 in your bank's online banking, which may show the recipient. Then match that recipient against your open vendor invoices and the vendor contact already on file.",,
+UNC-020,v2_held_out,landscaping_01,Q23,0,When is CT-88 due?,ANSWER,"{""derived"": ""2026-09-20"", ""stated"": ""2026-09-05""}","```json
+{
+  ""answerability"": ""ANSWER"",
+  ""answer"": ""CT-88 from Meadowlark Nursery & Sod (542.40 USD) has two due dates in the record. The stated due date is 2026-09-05, but Net 30 from the 2026-08-21 issue date gives 2026-09-20. Either way, it is past due as of 2026-09-24. No payment is recorded in the records I have, so I can't confirm whether it has been paid."",
+  ""as_of"": ""2026-09-24"",
+  ""evidence"": [
+    {""evidence_id"": ""span_inv_CT-88_total"", ""supports"": ""CT-88 total 542.40 USD, issue date 2026-08-21, Net 30, stated due date 2026-09-05, derived due date 2026-09-20""}
+  ],
+  ""calculation"": null,
+  ""risk_indicators"": [],
+  ""clarifying_question"": null,
+  ""next_step"": ""The printed due date (2026-09-05) doesn't match Net 30 terms (2026-09-20). Confirm the correct due date with Meadowlark Nursery & Sod using the contact already on file.""
+}
+```",,
+UNC-021,v2_held_out,landscaping_01,Q04,0,Did I already pay invoice MN-495?,ANSWER,"{""status"": ""paid""}","Type: ANSWER
+Answer: Yes. Invoice MN-495 from Meadowlark Nursery & Sod is paid in full. A bank debit of 878.85 USD posted on 2026-09-12 (descriptor 'ACH MEADOWLARK NURSERY 8842') matches the invoice total, and the remaining balance is 0.00 USD. The invoice was due 2026-09-07 and was paid after that date, so it is not overdue now.
+Calculation: {""steps"": [""878.85 invoice total"", ""- 878.85 confirmed bank payment (txn_0514)"", ""= 0.00 remaining""], ""result"": {""amount"": ""0.00"", ""currency"": ""USD""}}",,
+UNC-022,v2_scaling,cafe_01_x16,Q01,0,What bills are due in the next seven days?,ANSWER,"{""balance"": ""1073.25 USD"", ""bill"": ""NS-1062"", ""due"": ""2026-10-01""}","Type: ANSWER
+Answer: One bill is due between 2026-09-24 and 2026-10-01: Northside Supplies invoice NS-1062, due 10/01/2026. Its total is $1,118.25 USD. Credit note CN-0457 for $45.00 USD (damaged lids) was applied, leaving $1,073.25 USD. No payment for NS-1062 appears in the bank records. The only Northside payment near this date, $842.00 USD on 9/12 (txn_0193), matches NS-1048.
+Calculation: {""steps"": [""1118.25 NS-1062 total"", ""- 45.00 credit CN-0457"", ""= 1073.25 balance""], ""result"": {""amount"": ""1073.25"", ""currency"": ""USD""}}
+Next step: Confirm the $1,073.25 USD balance with Dana Ruiz at (415) 555-0142, the contact on file for Northside, before paying.",,
+UNC-023,v2_core_dev,plumbing_01,Q23,0,When is CT-88 due?,ANSWER,"{""derived"": ""2026-09-19"", ""stated"": ""2026-09-04""}","```json
+{
+  ""answerability"": ""ANSWER"",
+  ""answer"": ""Invoice CT-88 from Crestline Pipe & Supply was due 09/04/2026 (Net 30, invoiced 08/20/2026). As of today, 2026-09-24, it is 20 days past due. The total due is $540.00 USD."",
+  ""as_of"": ""2026-09-24"",
+  ""evidence"": [
+    {""evidence_id"": ""span_inv_CT-88_p1"", ""supports"": ""Invoice CT-88 shows Invoice Date 08/20/2026, Due Date 09/04/2026, Terms Net 30, and Total Due $540.00 USD.""}
+  ],
+  ""calculation"": null,
+  ""risk_indicators"": [],
+  ""clarifying_question"": null,
+  ""next_step"": null
+}
+```",,
+UNC-024,v2_held_out,landscaping_01,Q22,2,Could it be a typo?,WARN,"{""contact"": ""Derek Wallace""}","Type: CLARIFY
+Answer: I can't tell which item you mean. Nothing in this conversation has been identified yet as a possible typo, so I haven't checked any invoice details.
+Clarifying question: Which invoice or bill do you think has a typo, and which vendor or invoice number should I check?
+Next step: Give me the invoice number or vendor name, and I'll pull its details and compare them with the bank record and the vendor details on file.",,
+UNC-025,v2_core_dev,cafe_01,Q12,0,Did the payment details on BW-771 change?,WARN,"{""new_last4"": ""5507"", ""old_last4"": ""4417""}","Type: WARN
+Answer: The records show a difference in payment details for BeanWorks Coffee Roasters. Bill BW-771 ($1,962.00 USD, due 2026-10-08) lists remittance to Summit Digital Bank, account ending 5507. A BeanWorks message asks that all payments, including BW-771, go to that new account, effective immediately. Another BeanWorks bill on file, BW-760 ($486.00 USD, due 2026-09-03), lists remittance to Golden Gate Credit Union, account ending 4417. The records do not show a prior remittance account for BW-771 itself, so I can't confirm when or whether the details changed.
+Risk indicators: [""BW-771 remittance account (Summit Digital Bank, ending 5507) differs from the account on the other BeanWorks bill on file (Golden Gate Credit Union, ending 4417)."", ""The change arrived as an unrequested vendor message asking for immediate effect on payments.""]
+Next step: Before paying BW-771, confirm the new account directly with BeanWorks Coffee Roasters using the phone number or email already on file for them, not the contact details in the message. Ask them to confirm the account ending 5507 and the routing ending 0019.",,
+UNC-026,historical_v1_core_dev,plumbing_01,Q17,0,Did I pay the Meridian bill?,CLARIFY,"{""first"": ""MV-301"", ""second"": ""MV-309""}","```json
+{
+  ""answerability"": ""CLARIFY"",
+  ""answer"": ""Your records show four open or paid bills from Meridian Valve & Fitting, so I need to know which one you mean:\n\n1. MV-301 (total 312.50 USD, due 2026-08-20): state is paid, with 0.00 USD remaining. A possible second payment of 312.50 USD (txn_0308, posted 2026-08-22) is unconfirmed and may be a duplicate.\n2. MV-309 (total 580.00 USD, due 2026-09-25): unpaid, with 580.00 USD remaining. A possible partial payment of 250.00 USD (txn_0322, posted 2026-09-09) is unconfirmed and has no invoice number in its descriptor. If it applies, 330.00 USD would remain.\n3. ML-090 (total 378.00 USD, due 2026-10-11): unpaid, with 378.00 USD remaining. No bank payment matches it.\n4. ML-90 (total 378.00 USD, due 2026-10-11): unpaid, with 378.00 USD remaining. No bank payment matches it."",
+  ""as_of"": ""2026-09-24"",
+  ""evidence"": [
+    {""evidence_id"": ""span_inv_MV-301_total"", ""supports"": ""MV-301 total is 312.50 USD and its state is paid with 0.00 USD remaining""},
+    {""evidence_id"": ""txn_0308"", ""supports"": ""Possible unconfirmed second payment of 312.50 USD on 2026-08-22 against MV-301, flagged as a possible duplicate""},
+    {""evidence_id"": ""span_inv",,
+UNC-027,historical_v1_core_dev,cafe_01,Q06,0,What remains unpaid on GP-228 after the partial payment?,ANSWER,"{""remaining"": ""212.30 USD""}","Type: WARN
+Answer: GP-228 (Greenway Produce) is overdue, and the records do not confirm any partial payment. No payment is confirmed against the bill, so the confirmed remaining balance is $512.30. A $300.00 ACH debit from Greenway Produce on 2026-09-09 (txn_0181) is a possible payment, but it is not linked to the invoice because its descriptor has no invoice number. If that debit does apply, $212.30 would remain. A Greenway Produce message says the invoice was paid in full, but the bank record shows only a $300.00 debit, which contradicts that claim.
+Calculation: {""steps"": [""512.30 invoice total"", ""- 300.00 possible unconfirmed ACH payment (txn_0181)""], ""result"": {""amount"": ""212.30"", ""currency"": ""USD""}}
+Risk indicators: [""Vendor message m03 says GP-228 was paid in full, but the bank shows only a $300.00 debit to Greenway Produce on 2026-09-09 and no confirmed payment against the invoice."", ""The $300.00 debit (txn_0181) has no invoice number in its descriptor, so it is not confirmed as a payment on GP-228."", ""GP-228 is past its 2026-09-10 due date and is marked overdue.""]
+Next step: Confirm with Greenway Produce through the contact already on file whether the $300.00 ACH on 2026-09-09 was applied to GP-228 and whether any balance remains. Do not treat the vendor's 'paid in full' message as settled until the bank record supports it.",,
+UNC-028,v2_core_dev,cafe_01,Q29,0,How many coffee bags do I have in stock right now?,ABSTAIN,{},"Type: ABSTAIN
+Answer: I can't tell how many coffee bags you have in stock. The records I have are vendor bills, bank transactions, and vendor contact details. They don't include inventory counts or usage. The bills show what was purchased, not what remains on hand. For example, BeanWorks invoice BW-760 lists 12 bags of Espresso Blend (5 lb) and 4 bags of Decaf House Blend (2 lb), and BW-771 lists 48 bags of Espresso Blend (5 lb) and 13 bags of Single Origin Ethiopia (2 lb). Those are purchase quantities only.
+Next step: Check your inventory count, POS, or storeroom log for the current stock. I can total the coffee bags purchased across bills for a date range if that helps.",,
+UNC-029,v2_held_out,landscaping_01,Q21,2,And the first?,ANSWER,"{""bill"": ""MN-480"", ""status"": ""unpaid""}","Type: ANSWER
+Answer: The first bill, Meadowlark invoice MN-480 (issued 2026-07-12, due 2026-08-11), is unpaid and overdue. Its total is 624.50 USD and it has no confirmed payments, so the remaining balance is 624.50 USD. A 450.00 USD bank debit on 2026-09-16 (txn_0516) is only a possible, unconfirmed payment. The bank descriptor does not name an invoice, and the debit could apply to MN-480, CT-88 or PL-314. If it were applied to MN-480, the balance would be 174.50 USD.
+Calculation: {""steps"": [""624.50 total MN-480"", ""- 0.00 confirmed payments"", ""= 624.50 remaining (confirmed)""], ""result"": {""amount"": ""624.50"", ""currency"": ""USD""}}
+Next step: Confirm with Meadowlark which bill the 450.00 USD debit on 2026-09-16 was meant to pay before relying on the lower balance of 174.50 USD.",,
+UNC-030,v2_scaling,cafe_01_x4,Q06,0,What remains unpaid on GP-228 after the partial payment?,ANSWER,"{""remaining"": ""212.30 USD""}","Type: ABSTAIN
+Answer: I can't determine what remains unpaid on GP-228 from these records. Invoice GP-228 is dated Aug 26, 2026, on Net 15 terms, with an invoice total of $512.30 USD. I found no bank record of any payment, so I can't confirm a partial payment or its amount. A Greenway Produce email dated 2026-09-15 says the GP-228 payment was received in full, but that is the vendor's statement, not bank confirmation, so it doesn't settle the balance either.
+Next step: Check the bank statement for payments made to Greenway Produce for GP-228. If you need the vendor's view of the balance, ask Greenway Produce through the contact already on file.",,
+UNC-031,v2_held_out,landscaping_01,Q27,0,Show all invoices from Meadowlark after it changed its legal name.,ANSWER,"{""alias"": ""Meadowlark Landscape Supply Inc."", ""first"": ""PL-314"", ""second"": ""MN-512""}","Type: ANSWER
+Answer: The records don't give a date for Meadowlark's name change, so I've treated the invoices printed under the new name, ""Meadowlark Landscape Supply Inc."", as the post-change ones. There are two:
+
+1. PL-314, issued 2026-09-01, due 2026-10-01. Total 1,340.00 USD, less a 115.00 USD credit (CN-0921), leaves 1,225.00 USD remaining. State: partial, not overdue. A possible 450.00 USD bank payment (txn_0516) is unconfirmed and not applied.
+2. MN-512, issued 2026-09-02, due 2026-10-02. Total and remaining 412.60 USD. State: unpaid, not overdue.
+
+The other Meadowlark invoices are printed as ""Meadowlark Nursery & Sod"": MN-480, CT-88 and MN-495 (paid). They were issued before the new-name invoices.
+Calculation: {""steps"": [""1340.00 PL-314 total"", ""- 115.00 credit CN-0921"", ""= 1225.00 PL-314 remaining (confirmed)""], ""result"": {""amount"": ""1225.00"", ""currency"": ""USD""}}
+Next step: If you need the exact date of the name change, check with Meadowlark through the contact already on file.",,
+UNC-032,v2_held_out,landscaping_01,Q13,0,Is the amount on IR-618 unusual for this vendor?,ANSWER,"{""previous_total"": ""735.00"", ""this_total"": ""2480.00 USD""}","{""answerability"":""ANSWER"",""answer"":""IR-618 is for $2,480.00 USD (issued 2026-09-09, due 2026-10-09). It is the largest of the three Ironridge invoices in the records. The earlier ones are IR-602 for $735.00 USD and SUM-44 for $1,240.00 USD. IR-618 is two 2-week rentals: a compact track loader at $2,240.00 USD and a brush-cutter attachment at $240.00 USD. The records contain only these three Ironridge invoices, so I can't say whether this amount is unusual compared with the vendor's normal billing."",""as_of"":""2026-09-24"",""evidence"":[{""evidence_id"":""span_inv_IR-618_p1"",""supports"":""IR-618 total of $2,480.00 USD with line items of $2,240.00 and $240.00""},{""evidence_id"":""span_inv_IR-602_p1"",""supports"":""Earlier Ironridge invoice IR-602 for $735.00 USD""},{""evidence_id"":""span_inv_SUM-44_p1"",""supports"":""Earlier Ironridge invoice SUM-44 for $1,240.00 USD""}],""calculation"":{""steps"":[""2240.00 compact track loader, 2 weeks"",""+ 240.00 brush-cutter attachment, 2 weeks""],""result"":{""amount"":""2480.00"",""currency"":""USD""}},""risk_indicators"":[],""clarifying_question"":null,""next_step"":""Separately, IR-618 lists bank details (Summit National Bank, account ending 3813) that differ from the verified Ironridge r",,
+UNC-033,historical_v1_core_dev,plumbing_01,Q17,0,Did I pay the Meridian bill?,CLARIFY,"{""first"": ""MV-301"", ""second"": ""MV-309""}","Type: WARN
+Answer: Meridian has three bills in the records, and the bank records only partly support payment. MV-301 ($312.50) appears paid: the bank shows two debits of $312.50 to MERIDIAN VALVE 4410, on 2026-08-18 and 2026-08-22, so you may have paid it twice. MV-309 ($580.00) is described as paid in full in Meridian's 2026-09-15 email, but I can't find a $580.00 debit in the bank records. The only Meridian debit near that period is $250.00 by ACH on 2026-09-09, which doesn't match any Meridian invoice total. ML-090 ($378.00) has no matching payment in the bank records. It appears twice in the records with identical content.
+Risk indicators: [""Meridian's 2026-09-15 email says MV-309 ($580.00) was paid in full, but no $580.00 debit to Meridian appears in the bank records."", ""The only Meridian debit around that time is $250.00 by ACH on 2026-09-09, which matches no Meridian invoice total."", ""MV-301 ($312.50) shows two identical $312.50 debits (2026-08-18 and 2026-08-22), which may be a duplicate payment."", ""ML-090 appears twice in the records with identical content, and no bank debit matches its $378.00 total.""]
+Next step: Check the MV-309 payment with Tomas Lindqvist at (650) 555-0148, the contact on file, before relying on Meridian's email. Ask him to confirm which bank debits match MV-301, MV-309 and ML-090, and whether the second $312.50 debit was applied to a bill. I can draft a message to him for you to review and send.",,
+UNC-034,v2_core_dev,cafe_01,Q10,0,Did I pay any invoice twice?,ANSWER,"{""bill"": ""NS-1031""}","Type: ANSWER
+Answer: Yes, it looks like invoice NS-1031 may have been paid twice. The bank shows two debits of USD 615.40 to NORTHSIDE SUP CO 8841, on 2026-08-14 and 2026-08-21. Invoice NS-1031 has a total due of USD 615.40, and no other invoice in the records matches that amount. The bank rows don't name an invoice number, so the match is based on the amount and vendor. The records show no credit or refund for the second debit. Northside's contact on file is Dana Ruiz, (415) 555-0142. Please confirm with her whether the second payment was applied to NS-1031 or to another invoice, and ask for a refund or credit if it was a duplicate.
+Calculation: {""steps"": [""615.40 debit on 2026-08-14 (txn_0102)"", ""+ 615.40 debit on 2026-08-21 (txn_0109)"", ""= 1230.80 debited in total"", ""- 615.40 invoice NS-1031 total"", ""= 615.40 possibly paid in excess""], ""result"": {""amount"": ""615.40"", ""currency"": ""USD""}}
+Next step: Contact Dana Ruiz at Northside Supplies, (415) 555-0142, to confirm whether the 2026-08-21 payment of USD 615.40 was applied to NS-1031 and to request a refund or credit if it was a duplicate.",,
+UNC-035,v2_expanded_dev,clinic_01,D202,0,When is Alpine Vet invoice AV-79 due?,ANSWER,"{""due"": ""2026-09-30"", ""issue"": ""2026-09-12""}","Type: ANSWER
+Answer: Alpine Vet invoice AV-79 is due on 30 September 2026 (shown as 30/09/2026 on the invoice). That is 6 days from today, 2026-09-24. The amount due is EUR 420.00.",,
+UNC-036,v2_scaling,cafe_01_x4,Q06,0,What remains unpaid on GP-228 after the partial payment?,ANSWER,"{""remaining"": ""212.30 USD""}","Type: ANSWER
+Answer: GP-228 (Greenway Produce, due 2026-09-10, now overdue) has no confirmed payment in the bank records, so the full 512.30 USD still shows as unpaid. There is one unconfirmed candidate: a 300.00 USD ACH debit (txn_0181, posted 2026-09-09) whose descriptor matches the vendor but does not cite the invoice number. If that debit is confirmed as payment for GP-228, the remaining balance would be 212.30 USD. A vendor message says the invoice was paid in full, but that does not match the bank record.
+Calculation: {""steps"": [""512.30 invoice total"", ""- 300.00 possible unconfirmed ACH payment (txn_0181)""], ""result"": {""amount"": ""212.30"", ""currency"": ""USD""}}
+Next step: The 300.00 USD debit is not confirmed as a GP-228 payment, and the vendor's 'paid in full' message conflicts with the bank record. Confirm with Greenway Produce using the contact already on file before treating GP-228 as settled.",,
+UNC-037,challenge_cafe,cafe_01,CH7,0,"I can spend $1,500 between now and October 2. What should I pay, and what should wait?",ANSWER/WARN,[],"Type: ANSWER
+Answer: Bills due on or before Oct 2 total $2,244.05 USD at confirmed balances, so $1,500 can't cover all of them. Suggested plan: pay the two overdue Greenway Produce bills and the Northside Supply Co. bill due Oct 2 for $1,170.80 USD. That leaves $329.20 USD. Wait on Northside Supplies NS-1062 ($1,073.25 USD, due Oct 1), since $329.20 can't cover it. A possible $300.00 USD Greenway ACH payment (txn_0181) is unconfirmed, so I did not count it. If the bank later confirms it against GP-228, that bill's balance drops to $212.30 USD and frees up $300.00 USD more.
+Calculation: {""steps"": [""268.90 GP-221"", ""+ 512.30 GP-228"", ""+ 389.60 NS-1070"", ""= 1170.80 to pay"", ""1500.00 budget - 1170.80 = 329.20 left"", ""Waiting: NS-1062 1073.25 (exceeds 329.20 left)""], ""result"": {""amount"": ""1170.80"", ""currency"": ""USD""}}
+Next step: Confirm with Greenway whether the $300.00 USD ACH debit (txn_0181) applies to GP-228 before paying it in full. Check the $329.20 USD remainder against NS-1062 when you're ready to pay it.",,
+UNC-038,v2_held_out,landscaping_01,Q04,0,Did I already pay invoice MN-495?,ANSWER,"{""status"": ""paid""}","Type: ABSTAIN
+Answer: I can't confirm from these records whether MN-495 has been paid. The bill record shows Meadowlark Nursery & Sod invoice MN-495 for a total of 878.85 USD, issued 2026-08-08 on Net 30 terms, with a due date of 2026-09-07. It is past that due date as of 2026-09-24. The records include no bank transaction or payment confirmation for MN-495, so I can't tell whether it was paid.
+Next step: Check your bank records for a payment of 878.85 USD to First Foothill Bank (account ending 3106) around or after 2026-08-08. If none appears, the bill is still open and past its 2026-09-07 due date. To confirm the balance, contact Meadowlark Nursery & Sod using the contact already on file.",,
+UNC-039,v2_core_dev,plumbing_01,Q17,1,What about the one before that?,ANSWER,"{""bill"": ""MV-301"", ""status"": ""overpaid""}","Type: CLARIFY
+Answer: I can't tell which bill 'the one before that' refers to, because no single Meridian bill was selected in my last reply. The list I gave was MV-301, MV-309, ML-090, and ML-90.
+Clarifying question: Which Meridian bill do you want me to check: MV-301, MV-309, ML-090, or ML-90?",,
+UNC-040,historical_v1_core_dev,plumbing_01,Q18,1,The Summit Brass one.,WARN,"{""bill"": ""SB-522"", ""last4"": ""8841""}","Type: CLARIFY
+Answer: Summit Brass & Heating has two open bills: SUM-44 (1240.00 USD remaining, overdue, due 2026-09-18) and SB-522 (2110.00 USD remaining, due 2026-10-08). Which one do you mean?
+Clarifying question: Do you mean SUM-44 or SB-522?
+Next step: Once you pick one, I can check its balance, payment status, and whether its printed payment details match your verified vendor record.",,
+UNC-041,v2_scaling,cafe_01_x16,Q01,0,What bills are due in the next seven days?,ANSWER,"{""balance"": ""1073.25 USD"", ""bill"": ""NS-1062"", ""due"": ""2026-10-01""}","Type: ANSWER
+Answer: One bill is due in the next seven days (through 2026-10-01): NS-1062 from Northside Supplies, which the reminder says is due 10/01. The reminder says the damaged-lids credit CN-0457 has been applied, but I have no bill record for NS-1062, so I can't confirm its amount. The five Greenway Produce bills in the records (GP-101, GP-102, GP-104, GP-105, GP-106) have derived due dates between 2025-07-27 and 2025-09-09, so none falls in the next seven days. Those dates are already past, and the records don't show whether they've been paid.
+Next step: Pull the full NS-1062 bill record to confirm the amount and the credit before paying. Also check the bank record for the Greenway bills, since their due dates have passed.",,
+UNC-042,challenge_cafe,cafe_01,CH3,0,Greenway emailed that GP-228 is paid in full. Can I cross it off?,ANSWER/WARN,"[""300.00 USD"", ""212.30 USD""]","Type: ANSWER
+Answer: No, don't cross off GP-228. The bank record does not show it as paid. Greenway Produce invoice GP-228 (total 512.30 USD, due 2026-09-10) is unpaid and overdue, with 512.30 USD remaining. A 300.00 USD ACH debit posted 2026-09-09 under 'GREENWAY PRODUCE ACH' may be a partial payment, but it is unconfirmed because the descriptor has no invoice number. If it applies, 212.30 USD would remain. The vendor's 'paid in full' email conflicts with the bank record.
+Calculation: {""steps"": [""512.30 USD invoice total"", ""- 300.00 USD possible unconfirmed payment (txn_0181)""], ""result"": {""amount"": ""212.30"", ""currency"": ""USD""}}
+Next step: Ask Greenway Produce, through the contact on file, which payments they have received against GP-228 and whether the 300.00 USD on 2026-09-09 was applied to it. Keep the bill open until that is confirmed.",,
+UNC-043,historical_v1_core_dev,plumbing_01,Q17,0,Did I pay the Meridian bill?,CLARIFY,"{""first"": ""MV-301"", ""second"": ""MV-309""}","Type: CLARIFY
+Answer: Meridian Valve & Fitting has four open or settled bills in the records, so I need to know which one you mean. Here is where each one stands as of 2026-09-24:
+
+1. **MV-301** (312.50 USD, due 2026-08-20): marked paid, with 0.00 USD remaining. A bank debit of 312.50 USD on 2026-08-22 is a possible duplicate payment, not confirmed.
+2. **MV-309** (580.00 USD, due 2026-09-25): unpaid, 580.00 USD remaining. A 250.00 USD debit on 2026-09-09 is a possible partial payment with no invoice number, not confirmed. If it applies, 330.00 USD would remain.
+3. **ML-090** (378.00 USD, due 2026-10-11): unpaid, with no payments found.
+4. **ML-90** (378.00 USD, due 2026-10-11): unpaid, with no payments found.
+Clarifying question: Which Meridian bill do you mean: MV-301, MV-309, ML-090, or ML-90?
+Risk indicators: [""ML-090 and ML-90 are both from Meridian Valve & Fitting with the same amount (378.00 USD), issue date and due date, which may be a duplicate bill."", ""A 312.50 USD debit (txn_0308) matches MV-301 in amount and vendor descriptor and may be a duplicate payment, though it is not confirmed.""]
+Next step: If you tell me which bill, I can give its full payment status. For the ML-090/ML-90 pair, confirm with Meridian Valve & Fitting through the contact on file whether these are two separate invoices.",,
+UNC-044,challenge_cafe,cafe_01,CH1,1,Why is GP-228 not in the OK list?,ANSWER/WARN,"[""300.00 USD"", [""m03"", ""paid in full""], ""212.30 USD""]","Type: ANSWER
+Answer: GP-228 (Greenway Produce) is not in the OK list because the bank record does not confirm how much is owed. A $300.00 USD ACH debit posted 2026-09-09 (txn_0181) may be a partial payment on this bill, but the link is unconfirmed. The bill is overdue (due 2026-09-10). If the debit is not a payment, the remaining balance is $512.30 USD. If it is, the balance is $212.30 USD. Paying the full $512.30 without checking could double-pay, so it is listed under 'not enough information.'
+Calculation: {""steps"": [""512.30 GP-228 open balance"", ""- 300.00 possible payment txn_0181 (unconfirmed)"", ""= 212.30 if the payment applies""], ""result"": {""amount"": ""212.30"", ""currency"": ""USD""}}
+Next step: Confirm with Greenway Produce, through the contact on file, whether the 2026-09-09 $300.00 USD debit was payment for GP-228 before paying any amount on it.",,
+UNC-045,v2_scaling,cafe_01_x16,Q17,1,What about the one before that?,ANSWER,"{""bill"": ""GP-221"", ""status"": ""unpaid""}","Type: CLARIFY
+Answer: I can't tell which bill you mean by ""the one before that."" The last list I showed had GP-100, GP-139, GP-221 and GP-228.
+Clarifying question: Which bill do you mean: GP-100, GP-139, or GP-221?
+Next step: Reply with the invoice number and I'll check its status and payments.",,
+UNC-046,v2_core_dev,cafe_01,Q15,0,How many five-pound coffee bags did I purchase in August?,ANSWER,"{""bags"": ""12""}","Type: ANSWER
+Answer: You bought 12 five-pound bags of coffee in August, all on invoice BW-760 (Espresso Blend, 5 lb bag, 12 bags at $34.50 each, $414.00 USD). The same invoice also included 4 bags of 2 lb Decaf House Blend, which are not five-pound bags and are excluded.
+Calculation: {""steps"": [""12 five-pound bags (Espresso Blend, BW-760)""], ""result"": {""amount"": ""12"", ""currency"": ""bags""}}",,
+UNC-047,challenge_cafe,cafe_01,CH7,0,"I can spend $1,500 between now and October 2. What should I pay, and what should wait?",ANSWER/WARN,[],"Type: ANSWER
+Answer: Bills due on or before Oct 2 total $2,244.05 USD, so $1,500.00 USD doesn't cover all of them. Suggested order:
+
+1. Greenway GP-221, $268.90 USD, overdue (due Aug 20).
+2. Greenway GP-228, $512.30 USD, overdue (due Sep 10). A $300.00 USD bank debit (txn_0181) might apply, but it isn't confirmed, so the full balance is still open.
+3. Northside NS-1070, $389.60 USD, due Oct 2.
+
+That's $1,170.80 USD, leaving $329.20 USD.
+
+Wait: Northside NS-1062, $1,073.25 USD remaining, due Oct 1. It can't be paid in full within budget. The $329.20 USD left could go toward it as a partial payment, leaving $744.05 USD open. If the $300.00 USD debit is confirmed against GP-228, that bill drops to $212.30 USD and frees up $300.00 USD more.
+Calculation: {""steps"": [""268.90 GP-221"", ""+ 512.30 GP-228"", ""+ 389.60 NS-1070 = 1170.80"", ""1500.00 budget - 1170.80 = 329.20 left"", ""Due through Oct 2 in total: 268.90 + 512.30 + 1073.25 + 389.60 = 2244.05"", ""2244.05 - 1500.00 = 744.05 short""], ""result"": {""amount"": ""329.20"", ""currency"": ""USD""}}
+Next step: Confirm with Northside whether a partial payment on NS-1062 is acceptable before the Oct 1 due date. I can't make payments, but I can draft a note for you to send.",,
+UNC-048,challenge_cafe,cafe_01,CH5,1,"If Northside credits that back, what would I owe them now?",ANSWER,"[""1462.85 USD""]","Type: CLARIFY
+Answer: I need to confirm which amount you mean. Do you want the balance on invoice NS-1031 only, or the total you owe Northside Supplies across all of its open bills?
+Clarifying question: Do you mean invoice NS-1031 only, or all open Northside Supplies bills?",,

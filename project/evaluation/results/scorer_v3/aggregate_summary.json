@@ -1,0 +1,1176 @@
+{
+  "scorer_version": "scorer_v3",
+  "git_head": "4f23435",
+  "git_dirty": true,
+  "code_hashes": {
+    "scoring.py": "4017f9734d4843ca9b0527f7d3ee716ba712a6cda5d7fb517afe328413f29627",
+    "postprocess.py": "3850a577c753d61c4a26718bf8647db304c3fa961fe315c88c0b19255eda691d",
+    "rescore_v3.py": "d200e4a9cdda61ba8c39448a9ee6013f3bd2071c2ae052ba8e4d832bc1050c8a"
+  },
+  "strata": {
+    "historical_v1_core_dev": {
+      "runs": [
+        {
+          "stratum": "historical_v1_core_dev",
+          "original_run_path": "evaluation/results/20261117-234352-cafe_01-claude-haiku-5-5",
+          "baseline_log_compared": "evaluation/results/20261117-234352-cafe_01-claude-haiku-5-5/rescored/log.jsonl",
+          "baseline_source": "prior_rescored",
+          "bundle": "data/dev/cafe_01",
+          "queries_file": "evaluation/queries.yaml",
+          "model_version": "claude-haiku-5-5",
+          "prompt_version": "answer_system_v1",
+          "original_code_commit": "081b05c",
+          "scorer_version": "scorer_v3",
+          "code_hashes": {
+            "scoring.py": "4017f9734d4843ca9b0527f7d3ee716ba712a6cda5d7fb517afe328413f29627",
+            "postprocess.py": "3850a577c753d61c4a26718bf8647db304c3fa961fe315c88c0b19255eda691d",
+            "rescore_v3.py": "d200e4a9cdda61ba8c39448a9ee6013f3bd2071c2ae052ba8e4d832bc1050c8a"
+          },
+          "git_head": "4f23435",
+          "git_dirty": true,
+          "total_scored_turns_all_configs": 140,
+          "verdict_changes_count": 1,
+          "per_config": {
+            "C0": {
+              "turns": 28,
+              "old_successes": 19,
+              "old_rate": 0.679,
+              "new_successes": 19,
+              "new_rate": 0.679,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 27,
+              "new_parsed": 27
+            },
+            "C1": {
+              "turns": 28,
+              "old_successes": 12,
+              "old_rate": 0.429,
+              "new_successes": 12,
+              "new_rate": 0.429,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 28,
+              "new_parsed": 28
+            },
+            "C2": {
+              "turns": 28,
+              "old_successes": 15,
+              "old_rate": 0.536,
+              "new_successes": 15,
+              "new_rate": 0.536,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 28,
+              "new_parsed": 28
+            },
+            "C3": {
+              "turns": 28,
+              "old_successes": 19,
+              "old_rate": 0.679,
+              "new_successes": 20,
+              "new_rate": 0.714,
+              "delta_turns": 1,
+              "pass_to_fail": 0,
+              "fail_to_pass": 1,
+              "old_parsed": 27,
+              "new_parsed": 28
+            },
+            "C4": {
+              "turns": 28,
+              "old_successes": 20,
+              "old_rate": 0.714,
+              "new_successes": 20,
+              "new_rate": 0.714,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 28,
+              "new_parsed": 28
+            }
+          }
+        },
+        {
+          "stratum": "historical_v1_core_dev",
+          "original_run_path": "evaluation/results/20261118-164027-cafe_01-claude-haiku-5-5",
+          "baseline_log_compared": "evaluation/results/20261118-164027-cafe_01-claude-haiku-5-5/rescored/log.jsonl",
+          "baseline_source": "prior_rescored",
+          "bundle": "data/dev/cafe_01",
+          "queries_file": "evaluation/queries.yaml",
+          "model_version": "claude-haiku-5-5",
+          "prompt_version": "answer_system_v1",
+          "original_code_commit": "081b05c",
+          "scorer_version": "scorer_v3",
+          "code_hashes": {
+            "scoring.py": "4017f9734d4843ca9b0527f7d3ee716ba712a6cda5d7fb517afe328413f29627",
+            "postprocess.py": "3850a577c753d61c4a26718bf8647db304c3fa961fe315c88c0b19255eda691d",
+            "rescore_v3.py": "d200e4a9cdda61ba8c39448a9ee6013f3bd2071c2ae052ba8e4d832bc1050c8a"
+          },
+          "git_head": "4f23435",
+          "git_dirty": true,
+          "total_scored_turns_all_configs": 140,
+          "verdict_changes_count": 3,
+          "per_config": {
+            "C0": {
+              "turns": 28,
+              "old_successes": 16,
+              "old_rate": 0.571,
+              "new_successes": 17,
+              "new_rate": 0.607,
+              "delta_turns": 1,
+              "pass_to_fail": 0,
+              "fail_to_pass": 1,
+              "old_parsed": 26,
+              "new_parsed": 27
+            },
+            "C1": {
+              "turns": 28,
+              "old_successes": 13,
+              "old_rate": 0.464,
+              "new_successes": 13,
+              "new_rate": 0.464,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 28,
+              "new_parsed": 28
+            },
+            "C2": {
+              "turns": 28,
+              "old_successes": 14,
+              "old_rate": 0.5,
+              "new_successes": 14,
+              "new_rate": 0.5,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 28,
+              "new_parsed": 28
+            },
+            "C3": {
+              "turns": 28,
+              "old_successes": 19,
+              "old_rate": 0.679,
+              "new_successes": 21,
+              "new_rate": 0.75,
+              "delta_turns": 2,
+              "pass_to_fail": 0,
+              "fail_to_pass": 2,
+              "old_parsed": 25,
+              "new_parsed": 28
+            },
+            "C4": {
+              "turns": 28,
+              "old_successes": 21,
+              "old_rate": 0.75,
+              "new_successes": 21,
+              "new_rate": 0.75,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 28,
+              "new_parsed": 28
+            }
+          }
+        },
+        {
+          "stratum": "historical_v1_core_dev",
+          "original_run_path": "evaluation/results/20261118-141745-plumbing_01-claude-haiku-5-5",
+          "baseline_log_compared": "evaluation/results/20261118-141745-plumbing_01-claude-haiku-5-5/rescored/log.jsonl",
+          "baseline_source": "prior_rescored",
+          "bundle": "data/dev/plumbing_01",
+          "queries_file": "evaluation/queries.yaml",
+          "model_version": "claude-haiku-5-5",
+          "prompt_version": "answer_system_v1",
+          "original_code_commit": "081b05c",
+          "scorer_version": "scorer_v3",
+          "code_hashes": {
+            "scoring.py": "4017f9734d4843ca9b0527f7d3ee716ba712a6cda5d7fb517afe328413f29627",
+            "postprocess.py": "3850a577c753d61c4a26718bf8647db304c3fa961fe315c88c0b19255eda691d",
+            "rescore_v3.py": "d200e4a9cdda61ba8c39448a9ee6013f3bd2071c2ae052ba8e4d832bc1050c8a"
+          },
+          "git_head": "4f23435",
+          "git_dirty": true,
+          "total_scored_turns_all_configs": 200,
+          "verdict_changes_count": 0,
+          "per_config": {
+            "C0": {
+              "turns": 40,
+              "old_successes": 24,
+              "old_rate": 0.6,
+              "new_successes": 24,
+              "new_rate": 0.6,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 36,
+              "new_parsed": 36
+            },
+            "C1": {
+              "turns": 40,
+              "old_successes": 15,
+              "old_rate": 0.375,
+              "new_successes": 15,
+              "new_rate": 0.375,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 38,
+              "new_parsed": 39
+            },
+            "C2": {
+              "turns": 40,
+              "old_successes": 20,
+              "old_rate": 0.5,
+              "new_successes": 20,
+              "new_rate": 0.5,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 40,
+              "new_parsed": 40
+            },
+            "C3": {
+              "turns": 40,
+              "old_successes": 25,
+              "old_rate": 0.625,
+              "new_successes": 25,
+              "new_rate": 0.625,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 40,
+              "new_parsed": 40
+            },
+            "C4": {
+              "turns": 40,
+              "old_successes": 21,
+              "old_rate": 0.525,
+              "new_successes": 21,
+              "new_rate": 0.525,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 40,
+              "new_parsed": 40
+            }
+          }
+        },
+        {
+          "stratum": "historical_v1_core_dev",
+          "original_run_path": "evaluation/results/20261118-161549-plumbing_01-claude-haiku-5-5",
+          "baseline_log_compared": "evaluation/results/20261118-161549-plumbing_01-claude-haiku-5-5/rescored/log.jsonl",
+          "baseline_source": "prior_rescored",
+          "bundle": "data/dev/plumbing_01",
+          "queries_file": "evaluation/queries.yaml",
+          "model_version": "claude-haiku-5-5",
+          "prompt_version": "answer_system_v1",
+          "original_code_commit": "081b05c",
+          "scorer_version": "scorer_v3",
+          "code_hashes": {
+            "scoring.py": "4017f9734d4843ca9b0527f7d3ee716ba712a6cda5d7fb517afe328413f29627",
+            "postprocess.py": "3850a577c753d61c4a26718bf8647db304c3fa961fe315c88c0b19255eda691d",
+            "rescore_v3.py": "d200e4a9cdda61ba8c39448a9ee6013f3bd2071c2ae052ba8e4d832bc1050c8a"
+          },
+          "git_head": "4f23435",
+          "git_dirty": true,
+          "total_scored_turns_all_configs": 200,
+          "verdict_changes_count": 1,
+          "per_config": {
+            "C0": {
+              "turns": 40,
+              "old_successes": 23,
+              "old_rate": 0.575,
+              "new_successes": 23,
+              "new_rate": 0.575,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 38,
+              "new_parsed": 38
+            },
+            "C1": {
+              "turns": 40,
+              "old_successes": 14,
+              "old_rate": 0.35,
+              "new_successes": 14,
+              "new_rate": 0.35,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 40,
+              "new_parsed": 40
+            },
+            "C2": {
+              "turns": 40,
+              "old_successes": 22,
+              "old_rate": 0.55,
+              "new_successes": 22,
+              "new_rate": 0.55,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 40,
+              "new_parsed": 40
+            },
+            "C3": {
+              "turns": 40,
+              "old_successes": 21,
+              "old_rate": 0.525,
+              "new_successes": 22,
+              "new_rate": 0.55,
+              "delta_turns": 1,
+              "pass_to_fail": 0,
+              "fail_to_pass": 1,
+              "old_parsed": 38,
+              "new_parsed": 39
+            },
+            "C4": {
+              "turns": 40,
+              "old_successes": 23,
+              "old_rate": 0.575,
+              "new_successes": 23,
+              "new_rate": 0.575,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 39,
+              "new_parsed": 40
+            }
+          }
+        }
+      ],
+      "stratum_totals": {
+        "C0": {
+          "turns": 136,
+          "old": 82,
+          "new": 83,
+          "p2f": 0,
+          "f2p": 1
+        },
+        "C1": {
+          "turns": 136,
+          "old": 54,
+          "new": 54,
+          "p2f": 0,
+          "f2p": 0
+        },
+        "C2": {
+          "turns": 136,
+          "old": 71,
+          "new": 71,
+          "p2f": 0,
+          "f2p": 0
+        },
+        "C3": {
+          "turns": 136,
+          "old": 84,
+          "new": 88,
+          "p2f": 0,
+          "f2p": 4
+        },
+        "C4": {
+          "turns": 136,
+          "old": 85,
+          "new": 85,
+          "p2f": 0,
+          "f2p": 0
+        }
+      }
+    },
+    "v2_core_dev": {
+      "runs": [
+        {
+          "stratum": "v2_core_dev",
+          "original_run_path": "evaluation/results/20261118-223250-cafe_01-claude-haiku-5-5",
+          "baseline_log_compared": "evaluation/results/20261118-223250-cafe_01-claude-haiku-5-5/log.jsonl",
+          "baseline_source": "orig",
+          "bundle": "data/dev/cafe_01",
+          "queries_file": "evaluation/queries.yaml",
+          "model_version": "claude-haiku-5-5",
+          "prompt_version": "answer_system_v2",
+          "original_code_commit": "7a5dd10",
+          "scorer_version": "scorer_v3",
+          "code_hashes": {
+            "scoring.py": "4017f9734d4843ca9b0527f7d3ee716ba712a6cda5d7fb517afe328413f29627",
+            "postprocess.py": "3850a577c753d61c4a26718bf8647db304c3fa961fe315c88c0b19255eda691d",
+            "rescore_v3.py": "d200e4a9cdda61ba8c39448a9ee6013f3bd2071c2ae052ba8e4d832bc1050c8a"
+          },
+          "git_head": "4f23435",
+          "git_dirty": true,
+          "total_scored_turns_all_configs": 140,
+          "verdict_changes_count": 1,
+          "per_config": {
+            "C0": {
+              "turns": 28,
+              "old_successes": 20,
+              "old_rate": 0.714,
+              "new_successes": 20,
+              "new_rate": 0.714,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 27,
+              "new_parsed": 27
+            },
+            "C1": {
+              "turns": 28,
+              "old_successes": 14,
+              "old_rate": 0.5,
+              "new_successes": 13,
+              "new_rate": 0.464,
+              "delta_turns": -1,
+              "pass_to_fail": 1,
+              "fail_to_pass": 0,
+              "old_parsed": 27,
+              "new_parsed": 27
+            },
+            "C2": {
+              "turns": 28,
+              "old_successes": 15,
+              "old_rate": 0.536,
+              "new_successes": 15,
+              "new_rate": 0.536,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 28,
+              "new_parsed": 28
+            },
+            "C3": {
+              "turns": 28,
+              "old_successes": 22,
+              "old_rate": 0.786,
+              "new_successes": 22,
+              "new_rate": 0.786,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 27,
+              "new_parsed": 27
+            },
+            "C4": {
+              "turns": 28,
+              "old_successes": 22,
+              "old_rate": 0.786,
+              "new_successes": 22,
+              "new_rate": 0.786,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 25,
+              "new_parsed": 25
+            }
+          }
+        },
+        {
+          "stratum": "v2_core_dev",
+          "original_run_path": "evaluation/results/20261118-224539-plumbing_01-claude-haiku-5-5",
+          "baseline_log_compared": "evaluation/results/20261118-224539-plumbing_01-claude-haiku-5-5/log.jsonl",
+          "baseline_source": "orig",
+          "bundle": "data/dev/plumbing_01",
+          "queries_file": "evaluation/queries.yaml",
+          "model_version": "claude-haiku-5-5",
+          "prompt_version": "answer_system_v2",
+          "original_code_commit": "7a5dd10",
+          "scorer_version": "scorer_v3",
+          "code_hashes": {
+            "scoring.py": "4017f9734d4843ca9b0527f7d3ee716ba712a6cda5d7fb517afe328413f29627",
+            "postprocess.py": "3850a577c753d61c4a26718bf8647db304c3fa961fe315c88c0b19255eda691d",
+            "rescore_v3.py": "d200e4a9cdda61ba8c39448a9ee6013f3bd2071c2ae052ba8e4d832bc1050c8a"
+          },
+          "git_head": "4f23435",
+          "git_dirty": true,
+          "total_scored_turns_all_configs": 200,
+          "verdict_changes_count": 0,
+          "per_config": {
+            "C0": {
+              "turns": 40,
+              "old_successes": 26,
+              "old_rate": 0.65,
+              "new_successes": 26,
+              "new_rate": 0.65,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 39,
+              "new_parsed": 39
+            },
+            "C1": {
+              "turns": 40,
+              "old_successes": 14,
+              "old_rate": 0.35,
+              "new_successes": 14,
+              "new_rate": 0.35,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 39,
+              "new_parsed": 39
+            },
+            "C2": {
+              "turns": 40,
+              "old_successes": 24,
+              "old_rate": 0.6,
+              "new_successes": 24,
+              "new_rate": 0.6,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 39,
+              "new_parsed": 39
+            },
+            "C3": {
+              "turns": 40,
+              "old_successes": 31,
+              "old_rate": 0.775,
+              "new_successes": 31,
+              "new_rate": 0.775,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 39,
+              "new_parsed": 39
+            },
+            "C4": {
+              "turns": 40,
+              "old_successes": 33,
+              "old_rate": 0.825,
+              "new_successes": 33,
+              "new_rate": 0.825,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 40,
+              "new_parsed": 40
+            }
+          }
+        }
+      ],
+      "stratum_totals": {
+        "C0": {
+          "turns": 68,
+          "old": 46,
+          "new": 46,
+          "p2f": 0,
+          "f2p": 0
+        },
+        "C1": {
+          "turns": 68,
+          "old": 28,
+          "new": 27,
+          "p2f": 1,
+          "f2p": 0
+        },
+        "C2": {
+          "turns": 68,
+          "old": 39,
+          "new": 39,
+          "p2f": 0,
+          "f2p": 0
+        },
+        "C3": {
+          "turns": 68,
+          "old": 53,
+          "new": 53,
+          "p2f": 0,
+          "f2p": 0
+        },
+        "C4": {
+          "turns": 68,
+          "old": 55,
+          "new": 55,
+          "p2f": 0,
+          "f2p": 0
+        }
+      }
+    },
+    "v2_expanded_dev": {
+      "runs": [
+        {
+          "stratum": "v2_expanded_dev",
+          "original_run_path": "evaluation/results/20261118-231330-bakery_01-claude-haiku-5-5",
+          "baseline_log_compared": "evaluation/results/20261118-231330-bakery_01-claude-haiku-5-5/log.jsonl",
+          "baseline_source": "orig",
+          "bundle": "data/dev/bakery_01",
+          "queries_file": "data/dev/bakery_01/queries.yaml",
+          "model_version": "claude-haiku-5-5",
+          "prompt_version": "answer_system_v2",
+          "original_code_commit": "7a5dd10",
+          "scorer_version": "scorer_v3",
+          "code_hashes": {
+            "scoring.py": "4017f9734d4843ca9b0527f7d3ee716ba712a6cda5d7fb517afe328413f29627",
+            "postprocess.py": "3850a577c753d61c4a26718bf8647db304c3fa961fe315c88c0b19255eda691d",
+            "rescore_v3.py": "d200e4a9cdda61ba8c39448a9ee6013f3bd2071c2ae052ba8e4d832bc1050c8a"
+          },
+          "git_head": "4f23435",
+          "git_dirty": true,
+          "total_scored_turns_all_configs": 135,
+          "verdict_changes_count": 0,
+          "per_config": {
+            "C0": {
+              "turns": 27,
+              "old_successes": 18,
+              "old_rate": 0.667,
+              "new_successes": 18,
+              "new_rate": 0.667,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 27,
+              "new_parsed": 27
+            },
+            "C1": {
+              "turns": 27,
+              "old_successes": 15,
+              "old_rate": 0.556,
+              "new_successes": 15,
+              "new_rate": 0.556,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 27,
+              "new_parsed": 27
+            },
+            "C2": {
+              "turns": 27,
+              "old_successes": 15,
+              "old_rate": 0.556,
+              "new_successes": 15,
+              "new_rate": 0.556,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 27,
+              "new_parsed": 27
+            },
+            "C3": {
+              "turns": 27,
+              "old_successes": 15,
+              "old_rate": 0.556,
+              "new_successes": 15,
+              "new_rate": 0.556,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 27,
+              "new_parsed": 27
+            },
+            "C4": {
+              "turns": 27,
+              "old_successes": 16,
+              "old_rate": 0.593,
+              "new_successes": 16,
+              "new_rate": 0.593,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 27,
+              "new_parsed": 27
+            }
+          }
+        },
+        {
+          "stratum": "v2_expanded_dev",
+          "original_run_path": "evaluation/results/20261118-232652-clinic_01-claude-haiku-5-5",
+          "baseline_log_compared": "evaluation/results/20261118-232652-clinic_01-claude-haiku-5-5/log.jsonl",
+          "baseline_source": "orig",
+          "bundle": "data/dev/clinic_01",
+          "queries_file": "data/dev/clinic_01/queries.yaml",
+          "model_version": "claude-haiku-5-5",
+          "prompt_version": "answer_system_v2",
+          "original_code_commit": "7a5dd10",
+          "scorer_version": "scorer_v3",
+          "code_hashes": {
+            "scoring.py": "4017f9734d4843ca9b0527f7d3ee716ba712a6cda5d7fb517afe328413f29627",
+            "postprocess.py": "3850a577c753d61c4a26718bf8647db304c3fa961fe315c88c0b19255eda691d",
+            "rescore_v3.py": "d200e4a9cdda61ba8c39448a9ee6013f3bd2071c2ae052ba8e4d832bc1050c8a"
+          },
+          "git_head": "4f23435",
+          "git_dirty": true,
+          "total_scored_turns_all_configs": 130,
+          "verdict_changes_count": 2,
+          "per_config": {
+            "C0": {
+              "turns": 26,
+              "old_successes": 19,
+              "old_rate": 0.731,
+              "new_successes": 19,
+              "new_rate": 0.731,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 25,
+              "new_parsed": 25
+            },
+            "C1": {
+              "turns": 26,
+              "old_successes": 14,
+              "old_rate": 0.538,
+              "new_successes": 12,
+              "new_rate": 0.462,
+              "delta_turns": -2,
+              "pass_to_fail": 2,
+              "fail_to_pass": 0,
+              "old_parsed": 26,
+              "new_parsed": 26
+            },
+            "C2": {
+              "turns": 26,
+              "old_successes": 12,
+              "old_rate": 0.462,
+              "new_successes": 12,
+              "new_rate": 0.462,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 26,
+              "new_parsed": 26
+            },
+            "C3": {
+              "turns": 26,
+              "old_successes": 15,
+              "old_rate": 0.577,
+              "new_successes": 15,
+              "new_rate": 0.577,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 26,
+              "new_parsed": 26
+            },
+            "C4": {
+              "turns": 26,
+              "old_successes": 15,
+              "old_rate": 0.577,
+              "new_successes": 15,
+              "new_rate": 0.577,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 26,
+              "new_parsed": 26
+            }
+          }
+        }
+      ],
+      "stratum_totals": {
+        "C0": {
+          "turns": 53,
+          "old": 37,
+          "new": 37,
+          "p2f": 0,
+          "f2p": 0
+        },
+        "C1": {
+          "turns": 53,
+          "old": 29,
+          "new": 27,
+          "p2f": 2,
+          "f2p": 0
+        },
+        "C2": {
+          "turns": 53,
+          "old": 27,
+          "new": 27,
+          "p2f": 0,
+          "f2p": 0
+        },
+        "C3": {
+          "turns": 53,
+          "old": 30,
+          "new": 30,
+          "p2f": 0,
+          "f2p": 0
+        },
+        "C4": {
+          "turns": 53,
+          "old": 31,
+          "new": 31,
+          "p2f": 0,
+          "f2p": 0
+        }
+      }
+    },
+    "v2_scaling": {
+      "runs": [
+        {
+          "stratum": "v2_scaling",
+          "original_run_path": "evaluation/results/20261119-001330-cafe_01_x4-claude-haiku-5-5",
+          "baseline_log_compared": "evaluation/results/20261119-001330-cafe_01_x4-claude-haiku-5-5/log.jsonl",
+          "baseline_source": "orig",
+          "bundle": "data/dev/cafe_01_x4",
+          "queries_file": "evaluation/queries.yaml",
+          "model_version": "claude-haiku-5-5",
+          "prompt_version": "answer_system_v2",
+          "original_code_commit": "7a5dd10",
+          "scorer_version": "scorer_v3",
+          "code_hashes": {
+            "scoring.py": "4017f9734d4843ca9b0527f7d3ee716ba712a6cda5d7fb517afe328413f29627",
+            "postprocess.py": "3850a577c753d61c4a26718bf8647db304c3fa961fe315c88c0b19255eda691d",
+            "rescore_v3.py": "d200e4a9cdda61ba8c39448a9ee6013f3bd2071c2ae052ba8e4d832bc1050c8a"
+          },
+          "git_head": "4f23435",
+          "git_dirty": true,
+          "total_scored_turns_all_configs": 140,
+          "verdict_changes_count": 0,
+          "per_config": {
+            "C0": {
+              "turns": 28,
+              "old_successes": 22,
+              "old_rate": 0.786,
+              "new_successes": 22,
+              "new_rate": 0.786,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 28,
+              "new_parsed": 28
+            },
+            "C1": {
+              "turns": 28,
+              "old_successes": 11,
+              "old_rate": 0.393,
+              "new_successes": 11,
+              "new_rate": 0.393,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 28,
+              "new_parsed": 28
+            },
+            "C2": {
+              "turns": 28,
+              "old_successes": 6,
+              "old_rate": 0.214,
+              "new_successes": 6,
+              "new_rate": 0.214,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 28,
+              "new_parsed": 28
+            },
+            "C3": {
+              "turns": 28,
+              "old_successes": 24,
+              "old_rate": 0.857,
+              "new_successes": 24,
+              "new_rate": 0.857,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 28,
+              "new_parsed": 28
+            },
+            "C4": {
+              "turns": 28,
+              "old_successes": 23,
+              "old_rate": 0.821,
+              "new_successes": 23,
+              "new_rate": 0.821,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 28,
+              "new_parsed": 28
+            }
+          }
+        },
+        {
+          "stratum": "v2_scaling",
+          "original_run_path": "evaluation/results/20261119-002636-cafe_01_x16-claude-haiku-5-5",
+          "baseline_log_compared": "evaluation/results/20261119-002636-cafe_01_x16-claude-haiku-5-5/log.jsonl",
+          "baseline_source": "orig",
+          "bundle": "data/dev/cafe_01_x16",
+          "queries_file": "evaluation/queries.yaml",
+          "model_version": "claude-haiku-5-5",
+          "prompt_version": "answer_system_v2",
+          "original_code_commit": "7a5dd10",
+          "scorer_version": "scorer_v3",
+          "code_hashes": {
+            "scoring.py": "4017f9734d4843ca9b0527f7d3ee716ba712a6cda5d7fb517afe328413f29627",
+            "postprocess.py": "3850a577c753d61c4a26718bf8647db304c3fa961fe315c88c0b19255eda691d",
+            "rescore_v3.py": "d200e4a9cdda61ba8c39448a9ee6013f3bd2071c2ae052ba8e4d832bc1050c8a"
+          },
+          "git_head": "4f23435",
+          "git_dirty": true,
+          "total_scored_turns_all_configs": 140,
+          "verdict_changes_count": 0,
+          "per_config": {
+            "C0": {
+              "turns": 28,
+              "old_successes": 21,
+              "old_rate": 0.75,
+              "new_successes": 21,
+              "new_rate": 0.75,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 27,
+              "new_parsed": 27
+            },
+            "C1": {
+              "turns": 28,
+              "old_successes": 9,
+              "old_rate": 0.321,
+              "new_successes": 9,
+              "new_rate": 0.321,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 28,
+              "new_parsed": 28
+            },
+            "C2": {
+              "turns": 28,
+              "old_successes": 7,
+              "old_rate": 0.25,
+              "new_successes": 7,
+              "new_rate": 0.25,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 27,
+              "new_parsed": 27
+            },
+            "C3": {
+              "turns": 28,
+              "old_successes": 21,
+              "old_rate": 0.75,
+              "new_successes": 21,
+              "new_rate": 0.75,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 28,
+              "new_parsed": 28
+            },
+            "C4": {
+              "turns": 28,
+              "old_successes": 20,
+              "old_rate": 0.714,
+              "new_successes": 20,
+              "new_rate": 0.714,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 26,
+              "new_parsed": 26
+            }
+          }
+        }
+      ],
+      "stratum_totals": {
+        "C0": {
+          "turns": 56,
+          "old": 43,
+          "new": 43,
+          "p2f": 0,
+          "f2p": 0
+        },
+        "C1": {
+          "turns": 56,
+          "old": 20,
+          "new": 20,
+          "p2f": 0,
+          "f2p": 0
+        },
+        "C2": {
+          "turns": 56,
+          "old": 13,
+          "new": 13,
+          "p2f": 0,
+          "f2p": 0
+        },
+        "C3": {
+          "turns": 56,
+          "old": 45,
+          "new": 45,
+          "p2f": 0,
+          "f2p": 0
+        },
+        "C4": {
+          "turns": 56,
+          "old": 43,
+          "new": 43,
+          "p2f": 0,
+          "f2p": 0
+        }
+      }
+    },
+    "v2_held_out": {
+      "runs": [
+        {
+          "stratum": "v2_held_out",
+          "original_run_path": "evaluation/results/20261119-010517-landscaping_01-claude-haiku-5-5",
+          "baseline_log_compared": "evaluation/results/20261119-010517-landscaping_01-claude-haiku-5-5/log.jsonl",
+          "baseline_source": "orig",
+          "bundle": "data/test/landscaping_01",
+          "queries_file": "evaluation/queries.yaml",
+          "model_version": "claude-haiku-5-5",
+          "prompt_version": "answer_system_v2",
+          "original_code_commit": "7a5dd10",
+          "scorer_version": "scorer_v3",
+          "code_hashes": {
+            "scoring.py": "4017f9734d4843ca9b0527f7d3ee716ba712a6cda5d7fb517afe328413f29627",
+            "postprocess.py": "3850a577c753d61c4a26718bf8647db304c3fa961fe315c88c0b19255eda691d",
+            "rescore_v3.py": "d200e4a9cdda61ba8c39448a9ee6013f3bd2071c2ae052ba8e4d832bc1050c8a"
+          },
+          "git_head": "4f23435",
+          "git_dirty": true,
+          "total_scored_turns_all_configs": 200,
+          "verdict_changes_count": 0,
+          "per_config": {
+            "C0": {
+              "turns": 40,
+              "old_successes": 25,
+              "old_rate": 0.625,
+              "new_successes": 25,
+              "new_rate": 0.625,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 38,
+              "new_parsed": 38
+            },
+            "C1": {
+              "turns": 40,
+              "old_successes": 16,
+              "old_rate": 0.4,
+              "new_successes": 16,
+              "new_rate": 0.4,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 39,
+              "new_parsed": 39
+            },
+            "C2": {
+              "turns": 40,
+              "old_successes": 20,
+              "old_rate": 0.5,
+              "new_successes": 20,
+              "new_rate": 0.5,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 39,
+              "new_parsed": 39
+            },
+            "C3": {
+              "turns": 40,
+              "old_successes": 29,
+              "old_rate": 0.725,
+              "new_successes": 29,
+              "new_rate": 0.725,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 39,
+              "new_parsed": 39
+            },
+            "C4": {
+              "turns": 40,
+              "old_successes": 27,
+              "old_rate": 0.675,
+              "new_successes": 27,
+              "new_rate": 0.675,
+              "delta_turns": 0,
+              "pass_to_fail": 0,
+              "fail_to_pass": 0,
+              "old_parsed": 39,
+              "new_parsed": 39
+            }
+          }
+        }
+      ],
+      "stratum_totals": {
+        "C0": {
+          "turns": 40,
+          "old": 25,
+          "new": 25,
+          "p2f": 0,
+          "f2p": 0
+        },
+        "C1": {
+          "turns": 40,
+          "old": 16,
+          "new": 16,
+          "p2f": 0,
+          "f2p": 0
+        },
+        "C2": {
+          "turns": 40,
+          "old": 20,
+          "new": 20,
+          "p2f": 0,
+          "f2p": 0
+        },
+        "C3": {
+          "turns": 40,
+          "old": 29,
+          "new": 29,
+          "p2f": 0,
+          "f2p": 0
+        },
+        "C4": {
+          "turns": 40,
+          "old": 27,
+          "new": 27,
+          "p2f": 0,
+          "f2p": 0
+        }
+      }
+    }
+  },
+  "challenge": {
+    "20261119-103951-cafe_01": {
+      "stratum": "challenge_cafe",
+      "original_run_path": "evaluation/results/challenge/20261119-103951-cafe_01",
+      "bundle": "data/dev/cafe_01",
+      "queries_file": "evaluation/challenge/cafe_challenge.yaml",
+      "gold_file": "evaluation/challenge/cafe_challenge_gold.yaml",
+      "model_version": "claude-haiku-5-5",
+      "prompt_version": "answer_system_v2",
+      "original_code_commit": "4f23435",
+      "scorer_version": "scorer_v3",
+      "code_hashes": {
+        "scoring.py": "4017f9734d4843ca9b0527f7d3ee716ba712a6cda5d7fb517afe328413f29627",
+        "postprocess.py": "3850a577c753d61c4a26718bf8647db304c3fa961fe315c88c0b19255eda691d",
+        "rescore_v3.py": "d200e4a9cdda61ba8c39448a9ee6013f3bd2071c2ae052ba8e4d832bc1050c8a"
+      },
+      "git_head": "4f23435",
+      "git_dirty": true,
+      "turns": 17,
+      "orig_passed": 8,
+      "prior_rescored_passed": 14,
+      "scorer_v3_passed": 14
+    },
+    "20261119-110444-cafe_01": {
+      "stratum": "challenge_cafe",
+      "original_run_path": "evaluation/results/challenge/20261119-110444-cafe_01",
+      "bundle": "data/dev/cafe_01",
+      "queries_file": "evaluation/challenge/cafe_challenge.yaml",
+      "gold_file": "evaluation/challenge/cafe_challenge_gold.yaml",
+      "model_version": "claude-haiku-5-5",
+      "prompt_version": "answer_system_v2",
+      "original_code_commit": "4f23435",
+      "scorer_version": "scorer_v3",
+      "code_hashes": {
+        "scoring.py": "4017f9734d4843ca9b0527f7d3ee716ba712a6cda5d7fb517afe328413f29627",
+        "postprocess.py": "3850a577c753d61c4a26718bf8647db304c3fa961fe315c88c0b19255eda691d",
+        "rescore_v3.py": "d200e4a9cdda61ba8c39448a9ee6013f3bd2071c2ae052ba8e4d832bc1050c8a"
+      },
+      "git_head": "4f23435",
+      "git_dirty": true,
+      "turns": 17,
+      "orig_passed": 12,
+      "prior_rescored_passed": 14,
+      "scorer_v3_passed": 14
+    }
+  }
+}

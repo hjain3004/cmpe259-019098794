@@ -1,0 +1,67 @@
+{
+  "doc_id": "inv_NS-951",
+  "fields": {
+    "vendor_name": {
+      "text": "Northside Supplies",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "NS-951",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "05/10/2026",
+      "page": 1
+    },
+    "stated_due_date": {
+      "text": "06/09/2026",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 30",
+      "page": 1
+    },
+    "reference_or_po": {
+      "text": "PO-1454",
+      "page": 1
+    },
+    "subtotal": {
+      "text": "$268.10",
+      "page": 1
+    },
+    "tax": {
+      "text": "$22.12",
+      "page": 1
+    },
+    "total": {
+      "text": "$290.22",
+      "page": 1
+    },
+    "currency": {
+      "text": "USD",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Bay Commerce Bank",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "004417829931",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "121000358",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Paper cups 12 oz, sleeve of 50 8 sleeve $14.50 $116.00",
+      "page": 1
+    },
+    {
+      "text": "Paper cups 16 oz, sleeve of 50 9 sleeve $16.90 $152.10",
+      "page": 1
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "stratum": "v2_expanded_dev",
+  "original_run_path": "evaluation/results/20261118-232652-clinic_01-claude-haiku-5-5",
+  "baseline_log_compared": "evaluation/results/20261118-232652-clinic_01-claude-haiku-5-5/log.jsonl",
+  "baseline_source": "orig",
+  "bundle": "data/dev/clinic_01",
+  "queries_file": "data/dev/clinic_01/queries.yaml",
+  "model_version": "claude-haiku-5-5",
+  "prompt_version": "answer_system_v2",
+  "original_code_commit": "7a5dd10",
+  "scorer_version": "scorer_v3",
+  "code_hashes": {
+    "scoring.py": "4017f9734d4843ca9b0527f7d3ee716ba712a6cda5d7fb517afe328413f29627",
+    "postprocess.py": "3850a577c753d61c4a26718bf8647db304c3fa961fe315c88c0b19255eda691d",
+    "rescore_v3.py": "d200e4a9cdda61ba8c39448a9ee6013f3bd2071c2ae052ba8e4d832bc1050c8a"
+  },
+  "git_head": "4f23435",
+  "git_dirty": true,
+  "total_scored_turns_all_configs": 130,
+  "verdict_changes_count": 2,
+  "per_config": {
+    "C0": {
+      "turns": 26,
+      "old_successes": 19,
+      "old_rate": 0.731,
+      "new_successes": 19,
+      "new_rate": 0.731,
+      "delta_turns": 0,
+      "pass_to_fail": 0,
+      "fail_to_pass": 0,
+      "old_parsed": 25,
+      "new_parsed": 25
+    },
+    "C1": {
+      "turns": 26,
+      "old_successes": 14,
+      "old_rate": 0.538,
+      "new_successes": 12,
+      "new_rate": 0.462,
+      "delta_turns": -2,
+      "pass_to_fail": 2,
+      "fail_to_pass": 0,
+      "old_parsed": 26,
+      "new_parsed": 26
+    },
+    "C2": {
+      "turns": 26,
+      "old_successes": 12,
+      "old_rate": 0.462,
+      "new_successes": 12,
+      "new_rate": 0.462,
+      "delta_turns": 0,
+      "pass_to_fail": 0,
+      "fail_to_pass": 0,
+      "old_parsed": 26,
+      "new_parsed": 26
+    },
+    "C3": {
+      "turns": 26,
+      "old_successes": 15,
+      "old_rate": 0.577,
+      "new_successes": 15,
+      "new_rate": 0.577,
+      "delta_turns": 0,
+      "pass_to_fail": 0,
+      "fail_to_pass": 0,
+      "old_parsed": 26,
+      "new_parsed": 26
+    },
+    "C4": {
+      "turns": 26,
+      "old_successes": 15,
+      "old_rate": 0.577,
+      "new_successes": 15,
+      "new_rate": 0.577,
+      "delta_turns": 0,
+      "pass_to_fail": 0,
+      "fail_to_pass": 0,
+      "old_parsed": 26,
+      "new_parsed": 26
+    }
+  }
+}

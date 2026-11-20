@@ -1,0 +1,47 @@
+{
+  "doc_id": "inv_GP-113",
+  "fields": {
+    "vendor_name": {
+      "text": "Greenway Produce",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "GP-113",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "Jul 28, 2025",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 15",
+      "page": 1
+    },
+    "total": {
+      "text": "$332.25",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Pacific Western Bank",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "007733210456",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "121042882",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Spinach, case 5 case $31.25 $156.25",
+      "page": 1
+    },
+    {
+      "text": "Lemons, case 5 case $35.20 $176.00",
+      "page": 1
+    }
+  ]
+}

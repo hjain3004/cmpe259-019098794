@@ -1,0 +1,67 @@
+{
+  "doc_id": "inv_NS-838",
+  "fields": {
+    "vendor_name": {
+      "text": "Northside Supplies",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "NS-838",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "09/17/2025",
+      "page": 1
+    },
+    "stated_due_date": {
+      "text": "10/17/2025",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 30",
+      "page": 1
+    },
+    "reference_or_po": {
+      "text": "PO-1115",
+      "page": 1
+    },
+    "subtotal": {
+      "text": "$327.00",
+      "page": 1
+    },
+    "tax": {
+      "text": "$26.98",
+      "page": 1
+    },
+    "total": {
+      "text": "$353.98",
+      "page": 1
+    },
+    "currency": {
+      "text": "USD",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Bay Commerce Bank",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "004417829931",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "121000358",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Sanitizer, gallon 6 gallon $38.50 $231.00",
+      "page": 1
+    },
+    {
+      "text": "Napkins, case 4 case $24.00 $96.00",
+      "page": 1
+    }
+  ]
+}

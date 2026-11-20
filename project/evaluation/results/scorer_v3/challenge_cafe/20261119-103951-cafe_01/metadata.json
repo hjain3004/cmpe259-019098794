@@ -1,0 +1,22 @@
+{
+  "stratum": "challenge_cafe",
+  "original_run_path": "evaluation/results/challenge/20261119-103951-cafe_01",
+  "bundle": "data/dev/cafe_01",
+  "queries_file": "evaluation/challenge/cafe_challenge.yaml",
+  "gold_file": "evaluation/challenge/cafe_challenge_gold.yaml",
+  "model_version": "claude-haiku-5-5",
+  "prompt_version": "answer_system_v2",
+  "original_code_commit": "4f23435",
+  "scorer_version": "scorer_v3",
+  "code_hashes": {
+    "scoring.py": "4017f9734d4843ca9b0527f7d3ee716ba712a6cda5d7fb517afe328413f29627",
+    "postprocess.py": "3850a577c753d61c4a26718bf8647db304c3fa961fe315c88c0b19255eda691d",
+    "rescore_v3.py": "d200e4a9cdda61ba8c39448a9ee6013f3bd2071c2ae052ba8e4d832bc1050c8a"
+  },
+  "git_head": "4f23435",
+  "git_dirty": true,
+  "turns": 17,
+  "orig_passed": 8,
+  "prior_rescored_passed": 14,
+  "scorer_v3_passed": 14
+}

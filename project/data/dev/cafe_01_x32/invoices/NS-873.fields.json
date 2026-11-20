@@ -1,0 +1,67 @@
+{
+  "doc_id": "inv_NS-873",
+  "fields": {
+    "vendor_name": {
+      "text": "Northside Supplies",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "NS-873",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "05/05/2026",
+      "page": 1
+    },
+    "stated_due_date": {
+      "text": "06/04/2026",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 30",
+      "page": 1
+    },
+    "reference_or_po": {
+      "text": "PO-1220",
+      "page": 1
+    },
+    "subtotal": {
+      "text": "$231.00",
+      "page": 1
+    },
+    "tax": {
+      "text": "$19.06",
+      "page": 1
+    },
+    "total": {
+      "text": "$250.06",
+      "page": 1
+    },
+    "currency": {
+      "text": "USD",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Bay Commerce Bank",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "004417829931",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "121000358",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Compostable lids 12 oz, sleeve of 50 4 sleeve $9.75 $39.00",
+      "page": 1
+    },
+    {
+      "text": "Napkins, case 8 case $24.00 $192.00",
+      "page": 1
+    }
+  ]
+}

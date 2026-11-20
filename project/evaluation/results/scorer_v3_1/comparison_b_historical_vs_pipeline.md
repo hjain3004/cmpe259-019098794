@@ -1,0 +1,54 @@
+# Comparison B — Historical Recorded Results vs. Current Pipeline Reprocessing (`scorer_v3_1`)
+
+Compares historical recorded logs directly against current `postprocess()` + `scorer_v3_1`. **Not a scorer-only comparison:** exact historical `v1` postprocessing cannot be reconstructed from the current working tree alone, so parse-recovery changes are attributed separately.
+
+## Stratum: `historical_v1_core_dev`
+
+| Config | Historical Recorded | Current Pipeline (`scorer_v3_1`, strict) | Net Delta | Attributed to `postprocess` Parse Recovery | Attributed to Scorer Rules (P→F / F→P) |
+| --- | --- | --- | --- | --- | --- |
+| C0 | 82/136 (60.3%) | 83/136 (61.0%) | +1 | +1 | 0 / 0 |
+| C1 | 54/136 (39.7%) | 54/136 (39.7%) | +0 | +0 | 0 / 0 |
+| C2 | 71/136 (52.2%) | 71/136 (52.2%) | +0 | +0 | 0 / 0 |
+| C3 | 84/136 (61.8%) | 88/136 (64.7%) | +4 | +4 | 0 / 0 |
+| C4 | 85/136 (62.5%) | 85/136 (62.5%) | +0 | +0 | 0 / 0 |
+
+## Stratum: `v2_core_dev`
+
+| Config | Historical Recorded | Current Pipeline (`scorer_v3_1`, strict) | Net Delta | Attributed to `postprocess` Parse Recovery | Attributed to Scorer Rules (P→F / F→P) |
+| --- | --- | --- | --- | --- | --- |
+| C0 | 46/68 (67.6%) | 46/68 (67.6%) | +0 | +0 | 0 / 0 |
+| C1 | 28/68 (41.2%) | 27/68 (39.7%) | -1 | +0 | 1 / 0 |
+| C2 | 39/68 (57.4%) | 39/68 (57.4%) | +0 | +0 | 0 / 0 |
+| C3 | 53/68 (77.9%) | 53/68 (77.9%) | +0 | +0 | 0 / 0 |
+| C4 | 55/68 (80.9%) | 55/68 (80.9%) | +0 | +0 | 0 / 0 |
+
+## Stratum: `v2_expanded_dev`
+
+| Config | Historical Recorded | Current Pipeline (`scorer_v3_1`, strict) | Net Delta | Attributed to `postprocess` Parse Recovery | Attributed to Scorer Rules (P→F / F→P) |
+| --- | --- | --- | --- | --- | --- |
+| C0 | 37/53 (69.8%) | 37/53 (69.8%) | +0 | +0 | 0 / 0 |
+| C1 | 29/53 (54.7%) | 27/53 (50.9%) | -2 | +0 | 2 / 0 |
+| C2 | 27/53 (50.9%) | 27/53 (50.9%) | +0 | +0 | 0 / 0 |
+| C3 | 30/53 (56.6%) | 30/53 (56.6%) | +0 | +0 | 0 / 0 |
+| C4 | 31/53 (58.5%) | 31/53 (58.5%) | +0 | +0 | 0 / 0 |
+
+## Stratum: `v2_scaling`
+
+| Config | Historical Recorded | Current Pipeline (`scorer_v3_1`, strict) | Net Delta | Attributed to `postprocess` Parse Recovery | Attributed to Scorer Rules (P→F / F→P) |
+| --- | --- | --- | --- | --- | --- |
+| C0 | 43/56 (76.8%) | 43/56 (76.8%) | +0 | +0 | 0 / 0 |
+| C1 | 20/56 (35.7%) | 20/56 (35.7%) | +0 | +0 | 0 / 0 |
+| C2 | 13/56 (23.2%) | 13/56 (23.2%) | +0 | +0 | 0 / 0 |
+| C3 | 45/56 (80.4%) | 45/56 (80.4%) | +0 | +0 | 0 / 0 |
+| C4 | 43/56 (76.8%) | 43/56 (76.8%) | +0 | +0 | 0 / 0 |
+
+## Stratum: `v2_held_out`
+
+| Config | Historical Recorded | Current Pipeline (`scorer_v3_1`, strict) | Net Delta | Attributed to `postprocess` Parse Recovery | Attributed to Scorer Rules (P→F / F→P) |
+| --- | --- | --- | --- | --- | --- |
+| C0 | 25/40 (62.5%) | 25/40 (62.5%) | +0 | +0 | 0 / 0 |
+| C1 | 16/40 (40.0%) | 16/40 (40.0%) | +0 | +0 | 0 / 0 |
+| C2 | 20/40 (50.0%) | 20/40 (50.0%) | +0 | +0 | 0 / 0 |
+| C3 | 29/40 (72.5%) | 29/40 (72.5%) | +0 | +0 | 0 / 0 |
+| C4 | 27/40 (67.5%) | 27/40 (67.5%) | +0 | +0 | 0 / 0 |
+

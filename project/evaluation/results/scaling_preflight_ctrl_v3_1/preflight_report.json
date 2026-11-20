@@ -1,0 +1,493 @@
+{
+  "profile": "controlled",
+  "selected_configs": [
+    "C0",
+    "C3"
+  ],
+  "model": "claude-haiku-5-5",
+  "documented_context_limit": 1000000,
+  "context_limit": 1000000,
+  "context_limit_is_override": false,
+  "long_context_threshold": 100000,
+  "output_reserve": 4096,
+  "pricing_usd_per_1m": {
+    "standard_le_100k": {
+      "input": 0.1,
+      "output": 0.5,
+      "cache_write_5m": 0.125,
+      "cache_read": 0.01
+    },
+    "long_gt_100k": {
+      "input": 0.5,
+      "output": 2.5,
+      "cache_write_5m": 0.625,
+      "cache_read": 0.05
+    }
+  },
+  "assumptions": {
+    "prose_chars_per_token": 3.6,
+    "structured_chars_per_token": 1.87,
+    "extract_in_tokens_per_call_heuristic": 2030,
+    "extract_out_tokens_per_call_heuristic": 480,
+    "c0_output_tokens_per_turn_heuristic": 1800,
+    "c3_std_output_tokens_per_turn_heuristic": 1100,
+    "c3_settled_output_tokens_per_turn_heuristic": 1450,
+    "c3_calls_per_turn_heuristic": 2.6,
+    "high_token_margin": 1.25,
+    "high_retry_multiplier": 1.15,
+    "high_cache_write_fraction": 0.5
+  },
+  "doc_sources": {
+    "model_overview": "https://platform.claude.com/docs/en/models/haiku-5-5/overview",
+    "pricing": "https://platform.claude.com/docs/en/about-claude/pricing",
+    "retrieved_date": "2026-11-19"
+  },
+  "tokenizer_status": "approximate (character/table heuristic; no local Anthropic tokenizer installed)",
+  "bundles": [
+    {
+      "label": "cafe_01",
+      "profile": "baseline_x1",
+      "source": "on_disk",
+      "bundle": "data/dev/cafe_01",
+      "has_extracted_sqlite": true,
+      "extracted_sqlite_status": {
+        "present": true,
+        "sha256": "c445dc0c535ff51ed8850f64c378f92368c61ead94e2faf92e673984dd1564b3",
+        "bills": 8,
+        "message_claims": 4,
+        "bank_txns": 15,
+        "payment_links": 5
+      },
+      "counts": {
+        "invoices": 8,
+        "credits": 1,
+        "messages": 4,
+        "bank_rows": 15,
+        "raw_chunks": 31,
+        "gold_open_bills": 5,
+        "gold_all_bills": 8,
+        "conversations": 21,
+        "scored_turns": 28,
+        "invariant_subset_turns": 27,
+        "q13_turns": 1
+      },
+      "raw_context_chars": 8316,
+      "open_bills_payload_chars": 3739,
+      "all_bills_payload_chars": 6167,
+      "extraction_estimate": {
+        "estimated_calls_fresh": 21,
+        "estimated_calls_high_with_retries": 24,
+        "approx_input_tokens_fresh": 42630,
+        "approx_output_tokens_fresh": 10080,
+        "est_cost_usd_range_fresh": [
+          0.0077,
+          0.0125
+        ],
+        "estimated_calls_if_reusing_compatible_x1": 0,
+        "est_cost_usd_range_if_reusing_compatible_x1": [
+          0.0,
+          0.0
+        ],
+        "pricing_tier": "standard_le_100k"
+      },
+      "configs": {
+        "C0": {
+          "calls_per_turn": "1",
+          "estimated_calls_nominal": 28,
+          "estimated_calls_high_with_retries": 32,
+          "pricing_tier_low": "standard_le_100k",
+          "pricing_tier_high": "standard_le_100k",
+          "single_request_input_approx": 6348,
+          "single_request_input_naive_div4": 3790,
+          "single_request_with_reserve_approx": 10444,
+          "crosses_100k_pricing_tier": false,
+          "estimated_feasibility": "ESTIMATED_FEASIBLE",
+          "run_summed_input_approx": 177744,
+          "run_output_approx": 50400,
+          "est_answering_cost_usd_range": [
+            0.0395,
+            0.0597
+          ]
+        },
+        "C1": {
+          "calls_per_turn": "1",
+          "estimated_calls_nominal": 28,
+          "estimated_calls_high_with_retries": 32,
+          "single_request_input_approx": 4258,
+          "single_request_with_reserve_approx": 8354,
+          "crosses_100k_pricing_tier": false,
+          "estimated_feasibility": "ESTIMATED_FEASIBLE",
+          "run_summed_input_approx": 119224,
+          "run_output_approx": 33600,
+          "est_answering_cost_usd_range": [
+            0.0252,
+            0.0393
+          ]
+        },
+        "C2": {
+          "calls_per_turn": "1",
+          "estimated_calls_nominal": 28,
+          "estimated_calls_high_with_retries": 32,
+          "single_request_input_approx": 4200,
+          "single_request_with_reserve_approx": 8296,
+          "crosses_100k_pricing_tier": false,
+          "estimated_feasibility": "ESTIMATED_FEASIBLE",
+          "run_summed_input_approx": 117600,
+          "run_output_approx": 33600,
+          "est_answering_cost_usd_range": [
+            0.0251,
+            0.0391
+          ]
+        },
+        "C3": {
+          "calls_per_turn": "1..7 (loop)",
+          "estimated_calls_nominal": 72,
+          "estimated_calls_high_with_retries": 83,
+          "standard_turns_count": 24,
+          "settled_history_turns_count": 4,
+          "standard_turns_pricing_tier_low": "standard_le_100k",
+          "settled_turns_pricing_tier_low": "standard_le_100k",
+          "settled_turns_pricing_tier_high": "standard_le_100k",
+          "sample_open_only_request_input_approx": 5927,
+          "sample_include_settled_single_request_input_approx": 8081,
+          "sample_include_settled_with_reserve_approx": 12177,
+          "sample_open_multicall_sum_approx": 14818,
+          "sample_include_settled_multicall_sum_approx": 17778,
+          "mean_multicall_sum_approx": 15241,
+          "sample_settled_crosses_100k_pricing_tier": false,
+          "typical_open_crosses_100k_pricing_tier": false,
+          "estimated_feasibility": "ESTIMATED_FEASIBLE",
+          "run_summed_input_approx": 426748,
+          "run_output_approx": 32200,
+          "est_answering_cost_usd_range": [
+            0.0393,
+            0.0764
+          ],
+          "payload_bound_disclaimer": "Sample observed/constructed payloads only; not a verified upper bound across arbitrary multi-call histories."
+        },
+        "C4": {
+          "calls_per_turn": "1..7 (loop)",
+          "estimated_calls_nominal": 72,
+          "estimated_calls_high_with_retries": 83,
+          "sample_open_only_request_input_approx": 5927,
+          "sample_include_settled_single_request_input_approx": 8081,
+          "sample_include_settled_with_reserve_approx": 12177,
+          "sample_settled_crosses_100k_pricing_tier": false,
+          "estimated_feasibility": "ESTIMATED_FEASIBLE",
+          "run_summed_input_approx": 426748,
+          "run_output_approx": 32200,
+          "est_answering_cost_usd_range": [
+            0.0393,
+            0.0764
+          ]
+        }
+      }
+    },
+    {
+      "label": "cafe_01_ctrl_x16",
+      "profile": "controlled",
+      "source": "on_disk",
+      "bundle": "data/dev/cafe_01_ctrl_x16",
+      "has_extracted_sqlite": false,
+      "extracted_sqlite_status": {
+        "present": false
+      },
+      "counts": {
+        "invoices": 128,
+        "credits": 1,
+        "messages": 64,
+        "bank_rows": 285,
+        "raw_chunks": 481,
+        "gold_open_bills": 5,
+        "gold_all_bills": 128,
+        "conversations": 21,
+        "scored_turns": 28,
+        "invariant_subset_turns": 27,
+        "q13_turns": 1
+      },
+      "raw_context_chars": 111279,
+      "open_bills_payload_chars": 3739,
+      "all_bills_payload_chars": 81047,
+      "extraction_estimate": {
+        "estimated_calls_fresh": 321,
+        "estimated_calls_high_with_retries": 369,
+        "approx_input_tokens_fresh": 651630,
+        "approx_output_tokens_fresh": 154080,
+        "est_cost_usd_range_fresh": [
+          0.1163,
+          0.1908
+        ],
+        "estimated_calls_if_reusing_compatible_x1": 321,
+        "est_cost_usd_range_if_reusing_compatible_x1": [
+          0.1163,
+          0.1908
+        ],
+        "pricing_tier": "standard_le_100k"
+      },
+      "configs": {
+        "C0": {
+          "calls_per_turn": "1",
+          "estimated_calls_nominal": 28,
+          "estimated_calls_high_with_retries": 32,
+          "pricing_tier_low": "standard_le_100k",
+          "pricing_tier_high": "standard_le_100k",
+          "single_request_input_approx": 61409,
+          "single_request_input_naive_div4": 29530,
+          "single_request_with_reserve_approx": 65505,
+          "crosses_100k_pricing_tier": false,
+          "estimated_feasibility": "ESTIMATED_FEASIBLE",
+          "run_summed_input_approx": 1719452,
+          "run_output_approx": 50400,
+          "est_answering_cost_usd_range": [
+            0.1937,
+            0.28
+          ]
+        },
+        "C1": {
+          "calls_per_turn": "1",
+          "estimated_calls_nominal": 28,
+          "estimated_calls_high_with_retries": 32,
+          "single_request_input_approx": 4018,
+          "single_request_with_reserve_approx": 8114,
+          "crosses_100k_pricing_tier": false,
+          "estimated_feasibility": "ESTIMATED_FEASIBLE",
+          "run_summed_input_approx": 112504,
+          "run_output_approx": 33600,
+          "est_answering_cost_usd_range": [
+            0.0246,
+            0.0383
+          ]
+        },
+        "C2": {
+          "calls_per_turn": "1",
+          "estimated_calls_nominal": 28,
+          "estimated_calls_high_with_retries": 32,
+          "single_request_input_approx": 3970,
+          "single_request_with_reserve_approx": 8066,
+          "crosses_100k_pricing_tier": false,
+          "estimated_feasibility": "ESTIMATED_FEASIBLE",
+          "run_summed_input_approx": 111160,
+          "run_output_approx": 33600,
+          "est_answering_cost_usd_range": [
+            0.0244,
+            0.0381
+          ]
+        },
+        "C3": {
+          "calls_per_turn": "1..7 (loop)",
+          "estimated_calls_nominal": 72,
+          "estimated_calls_high_with_retries": 83,
+          "standard_turns_count": 24,
+          "settled_history_turns_count": 4,
+          "standard_turns_pricing_tier_low": "standard_le_100k",
+          "settled_turns_pricing_tier_low": "standard_le_100k",
+          "settled_turns_pricing_tier_high": "standard_le_100k",
+          "sample_open_only_request_input_approx": 5927,
+          "sample_include_settled_single_request_input_approx": 48123,
+          "sample_include_settled_with_reserve_approx": 52219,
+          "sample_open_multicall_sum_approx": 14818,
+          "sample_include_settled_multicall_sum_approx": 105871,
+          "mean_multicall_sum_approx": 27826,
+          "sample_settled_crosses_100k_pricing_tier": false,
+          "typical_open_crosses_100k_pricing_tier": false,
+          "estimated_feasibility": "ESTIMATED_FEASIBLE",
+          "run_summed_input_approx": 779128,
+          "run_output_approx": 32200,
+          "est_answering_cost_usd_range": [
+            0.0793,
+            0.1365
+          ],
+          "payload_bound_disclaimer": "Sample observed/constructed payloads only; not a verified upper bound across arbitrary multi-call histories."
+        },
+        "C4": {
+          "calls_per_turn": "1..7 (loop)",
+          "estimated_calls_nominal": 72,
+          "estimated_calls_high_with_retries": 83,
+          "sample_open_only_request_input_approx": 5927,
+          "sample_include_settled_single_request_input_approx": 48123,
+          "sample_include_settled_with_reserve_approx": 52219,
+          "sample_settled_crosses_100k_pricing_tier": false,
+          "estimated_feasibility": "ESTIMATED_FEASIBLE",
+          "run_summed_input_approx": 779128,
+          "run_output_approx": 32200,
+          "est_answering_cost_usd_range": [
+            0.0793,
+            0.1365
+          ]
+        }
+      }
+    },
+    {
+      "label": "cafe_01_ctrl_x64",
+      "profile": "controlled",
+      "source": "on_disk",
+      "bundle": "data/dev/cafe_01_ctrl_x64",
+      "has_extracted_sqlite": false,
+      "extracted_sqlite_status": {
+        "present": false
+      },
+      "counts": {
+        "invoices": 512,
+        "credits": 1,
+        "messages": 256,
+        "bank_rows": 1149,
+        "raw_chunks": 1921,
+        "gold_open_bills": 5,
+        "gold_all_bills": 512,
+        "conversations": 21,
+        "scored_turns": 28,
+        "invariant_subset_turns": 27,
+        "q13_turns": 1
+      },
+      "raw_context_chars": 441047,
+      "open_bills_payload_chars": 3739,
+      "all_bills_payload_chars": 320659,
+      "extraction_estimate": {
+        "estimated_calls_fresh": 1281,
+        "estimated_calls_high_with_retries": 1473,
+        "approx_input_tokens_fresh": 2600430,
+        "approx_output_tokens_fresh": 614880,
+        "est_cost_usd_range_fresh": [
+          0.4638,
+          0.7618
+        ],
+        "estimated_calls_if_reusing_compatible_x1": 1281,
+        "est_cost_usd_range_if_reusing_compatible_x1": [
+          0.4638,
+          0.7618
+        ],
+        "pricing_tier": "standard_le_100k"
+      },
+      "configs": {
+        "C0": {
+          "calls_per_turn": "1",
+          "estimated_calls_nominal": 28,
+          "estimated_calls_high_with_retries": 32,
+          "pricing_tier_low": "long_gt_100k",
+          "pricing_tier_high": "long_gt_100k",
+          "single_request_input_approx": 237755,
+          "single_request_input_naive_div4": 111972,
+          "single_request_with_reserve_approx": 241851,
+          "crosses_100k_pricing_tier": true,
+          "estimated_feasibility": "ESTIMATED_FEASIBLE",
+          "run_summed_input_approx": 6657140,
+          "run_output_approx": 50400,
+          "est_answering_cost_usd_range": [
+            3.4372,
+            4.9268
+          ]
+        },
+        "C1": {
+          "calls_per_turn": "1",
+          "estimated_calls_nominal": 28,
+          "estimated_calls_high_with_retries": 32,
+          "single_request_input_approx": 4018,
+          "single_request_with_reserve_approx": 8114,
+          "crosses_100k_pricing_tier": false,
+          "estimated_feasibility": "ESTIMATED_FEASIBLE",
+          "run_summed_input_approx": 112504,
+          "run_output_approx": 33600,
+          "est_answering_cost_usd_range": [
+            0.0246,
+            0.0383
+          ]
+        },
+        "C2": {
+          "calls_per_turn": "1",
+          "estimated_calls_nominal": 28,
+          "estimated_calls_high_with_retries": 32,
+          "single_request_input_approx": 3970,
+          "single_request_with_reserve_approx": 8066,
+          "crosses_100k_pricing_tier": false,
+          "estimated_feasibility": "ESTIMATED_FEASIBLE",
+          "run_summed_input_approx": 111160,
+          "run_output_approx": 33600,
+          "est_answering_cost_usd_range": [
+            0.0244,
+            0.0381
+          ]
+        },
+        "C3": {
+          "calls_per_turn": "1..7 (loop)",
+          "estimated_calls_nominal": 72,
+          "estimated_calls_high_with_retries": 83,
+          "standard_turns_count": 24,
+          "settled_history_turns_count": 4,
+          "standard_turns_pricing_tier_low": "standard_le_100k",
+          "settled_turns_pricing_tier_low": "long_gt_100k",
+          "settled_turns_pricing_tier_high": "long_gt_100k",
+          "sample_open_only_request_input_approx": 5927,
+          "sample_include_settled_single_request_input_approx": 176258,
+          "sample_include_settled_with_reserve_approx": 180354,
+          "sample_open_multicall_sum_approx": 14818,
+          "sample_include_settled_multicall_sum_approx": 387768,
+          "mean_multicall_sum_approx": 68097,
+          "sample_settled_crosses_100k_pricing_tier": true,
+          "typical_open_crosses_100k_pricing_tier": false,
+          "estimated_feasibility": "ESTIMATED_FEASIBLE",
+          "run_summed_input_approx": 1906716,
+          "run_output_approx": 32200,
+          "est_answering_cost_usd_range": [
+            0.9132,
+            1.3961
+          ],
+          "payload_bound_disclaimer": "Sample observed/constructed payloads only; not a verified upper bound across arbitrary multi-call histories."
+        },
+        "C4": {
+          "calls_per_turn": "1..7 (loop)",
+          "estimated_calls_nominal": 72,
+          "estimated_calls_high_with_retries": 83,
+          "sample_open_only_request_input_approx": 5927,
+          "sample_include_settled_single_request_input_approx": 176258,
+          "sample_include_settled_with_reserve_approx": 180354,
+          "sample_settled_crosses_100k_pricing_tier": true,
+          "estimated_feasibility": "ESTIMATED_FEASIBLE",
+          "run_summed_input_approx": 1906716,
+          "run_output_approx": 32200,
+          "est_answering_cost_usd_range": [
+            0.9132,
+            1.3961
+          ]
+        }
+      }
+    }
+  ],
+  "projected_bundles": [],
+  "cost_summary": {
+    "disclaimer": "Heuristic preflight estimate ONLY; NOT an enforced spending cap or guaranteed upper bound.",
+    "selected_configs": [
+      "C0",
+      "C3"
+    ],
+    "extraction_fresh_all_bundles_usd_range": [
+      0.5878,
+      0.9651
+    ],
+    "extraction_reusing_compatible_x1_usd_range": [
+      0.5801,
+      0.9526
+    ],
+    "answering_by_config_usd_range": {
+      "C0": [
+        3.6704,
+        5.2665
+      ],
+      "C3": [
+        1.0318,
+        1.609
+      ]
+    },
+    "answering_total_usd_range": [
+      4.7022,
+      6.8755
+    ],
+    "combined_total_fresh_extract_usd_range": [
+      5.29,
+      7.8406
+    ],
+    "combined_total_reusing_compatible_x1_usd_range": [
+      5.2823,
+      7.8281
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+version: specs_v3_1
+description: >
+  Explicit amount-semantics declarations for bank-outflow / payment transaction queries,
+  explicit bundle-to-scenario mappings (never inferred by suffix stripping), and
+  predeclared corpus-sensitive query annotations for scaling experiments.
+  Historical gold files remain untouched.
+
+bundle_to_scenario:
+  cafe_01: cafe_01
+  cafe_01_x4: cafe_01
+  cafe_01_x16: cafe_01
+  cafe_01_x32: cafe_01
+  cafe_01_x64: cafe_01
+  cafe_01_ctrl_x4: cafe_01
+  cafe_01_ctrl_x16: cafe_01
+  cafe_01_ctrl_x32: cafe_01
+  cafe_01_ctrl_x64: cafe_01
+  plumbing_01: plumbing_01
+  bakery_01: bakery_01
+  clinic_01: clinic_01
+  landscaping_01: landscaping_01
+
+corpus_sensitive_queries:
+  Q13:
+    applies_to_bundles:
+      - cafe_01_x4
+      - cafe_01_x16
+      - cafe_01_x32
+      - cafe_01_x64
+      - cafe_01_ctrl_x4
+      - cafe_01_ctrl_x16
+      - cafe_01_ctrl_x32
+      - cafe_01_ctrl_x64
+    reason: >
+      Q13 compares BW-771 against prior BeanWorks invoices. Corpus scaling prepends
+      historical BeanWorks invoices, making Q13's historical-comparison context
+      corpus-sensitive. Gold is not silently altered; report all 28 turns, the
+      predeclared 27-turn invariant-task subset (excluding Q13), and Q13 separately.
+
+overrides:
+  cafe_01:
+    Q17:
+      2:
+        payment:
+          kind: txn_magnitude
+          value: "300.00"
+          rationale: "Turn asks 'Show me the payment.' Bank row txn_0181 is recorded as -300.00 USD."
+  clinic_01:
+    D214:
+      0:
+        amount:
+          kind: txn_magnitude
+          value: "550.00 USD"
+          rationale: "Turn asks for the bank transaction (txn_6006, recorded as -550.00 USD)."
+      1:
+        total:
+          kind: txn_magnitude
+          value: "550.00 USD"
+          rationale: "Turn asks whether the bank payment (txn_6006, -550.00 USD) covers PV-401 and PV-402."
+  cafe_challenge:
+    CH6:
+      0:
+        "1750.00 USD":
+          kind: txn_magnitude
+          value: "1750.00 USD"
+          rationale: "Turn asks about bank transaction txn_0205 (-1750.00 USD debit on 2026-09-18)."

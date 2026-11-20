@@ -1,0 +1,1160 @@
+{
+  "Held-out (landscaping_01)": {
+    "majority_baseline": {
+      "class": "ANSWER",
+      "count": 28,
+      "total": 40,
+      "accuracy": 0.7,
+      "counts": {
+        "ANSWER": 28,
+        "WARN": 5,
+        "CLARIFY": 4,
+        "ABSTAIN": 3
+      }
+    },
+    "configs": {
+      "C0": {
+        "total": 40,
+        "correct": 31,
+        "accuracy": 0.775,
+        "per_class": {
+          "ANSWER": {
+            "support": 28,
+            "predicted": 20,
+            "tp": 20,
+            "precision": 1.0,
+            "recall": 0.7142857142857143,
+            "f1": 0.8333333333333333
+          },
+          "CLARIFY": {
+            "support": 4,
+            "predicted": 9,
+            "tp": 4,
+            "precision": 0.4444444444444444,
+            "recall": 1.0,
+            "f1": 0.6153846153846153
+          },
+          "ABSTAIN": {
+            "support": 3,
+            "predicted": 5,
+            "tp": 3,
+            "precision": 0.6,
+            "recall": 1.0,
+            "f1": 0.7499999999999999
+          },
+          "WARN": {
+            "support": 5,
+            "predicted": 4,
+            "tp": 4,
+            "precision": 1.0,
+            "recall": 0.8,
+            "f1": 0.888888888888889
+          }
+        },
+        "macro_f1": 0.7719017094017093,
+        "confusion_matrix": {
+          "ANSWER": {
+            "ANSWER": 20,
+            "CLARIFY": 4,
+            "ABSTAIN": 2,
+            "WARN": 0,
+            "UNPARSED": 2
+          },
+          "CLARIFY": {
+            "ANSWER": 0,
+            "CLARIFY": 4,
+            "ABSTAIN": 0,
+            "WARN": 0,
+            "UNPARSED": 0
+          },
+          "ABSTAIN": {
+            "ANSWER": 0,
+            "CLARIFY": 0,
+            "ABSTAIN": 3,
+            "WARN": 0,
+            "UNPARSED": 0
+          },
+          "WARN": {
+            "ANSWER": 0,
+            "CLARIFY": 1,
+            "ABSTAIN": 0,
+            "WARN": 4,
+            "UNPARSED": 0
+          }
+        },
+        "unparsed": 2,
+        "majority_class": "ANSWER",
+        "majority_accuracy": 0.7,
+        "delta_vs_majority": 0.07500000000000007
+      },
+      "C1": {
+        "total": 40,
+        "correct": 27,
+        "accuracy": 0.675,
+        "per_class": {
+          "ANSWER": {
+            "support": 28,
+            "predicted": 19,
+            "tp": 19,
+            "precision": 1.0,
+            "recall": 0.6785714285714286,
+            "f1": 0.8085106382978724
+          },
+          "CLARIFY": {
+            "support": 4,
+            "predicted": 4,
+            "tp": 2,
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5
+          },
+          "ABSTAIN": {
+            "support": 3,
+            "predicted": 10,
+            "tp": 2,
+            "precision": 0.2,
+            "recall": 0.6666666666666666,
+            "f1": 0.30769230769230765
+          },
+          "WARN": {
+            "support": 5,
+            "predicted": 6,
+            "tp": 4,
+            "precision": 0.6666666666666666,
+            "recall": 0.8,
+            "f1": 0.7272727272727272
+          }
+        },
+        "macro_f1": 0.5858689183157268,
+        "confusion_matrix": {
+          "ANSWER": {
+            "ANSWER": 19,
+            "CLARIFY": 1,
+            "ABSTAIN": 7,
+            "WARN": 1,
+            "UNPARSED": 0
+          },
+          "CLARIFY": {
+            "ANSWER": 0,
+            "CLARIFY": 2,
+            "ABSTAIN": 1,
+            "WARN": 0,
+            "UNPARSED": 1
+          },
+          "ABSTAIN": {
+            "ANSWER": 0,
+            "CLARIFY": 0,
+            "ABSTAIN": 2,
+            "WARN": 1,
+            "UNPARSED": 0
+          },
+          "WARN": {
+            "ANSWER": 0,
+            "CLARIFY": 1,
+            "ABSTAIN": 0,
+            "WARN": 4,
+            "UNPARSED": 0
+          }
+        },
+        "unparsed": 1,
+        "majority_class": "ANSWER",
+        "majority_accuracy": 0.7,
+        "delta_vs_majority": -0.02499999999999991
+      },
+      "C2": {
+        "total": 40,
+        "correct": 26,
+        "accuracy": 0.65,
+        "per_class": {
+          "ANSWER": {
+            "support": 28,
+            "predicted": 17,
+            "tp": 17,
+            "precision": 1.0,
+            "recall": 0.6071428571428571,
+            "f1": 0.7555555555555554
+          },
+          "CLARIFY": {
+            "support": 4,
+            "predicted": 7,
+            "tp": 3,
+            "precision": 0.42857142857142855,
+            "recall": 0.75,
+            "f1": 0.5454545454545454
+          },
+          "ABSTAIN": {
+            "support": 3,
+            "predicted": 9,
+            "tp": 3,
+            "precision": 0.3333333333333333,
+            "recall": 1.0,
+            "f1": 0.5
+          },
+          "WARN": {
+            "support": 5,
+            "predicted": 6,
+            "tp": 3,
+            "precision": 0.5,
+            "recall": 0.6,
+            "f1": 0.5454545454545454
+          }
+        },
+        "macro_f1": 0.5866161616161616,
+        "confusion_matrix": {
+          "ANSWER": {
+            "ANSWER": 17,
+            "CLARIFY": 2,
+            "ABSTAIN": 6,
+            "WARN": 2,
+            "UNPARSED": 1
+          },
+          "CLARIFY": {
+            "ANSWER": 0,
+            "CLARIFY": 3,
+            "ABSTAIN": 0,
+            "WARN": 1,
+            "UNPARSED": 0
+          },
+          "ABSTAIN": {
+            "ANSWER": 0,
+            "CLARIFY": 0,
+            "ABSTAIN": 3,
+            "WARN": 0,
+            "UNPARSED": 0
+          },
+          "WARN": {
+            "ANSWER": 0,
+            "CLARIFY": 2,
+            "ABSTAIN": 0,
+            "WARN": 3,
+            "UNPARSED": 0
+          }
+        },
+        "unparsed": 1,
+        "majority_class": "ANSWER",
+        "majority_accuracy": 0.7,
+        "delta_vs_majority": -0.04999999999999993
+      },
+      "C3": {
+        "total": 40,
+        "correct": 34,
+        "accuracy": 0.85,
+        "per_class": {
+          "ANSWER": {
+            "support": 28,
+            "predicted": 23,
+            "tp": 23,
+            "precision": 1.0,
+            "recall": 0.8214285714285714,
+            "f1": 0.9019607843137255
+          },
+          "CLARIFY": {
+            "support": 4,
+            "predicted": 8,
+            "tp": 4,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          },
+          "ABSTAIN": {
+            "support": 3,
+            "predicted": 4,
+            "tp": 3,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.8571428571428571
+          },
+          "WARN": {
+            "support": 5,
+            "predicted": 4,
+            "tp": 4,
+            "precision": 1.0,
+            "recall": 0.8,
+            "f1": 0.888888888888889
+          }
+        },
+        "macro_f1": 0.8286647992530345,
+        "confusion_matrix": {
+          "ANSWER": {
+            "ANSWER": 23,
+            "CLARIFY": 3,
+            "ABSTAIN": 1,
+            "WARN": 0,
+            "UNPARSED": 1
+          },
+          "CLARIFY": {
+            "ANSWER": 0,
+            "CLARIFY": 4,
+            "ABSTAIN": 0,
+            "WARN": 0,
+            "UNPARSED": 0
+          },
+          "ABSTAIN": {
+            "ANSWER": 0,
+            "CLARIFY": 0,
+            "ABSTAIN": 3,
+            "WARN": 0,
+            "UNPARSED": 0
+          },
+          "WARN": {
+            "ANSWER": 0,
+            "CLARIFY": 1,
+            "ABSTAIN": 0,
+            "WARN": 4,
+            "UNPARSED": 0
+          }
+        },
+        "unparsed": 1,
+        "majority_class": "ANSWER",
+        "majority_accuracy": 0.7,
+        "delta_vs_majority": 0.15000000000000002
+      },
+      "C4": {
+        "total": 40,
+        "correct": 33,
+        "accuracy": 0.825,
+        "per_class": {
+          "ANSWER": {
+            "support": 28,
+            "predicted": 22,
+            "tp": 22,
+            "precision": 1.0,
+            "recall": 0.7857142857142857,
+            "f1": 0.88
+          },
+          "CLARIFY": {
+            "support": 4,
+            "predicted": 9,
+            "tp": 4,
+            "precision": 0.4444444444444444,
+            "recall": 1.0,
+            "f1": 0.6153846153846153
+          },
+          "ABSTAIN": {
+            "support": 3,
+            "predicted": 4,
+            "tp": 3,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.8571428571428571
+          },
+          "WARN": {
+            "support": 5,
+            "predicted": 4,
+            "tp": 4,
+            "precision": 1.0,
+            "recall": 0.8,
+            "f1": 0.888888888888889
+          }
+        },
+        "macro_f1": 0.8103540903540903,
+        "confusion_matrix": {
+          "ANSWER": {
+            "ANSWER": 22,
+            "CLARIFY": 4,
+            "ABSTAIN": 1,
+            "WARN": 0,
+            "UNPARSED": 1
+          },
+          "CLARIFY": {
+            "ANSWER": 0,
+            "CLARIFY": 4,
+            "ABSTAIN": 0,
+            "WARN": 0,
+            "UNPARSED": 0
+          },
+          "ABSTAIN": {
+            "ANSWER": 0,
+            "CLARIFY": 0,
+            "ABSTAIN": 3,
+            "WARN": 0,
+            "UNPARSED": 0
+          },
+          "WARN": {
+            "ANSWER": 0,
+            "CLARIFY": 1,
+            "ABSTAIN": 0,
+            "WARN": 4,
+            "UNPARSED": 0
+          }
+        },
+        "unparsed": 1,
+        "majority_class": "ANSWER",
+        "majority_accuracy": 0.7,
+        "delta_vs_majority": 0.125
+      }
+    }
+  },
+  "Development (cafe_01 + plumbing_01)": {
+    "majority_baseline": {
+      "class": "ANSWER",
+      "count": 46,
+      "total": 68,
+      "accuracy": 0.6764705882352942,
+      "counts": {
+        "ANSWER": 46,
+        "WARN": 9,
+        "CLARIFY": 7,
+        "ABSTAIN": 6
+      }
+    },
+    "configs": {
+      "C0": {
+        "total": 68,
+        "correct": 54,
+        "accuracy": 0.7941176470588235,
+        "per_class": {
+          "ANSWER": {
+            "support": 46,
+            "predicted": 38,
+            "tp": 36,
+            "precision": 0.9473684210526315,
+            "recall": 0.782608695652174,
+            "f1": 0.8571428571428571
+          },
+          "CLARIFY": {
+            "support": 7,
+            "predicted": 10,
+            "tp": 5,
+            "precision": 0.5,
+            "recall": 0.7142857142857143,
+            "f1": 0.588235294117647
+          },
+          "ABSTAIN": {
+            "support": 6,
+            "predicted": 5,
+            "tp": 5,
+            "precision": 1.0,
+            "recall": 0.8333333333333334,
+            "f1": 0.9090909090909091
+          },
+          "WARN": {
+            "support": 9,
+            "predicted": 13,
+            "tp": 8,
+            "precision": 0.6153846153846154,
+            "recall": 0.8888888888888888,
+            "f1": 0.7272727272727274
+          }
+        },
+        "macro_f1": 0.7704354469060352,
+        "confusion_matrix": {
+          "ANSWER": {
+            "ANSWER": 36,
+            "CLARIFY": 3,
+            "ABSTAIN": 0,
+            "WARN": 5,
+            "UNPARSED": 2
+          },
+          "CLARIFY": {
+            "ANSWER": 2,
+            "CLARIFY": 5,
+            "ABSTAIN": 0,
+            "WARN": 0,
+            "UNPARSED": 0
+          },
+          "ABSTAIN": {
+            "ANSWER": 0,
+            "CLARIFY": 1,
+            "ABSTAIN": 5,
+            "WARN": 0,
+            "UNPARSED": 0
+          },
+          "WARN": {
+            "ANSWER": 0,
+            "CLARIFY": 1,
+            "ABSTAIN": 0,
+            "WARN": 8,
+            "UNPARSED": 0
+          }
+        },
+        "unparsed": 2,
+        "majority_class": "ANSWER",
+        "majority_accuracy": 0.6764705882352942,
+        "delta_vs_majority": 0.11764705882352933
+      },
+      "C1": {
+        "total": 68,
+        "correct": 41,
+        "accuracy": 0.6029411764705882,
+        "per_class": {
+          "ANSWER": {
+            "support": 46,
+            "predicted": 26,
+            "tp": 26,
+            "precision": 1.0,
+            "recall": 0.5652173913043478,
+            "f1": 0.7222222222222222
+          },
+          "CLARIFY": {
+            "support": 7,
+            "predicted": 11,
+            "tp": 4,
+            "precision": 0.36363636363636365,
+            "recall": 0.5714285714285714,
+            "f1": 0.4444444444444444
+          },
+          "ABSTAIN": {
+            "support": 6,
+            "predicted": 20,
+            "tp": 5,
+            "precision": 0.25,
+            "recall": 0.8333333333333334,
+            "f1": 0.3846153846153846
+          },
+          "WARN": {
+            "support": 9,
+            "predicted": 9,
+            "tp": 6,
+            "precision": 0.6666666666666666,
+            "recall": 0.6666666666666666,
+            "f1": 0.6666666666666666
+          }
+        },
+        "macro_f1": 0.5544871794871795,
+        "confusion_matrix": {
+          "ANSWER": {
+            "ANSWER": 26,
+            "CLARIFY": 3,
+            "ABSTAIN": 14,
+            "WARN": 3,
+            "UNPARSED": 0
+          },
+          "CLARIFY": {
+            "ANSWER": 0,
+            "CLARIFY": 4,
+            "ABSTAIN": 1,
+            "WARN": 0,
+            "UNPARSED": 2
+          },
+          "ABSTAIN": {
+            "ANSWER": 0,
+            "CLARIFY": 1,
+            "ABSTAIN": 5,
+            "WARN": 0,
+            "UNPARSED": 0
+          },
+          "WARN": {
+            "ANSWER": 0,
+            "CLARIFY": 3,
+            "ABSTAIN": 0,
+            "WARN": 6,
+            "UNPARSED": 0
+          }
+        },
+        "unparsed": 2,
+        "majority_class": "ANSWER",
+        "majority_accuracy": 0.6764705882352942,
+        "delta_vs_majority": -0.07352941176470595
+      },
+      "C2": {
+        "total": 68,
+        "correct": 47,
+        "accuracy": 0.6911764705882353,
+        "per_class": {
+          "ANSWER": {
+            "support": 46,
+            "predicted": 31,
+            "tp": 30,
+            "precision": 0.967741935483871,
+            "recall": 0.6521739130434783,
+            "f1": 0.7792207792207793
+          },
+          "CLARIFY": {
+            "support": 7,
+            "predicted": 12,
+            "tp": 5,
+            "precision": 0.4166666666666667,
+            "recall": 0.7142857142857143,
+            "f1": 0.5263157894736842
+          },
+          "ABSTAIN": {
+            "support": 6,
+            "predicted": 13,
+            "tp": 5,
+            "precision": 0.38461538461538464,
+            "recall": 0.8333333333333334,
+            "f1": 0.5263157894736842
+          },
+          "WARN": {
+            "support": 9,
+            "predicted": 11,
+            "tp": 7,
+            "precision": 0.6363636363636364,
+            "recall": 0.7777777777777778,
+            "f1": 0.7000000000000001
+          }
+        },
+        "macro_f1": 0.632963089542037,
+        "confusion_matrix": {
+          "ANSWER": {
+            "ANSWER": 30,
+            "CLARIFY": 4,
+            "ABSTAIN": 8,
+            "WARN": 3,
+            "UNPARSED": 1
+          },
+          "CLARIFY": {
+            "ANSWER": 1,
+            "CLARIFY": 5,
+            "ABSTAIN": 0,
+            "WARN": 1,
+            "UNPARSED": 0
+          },
+          "ABSTAIN": {
+            "ANSWER": 0,
+            "CLARIFY": 1,
+            "ABSTAIN": 5,
+            "WARN": 0,
+            "UNPARSED": 0
+          },
+          "WARN": {
+            "ANSWER": 0,
+            "CLARIFY": 2,
+            "ABSTAIN": 0,
+            "WARN": 7,
+            "UNPARSED": 0
+          }
+        },
+        "unparsed": 1,
+        "majority_class": "ANSWER",
+        "majority_accuracy": 0.6764705882352942,
+        "delta_vs_majority": 0.014705882352941124
+      },
+      "C3": {
+        "total": 68,
+        "correct": 56,
+        "accuracy": 0.8235294117647058,
+        "per_class": {
+          "ANSWER": {
+            "support": 46,
+            "predicted": 38,
+            "tp": 37,
+            "precision": 0.9736842105263158,
+            "recall": 0.8043478260869565,
+            "f1": 0.8809523809523809
+          },
+          "CLARIFY": {
+            "support": 7,
+            "predicted": 15,
+            "tp": 6,
+            "precision": 0.4,
+            "recall": 0.8571428571428571,
+            "f1": 0.5454545454545455
+          },
+          "ABSTAIN": {
+            "support": 6,
+            "predicted": 6,
+            "tp": 6,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "WARN": {
+            "support": 9,
+            "predicted": 7,
+            "tp": 7,
+            "precision": 1.0,
+            "recall": 0.7777777777777778,
+            "f1": 0.8750000000000001
+          }
+        },
+        "macro_f1": 0.8253517316017316,
+        "confusion_matrix": {
+          "ANSWER": {
+            "ANSWER": 37,
+            "CLARIFY": 7,
+            "ABSTAIN": 0,
+            "WARN": 0,
+            "UNPARSED": 2
+          },
+          "CLARIFY": {
+            "ANSWER": 1,
+            "CLARIFY": 6,
+            "ABSTAIN": 0,
+            "WARN": 0,
+            "UNPARSED": 0
+          },
+          "ABSTAIN": {
+            "ANSWER": 0,
+            "CLARIFY": 0,
+            "ABSTAIN": 6,
+            "WARN": 0,
+            "UNPARSED": 0
+          },
+          "WARN": {
+            "ANSWER": 0,
+            "CLARIFY": 2,
+            "ABSTAIN": 0,
+            "WARN": 7,
+            "UNPARSED": 0
+          }
+        },
+        "unparsed": 2,
+        "majority_class": "ANSWER",
+        "majority_accuracy": 0.6764705882352942,
+        "delta_vs_majority": 0.1470588235294117
+      },
+      "C4": {
+        "total": 68,
+        "correct": 58,
+        "accuracy": 0.8529411764705882,
+        "per_class": {
+          "ANSWER": {
+            "support": 46,
+            "predicted": 40,
+            "tp": 39,
+            "precision": 0.975,
+            "recall": 0.8478260869565217,
+            "f1": 0.9069767441860466
+          },
+          "CLARIFY": {
+            "support": 7,
+            "predicted": 11,
+            "tp": 5,
+            "precision": 0.45454545454545453,
+            "recall": 0.7142857142857143,
+            "f1": 0.5555555555555556
+          },
+          "ABSTAIN": {
+            "support": 6,
+            "predicted": 6,
+            "tp": 6,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "WARN": {
+            "support": 9,
+            "predicted": 8,
+            "tp": 8,
+            "precision": 1.0,
+            "recall": 0.8888888888888888,
+            "f1": 0.9411764705882353
+          }
+        },
+        "macro_f1": 0.8509271925824593,
+        "confusion_matrix": {
+          "ANSWER": {
+            "ANSWER": 39,
+            "CLARIFY": 5,
+            "ABSTAIN": 0,
+            "WARN": 0,
+            "UNPARSED": 2
+          },
+          "CLARIFY": {
+            "ANSWER": 1,
+            "CLARIFY": 5,
+            "ABSTAIN": 0,
+            "WARN": 0,
+            "UNPARSED": 1
+          },
+          "ABSTAIN": {
+            "ANSWER": 0,
+            "CLARIFY": 0,
+            "ABSTAIN": 6,
+            "WARN": 0,
+            "UNPARSED": 0
+          },
+          "WARN": {
+            "ANSWER": 0,
+            "CLARIFY": 1,
+            "ABSTAIN": 0,
+            "WARN": 8,
+            "UNPARSED": 0
+          }
+        },
+        "unparsed": 3,
+        "majority_class": "ANSWER",
+        "majority_accuracy": 0.6764705882352942,
+        "delta_vs_majority": 0.17647058823529405
+      }
+    }
+  },
+  "Expanded development (bakery_01 + clinic_01)": {
+    "majority_baseline": {
+      "class": "ANSWER",
+      "count": 36,
+      "total": 53,
+      "accuracy": 0.6792452830188679,
+      "counts": {
+        "ANSWER": 36,
+        "ABSTAIN": 8,
+        "CLARIFY": 6,
+        "WARN": 3
+      }
+    },
+    "configs": {
+      "C0": {
+        "total": 53,
+        "correct": 45,
+        "accuracy": 0.8490566037735849,
+        "per_class": {
+          "ANSWER": {
+            "support": 36,
+            "predicted": 34,
+            "tp": 32,
+            "precision": 0.9411764705882353,
+            "recall": 0.8888888888888888,
+            "f1": 0.9142857142857143
+          },
+          "CLARIFY": {
+            "support": 6,
+            "predicted": 5,
+            "tp": 4,
+            "precision": 0.8,
+            "recall": 0.6666666666666666,
+            "f1": 0.7272727272727272
+          },
+          "ABSTAIN": {
+            "support": 8,
+            "predicted": 6,
+            "tp": 6,
+            "precision": 1.0,
+            "recall": 0.75,
+            "f1": 0.8571428571428571
+          },
+          "WARN": {
+            "support": 3,
+            "predicted": 7,
+            "tp": 3,
+            "precision": 0.42857142857142855,
+            "recall": 1.0,
+            "f1": 0.6
+          }
+        },
+        "macro_f1": 0.7746753246753246,
+        "confusion_matrix": {
+          "ANSWER": {
+            "ANSWER": 32,
+            "CLARIFY": 1,
+            "ABSTAIN": 0,
+            "WARN": 2,
+            "UNPARSED": 1
+          },
+          "CLARIFY": {
+            "ANSWER": 2,
+            "CLARIFY": 4,
+            "ABSTAIN": 0,
+            "WARN": 0,
+            "UNPARSED": 0
+          },
+          "ABSTAIN": {
+            "ANSWER": 0,
+            "CLARIFY": 0,
+            "ABSTAIN": 6,
+            "WARN": 2,
+            "UNPARSED": 0
+          },
+          "WARN": {
+            "ANSWER": 0,
+            "CLARIFY": 0,
+            "ABSTAIN": 0,
+            "WARN": 3,
+            "UNPARSED": 0
+          }
+        },
+        "unparsed": 1,
+        "majority_class": "ANSWER",
+        "majority_accuracy": 0.6792452830188679,
+        "delta_vs_majority": 0.16981132075471705
+      },
+      "C1": {
+        "total": 53,
+        "correct": 44,
+        "accuracy": 0.8301886792452831,
+        "per_class": {
+          "ANSWER": {
+            "support": 36,
+            "predicted": 32,
+            "tp": 31,
+            "precision": 0.96875,
+            "recall": 0.8611111111111112,
+            "f1": 0.911764705882353
+          },
+          "CLARIFY": {
+            "support": 6,
+            "predicted": 6,
+            "tp": 4,
+            "precision": 0.6666666666666666,
+            "recall": 0.6666666666666666,
+            "f1": 0.6666666666666666
+          },
+          "ABSTAIN": {
+            "support": 8,
+            "predicted": 9,
+            "tp": 6,
+            "precision": 0.6666666666666666,
+            "recall": 0.75,
+            "f1": 0.7058823529411765
+          },
+          "WARN": {
+            "support": 3,
+            "predicted": 6,
+            "tp": 3,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          }
+        },
+        "macro_f1": 0.7377450980392157,
+        "confusion_matrix": {
+          "ANSWER": {
+            "ANSWER": 31,
+            "CLARIFY": 2,
+            "ABSTAIN": 2,
+            "WARN": 1,
+            "UNPARSED": 0
+          },
+          "CLARIFY": {
+            "ANSWER": 1,
+            "CLARIFY": 4,
+            "ABSTAIN": 1,
+            "WARN": 0,
+            "UNPARSED": 0
+          },
+          "ABSTAIN": {
+            "ANSWER": 0,
+            "CLARIFY": 0,
+            "ABSTAIN": 6,
+            "WARN": 2,
+            "UNPARSED": 0
+          },
+          "WARN": {
+            "ANSWER": 0,
+            "CLARIFY": 0,
+            "ABSTAIN": 0,
+            "WARN": 3,
+            "UNPARSED": 0
+          }
+        },
+        "unparsed": 0,
+        "majority_class": "ANSWER",
+        "majority_accuracy": 0.6792452830188679,
+        "delta_vs_majority": 0.15094339622641517
+      },
+      "C2": {
+        "total": 53,
+        "correct": 43,
+        "accuracy": 0.8113207547169812,
+        "per_class": {
+          "ANSWER": {
+            "support": 36,
+            "predicted": 30,
+            "tp": 30,
+            "precision": 1.0,
+            "recall": 0.8333333333333334,
+            "f1": 0.9090909090909091
+          },
+          "CLARIFY": {
+            "support": 6,
+            "predicted": 6,
+            "tp": 4,
+            "precision": 0.6666666666666666,
+            "recall": 0.6666666666666666,
+            "f1": 0.6666666666666666
+          },
+          "ABSTAIN": {
+            "support": 8,
+            "predicted": 9,
+            "tp": 6,
+            "precision": 0.6666666666666666,
+            "recall": 0.75,
+            "f1": 0.7058823529411765
+          },
+          "WARN": {
+            "support": 3,
+            "predicted": 8,
+            "tp": 3,
+            "precision": 0.375,
+            "recall": 1.0,
+            "f1": 0.5454545454545454
+          }
+        },
+        "macro_f1": 0.7067736185383244,
+        "confusion_matrix": {
+          "ANSWER": {
+            "ANSWER": 30,
+            "CLARIFY": 2,
+            "ABSTAIN": 1,
+            "WARN": 3,
+            "UNPARSED": 0
+          },
+          "CLARIFY": {
+            "ANSWER": 0,
+            "CLARIFY": 4,
+            "ABSTAIN": 2,
+            "WARN": 0,
+            "UNPARSED": 0
+          },
+          "ABSTAIN": {
+            "ANSWER": 0,
+            "CLARIFY": 0,
+            "ABSTAIN": 6,
+            "WARN": 2,
+            "UNPARSED": 0
+          },
+          "WARN": {
+            "ANSWER": 0,
+            "CLARIFY": 0,
+            "ABSTAIN": 0,
+            "WARN": 3,
+            "UNPARSED": 0
+          }
+        },
+        "unparsed": 0,
+        "majority_class": "ANSWER",
+        "majority_accuracy": 0.6792452830188679,
+        "delta_vs_majority": 0.1320754716981133
+      },
+      "C3": {
+        "total": 53,
+        "correct": 39,
+        "accuracy": 0.7358490566037735,
+        "per_class": {
+          "ANSWER": {
+            "support": 36,
+            "predicted": 32,
+            "tp": 29,
+            "precision": 0.90625,
+            "recall": 0.8055555555555556,
+            "f1": 0.8529411764705882
+          },
+          "CLARIFY": {
+            "support": 6,
+            "predicted": 4,
+            "tp": 3,
+            "precision": 0.75,
+            "recall": 0.5,
+            "f1": 0.6
+          },
+          "ABSTAIN": {
+            "support": 8,
+            "predicted": 11,
+            "tp": 4,
+            "precision": 0.36363636363636365,
+            "recall": 0.5,
+            "f1": 0.4210526315789474
+          },
+          "WARN": {
+            "support": 3,
+            "predicted": 6,
+            "tp": 3,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          }
+        },
+        "macro_f1": 0.6351651186790506,
+        "confusion_matrix": {
+          "ANSWER": {
+            "ANSWER": 29,
+            "CLARIFY": 1,
+            "ABSTAIN": 5,
+            "WARN": 1,
+            "UNPARSED": 0
+          },
+          "CLARIFY": {
+            "ANSWER": 1,
+            "CLARIFY": 3,
+            "ABSTAIN": 2,
+            "WARN": 0,
+            "UNPARSED": 0
+          },
+          "ABSTAIN": {
+            "ANSWER": 2,
+            "CLARIFY": 0,
+            "ABSTAIN": 4,
+            "WARN": 2,
+            "UNPARSED": 0
+          },
+          "WARN": {
+            "ANSWER": 0,
+            "CLARIFY": 0,
+            "ABSTAIN": 0,
+            "WARN": 3,
+            "UNPARSED": 0
+          }
+        },
+        "unparsed": 0,
+        "majority_class": "ANSWER",
+        "majority_accuracy": 0.6792452830188679,
+        "delta_vs_majority": 0.05660377358490565
+      },
+      "C4": {
+        "total": 53,
+        "correct": 41,
+        "accuracy": 0.7735849056603774,
+        "per_class": {
+          "ANSWER": {
+            "support": 36,
+            "predicted": 34,
+            "tp": 30,
+            "precision": 0.8823529411764706,
+            "recall": 0.8333333333333334,
+            "f1": 0.8571428571428571
+          },
+          "CLARIFY": {
+            "support": 6,
+            "predicted": 4,
+            "tp": 4,
+            "precision": 1.0,
+            "recall": 0.6666666666666666,
+            "f1": 0.8
+          },
+          "ABSTAIN": {
+            "support": 8,
+            "predicted": 9,
+            "tp": 4,
+            "precision": 0.4444444444444444,
+            "recall": 0.5,
+            "f1": 0.47058823529411764
+          },
+          "WARN": {
+            "support": 3,
+            "predicted": 6,
+            "tp": 3,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          }
+        },
+        "macro_f1": 0.6985994397759103,
+        "confusion_matrix": {
+          "ANSWER": {
+            "ANSWER": 30,
+            "CLARIFY": 0,
+            "ABSTAIN": 5,
+            "WARN": 1,
+            "UNPARSED": 0
+          },
+          "CLARIFY": {
+            "ANSWER": 2,
+            "CLARIFY": 4,
+            "ABSTAIN": 0,
+            "WARN": 0,
+            "UNPARSED": 0
+          },
+          "ABSTAIN": {
+            "ANSWER": 2,
+            "CLARIFY": 0,
+            "ABSTAIN": 4,
+            "WARN": 2,
+            "UNPARSED": 0
+          },
+          "WARN": {
+            "ANSWER": 0,
+            "CLARIFY": 0,
+            "ABSTAIN": 0,
+            "WARN": 3,
+            "UNPARSED": 0
+          }
+        },
+        "unparsed": 0,
+        "majority_class": "ANSWER",
+        "majority_accuracy": 0.6792452830188679,
+        "delta_vs_majority": 0.09433962264150952
+      }
+    }
+  }
+}

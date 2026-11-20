@@ -1,0 +1,25 @@
+{
+  "stratum": "challenge_cafe",
+  "original_run_path": "evaluation/results/challenge/20261119-103951-cafe_01",
+  "model_version": "claude-haiku-5-5",
+  "prompt_version": "answer_system_v2",
+  "original_code_commit": "4f23435",
+  "scorer_version": "scorer_v3_1",
+  "code_hashes": {
+    "scoring.py": "204198e75620e78f4408329a167f22a7131f0e1243f88ef91e7a1b17a081a646",
+    "postprocess.py": "3850a577c753d61c4a26718bf8647db304c3fa961fe315c88c0b19255eda691d",
+    "rescore_v3_1.py": "31bde3ee73c671d1009130312848fe9fa1e4f347d734825badbfd08d522b7b6a",
+    "specs_v3_1_overrides.yaml": "66ff8f7643d592e735fda6d64b646e2ce54f2347f17533b00c5f90610d6d36f0"
+  },
+  "spec_hashes": {
+    "cafe_challenge_gold.yaml": "a431e8a119e6f40c154ecfd06a7feda0d8dddb897926bb63a4d1f8dd283111ac",
+    "cafe_challenge.yaml": "46a2f5b1cbf28122e5b28618decfbebcf2f7fc1ee1f6d9c13749acf2655af6ed",
+    "specs_v3_1_overrides": "66ff8f7643d592e735fda6d64b646e2ce54f2347f17533b00c5f90610d6d36f0"
+  },
+  "git_head": "4f23435",
+  "git_dirty": true,
+  "turns": 17,
+  "orig_passed": 8,
+  "prior_rescored_passed": 14,
+  "scorer_v3_1_passed": 15
+}

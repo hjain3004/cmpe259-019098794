@@ -69,9 +69,9 @@ conversations:
       - text: "Did I pay anyone twice?"
         expected: ANSWER
         expected_behavior: "Identifies MV-301 with two $312.50 payments on 2026-08-18 and 2026-08-22."
-      - text: "If Meridian credits that back, what would I owe them now?"
+      - text: "If Meridian applies that duplicate payment as a credit against my open Meridian bills, what would I still owe them?"
         expected: ANSWER
-        expected_behavior: "Computes 708.00 - 312.50 = 395.50 (or 958.00 - 312.50 = 645.50) as hypothetical until confirmed."
+        expected_behavior: "Computes 708.00 - 312.50 = 395.50 USD if txn_0322 ($250.00) applies (or 958.00 - 312.50 = 645.50 USD confirmed-only), excluding duplicate ML-90, labeled hypothetical until confirmed."
 
   - id: CH6
     category: edge_case

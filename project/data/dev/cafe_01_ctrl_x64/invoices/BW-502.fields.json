@@ -1,0 +1,63 @@
+{
+  "doc_id": "inv_BW-502",
+  "fields": {
+    "vendor_name": {
+      "text": "BeanWorks Coffee Roasters",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "BW-502",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "2025-07-06",
+      "page": 1
+    },
+    "stated_due_date": {
+      "text": "2025-08-05",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 30",
+      "page": 1
+    },
+    "subtotal": {
+      "text": "$231.00",
+      "page": 1
+    },
+    "tax": {
+      "text": "$0.00",
+      "page": 1
+    },
+    "total": {
+      "text": "$231.00",
+      "page": 1
+    },
+    "currency": {
+      "text": "USD",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Golden Gate Credit Union",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "002299104417",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "322271627",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Single Origin Ethiopia, 2 lb bag 9 bag $18.00 $162.00",
+      "page": 1
+    },
+    {
+      "text": "Espresso Blend, 5 lb bag 2 bag $34.50 $69.00",
+      "page": 1
+    }
+  ]
+}

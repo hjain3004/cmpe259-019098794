@@ -1,0 +1,47 @@
+{
+  "doc_id": "inv_GP-233",
+  "fields": {
+    "vendor_name": {
+      "text": "Greenway Produce",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "GP-233",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "Mar 30, 2026",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 15",
+      "page": 1
+    },
+    "total": {
+      "text": "$736.00",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Pacific Western Bank",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "007733210456",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "121042882",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Avocados, case 8 case $52.40 $419.20",
+      "page": 1
+    },
+    {
+      "text": "Lemons, case 9 case $35.20 $316.80",
+      "page": 1
+    }
+  ]
+}

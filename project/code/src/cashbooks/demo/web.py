@@ -13,6 +13,8 @@ import secrets
 import sqlite3
 import threading
 from dataclasses import dataclass, field
+from datetime import date, timedelta
+from decimal import Decimal, InvalidOperation
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, quote, urlsplit
@@ -20,13 +22,18 @@ from urllib.parse import parse_qs, quote, urlsplit
 import pdfplumber
 from PIL import Image, ImageDraw
 
+from cashbooks.attention import find_attention_items
+from cashbooks.contracts.common import PaymentState
 from cashbooks.contracts.postprocess import mask_numbers
+from cashbooks.contracts.tools import CompareVendorPaymentDetailsArgs, GetBillStatusArgs, ListOpenBillsArgs
 from cashbooks.demo.rehearsal import rehearsal_llm
 from cashbooks.demo.session import ChatSession, ChatTurnResult
 from cashbooks.ingest.bank_csv import read_bank_csv
 from cashbooks.ingest.bundle import read_messages, read_vendor_history
 from cashbooks.store.db import Store
 from cashbooks.store.load_gold import load_gold
+from cashbooks.tools.bills import get_bill_status, list_open_bills
+from cashbooks.tools.more import compare_vendor_payment_details
 
 PROJECT = Path(__file__).resolve().parents[4]
 PDF_DPI = 216  # >= 200 dpi (3x PDF 72-pt scale)
@@ -75,11 +82,11 @@ _FIELD_TITLES = {
 }
 
 CONFIGS = {
-    "C3": ("Tools + records", "Claude uses read-only tools to compute answers from extracted records."),
-    "C0": ("Full context", "Claude receives the complete document collection in its prompt."),
-    "C1": ("Document search", "BM25 selects raw document passages for Claude to read."),
-    "C2": ("Record search", "BM25 selects structured records for Claude to read."),
-    "C4": ("Tools + checked records", "A reference configuration uses hand-checked records instead of extracted records."),
+    "C3": ("Tools + records", "Uses read-only tools over extracted records to compute exact balances and check details."),
+    "C0": ("Full context", "Reads the entire raw document collection directly in one prompt."),
+    "C1": ("Document search", "Searches raw document passages with BM25 before answering."),
+    "C2": ("Record search", "Searches extracted records with BM25 before answering."),
+    "C4": ("Tools + checked records", "Reference configuration using hand-verified records instead of extracted records."),
 }
 TOOLS = {
     "list_open_bills": ("Find outstanding bills", "Looked up open bills and their due dates."),
@@ -90,11 +97,271 @@ TOOLS = {
     "summarize_purchases": ("Summarize purchases", "Calculated quantities and spending for the requested period."),
     "get_source_evidence": ("Look up supporting evidence", "Retrieved the source material behind the cited records."),
 }
+
+# Single configurable list of tested, passing owner question chips.
 QUESTIONS = [
-    {"title": "Check a payment", "question": "Did I already pay invoice NS-1048?"},
-    {"title": "Review payment details", "question": "Did the payment details on BW-771 change?"},
-    {"title": "Plan the week", "question": "What bills are due in the next seven days?"},
+    {
+        "title": "Two-step check",
+        "question": "Is this safe to pay?",
+        "followup": "The BeanWorks one.",
+    },
+    {
+        "title": "Vendor balance",
+        "question": "How much do I owe Northside?",
+    },
+    {
+        "title": "Bills in order",
+        "question": "List my Greenway bills, oldest first.",
+    },
+    {
+        "title": "Possible money back",
+        "question": "Did I pay anyone twice?",
+    },
+    {
+        "title": "New bank details",
+        "question": "BeanWorks sent BW-771 with new bank details. Is anything off?",
+    },
 ]
+
+RESPONSE_BADGES = {
+    "WARN": "Heads up",
+    "CLARIFY": "I need one detail",
+    "ABSTAIN": "I can't tell from your records",
+    "ANSWER": "",
+    "ERROR": "Could not answer",
+}
+
+
+def format_money_owner(amount: Decimal | str | float, currency: str = "USD") -> str:
+    """Format money in owner language (e.g. $1,073.25 for USD)."""
+    try:
+        dec = Decimal(str(amount))
+    except (InvalidOperation, ValueError):
+        return mask_numbers(str(amount))
+    sign = "-" if dec < 0 else ""
+    abs_amt = abs(dec)
+    if (currency or "USD").upper() == "USD":
+        return f"{sign}${abs_amt:,.2f}"
+    return f"{sign}{abs_amt:,.2f} {currency.upper()}"
+
+
+def format_date_owner(d: date | str | None) -> str:
+    """Format date cleanly as 'Oct 1'."""
+    if not d:
+        return ""
+    dt = d if isinstance(d, date) else date.fromisoformat(str(d))
+    return f"{dt.strftime('%b')} {dt.day}"
+
+
+def format_header_date(d: date | str) -> str:
+    """Format header clock date as '24 Sep 2026'."""
+    dt = d if isinstance(d, date) else date.fromisoformat(str(d))
+    return f"{dt.day} {dt.strftime('%b')} {dt.year}"
+
+
+def bill_status_badge(state: PaymentState | str, overdue: bool = False, needs_check: bool = False) -> str:
+    """Map PaymentState / flags into the five plain owner status badges."""
+    if needs_check:
+        return "Check before paying"
+    st_val = state.value if isinstance(state, PaymentState) else str(state).lower()
+    if st_val in ("paid", "overpaid"):
+        return "Paid"
+    if st_val in ("partial", "partly_paid", "partially_paid"):
+        return "Partly paid?"
+    if overdue:
+        return "Overdue"
+    return "Unpaid"
+
+
+def _preferred_proof_id(evidence_ids: list[str], invoice_number: str | None = None) -> str | None:
+    """Pick the clearest single evidence ID for 'See proof' without exposing IDs in text."""
+    for eid in evidence_ids:
+        if eid.startswith("span_msg_"):
+            return eid
+    if invoice_number:
+        for preferred in ("remit_account", "total", "stated_due_date", "invoice_number", "p1"):
+            candidate = f"span_inv_{invoice_number}_{preferred}"
+            if candidate in evidence_ids:
+                return candidate
+    for eid in evidence_ids:
+        if eid.startswith("span_inv_") or eid.startswith("txn_") or eid.startswith("vh_"):
+            return eid
+    return evidence_ids[0] if evidence_ids else None
+
+
+def build_attention_panel(store: Store, as_of: date) -> list[dict]:
+    """Build grouped 'This week' owner cards directly from attention.py + read-only store queries."""
+    items = find_attention_items(store, as_of)
+    all_bills = list_open_bills(store, ListOpenBillsArgs(as_of=as_of, include_settled=True)).bills
+    summary_by_inv = {b.invoice_number: b for b in all_bills}
+    txn_by_id = {t.txn_id: t for t in store.txns()}
+
+    groups: dict[str, dict] = {
+        "overdue": {"id": "overdue", "title": "Overdue", "cards": []},
+        "due_soon": {"id": "due_soon", "title": "Due soon", "cards": []},
+        "check_before_paying": {"id": "check_before_paying", "title": "Check before paying", "cards": []},
+        "possible_money_back": {"id": "possible_money_back", "title": "Possible money back", "cards": []},
+    }
+
+    seen_overdue: set[str] = set()
+    for it in items:
+        if it.kind == "overdue_bill" and it.subject not in seen_overdue:
+            seen_overdue.add(it.subject)
+            bsum = summary_by_inv.get(it.subject)
+            if not bsum:
+                continue
+            due_txt = format_date_owner(bsum.due_date)
+            amt_txt = format_money_owner(bsum.remaining.amount, bsum.remaining.currency)
+            sentence = mask_numbers(f"Past due since {due_txt}; {amt_txt} is still open.")
+            eid = _preferred_proof_id(list(it.evidence_ids), it.subject)
+            groups["overdue"]["cards"].append({
+                "vendor": bsum.vendor,
+                "invoice": bsum.invoice_number,
+                "amount": amt_txt,
+                "status": bill_status_badge(bsum.state, overdue=True),
+                "summary": sentence,
+                "proof": {"evidence_id": eid, "label": f"Invoice {bsum.invoice_number}", "supports": sentence} if eid else None,
+            })
+
+    due_horizon = as_of + timedelta(days=7)
+    for bsum in sorted(all_bills, key=lambda b: (b.due_date or as_of, b.invoice_number)):
+        if bsum.state in (PaymentState.PAID, PaymentState.OVERPAID) or bsum.overdue:
+            continue
+        if bsum.due_date and as_of <= bsum.due_date <= due_horizon:
+            st = get_bill_status(store, GetBillStatusArgs(bill_id=bsum.bill_id, as_of=as_of))
+            due_txt = format_date_owner(bsum.due_date)
+            amt_txt = format_money_owner(bsum.remaining.amount, bsum.remaining.currency)
+            cred_total = sum((c.amount for c in st.credits), Decimal("0.00"))
+            if cred_total > 0:
+                sentence = mask_numbers(
+                    f"Due {due_txt}; {amt_txt} left after a {format_money_owner(cred_total, bsum.remaining.currency)} credit."
+                )
+            elif st.payments:
+                paid_amt = sum((p.amount_applied.amount for p in st.payments), Decimal("0.00"))
+                sentence = mask_numbers(
+                    f"Due {due_txt}; {amt_txt} left after a {format_money_owner(paid_amt, bsum.remaining.currency)} payment."
+                )
+            else:
+                sentence = mask_numbers(f"Due {due_txt} for {amt_txt}.")
+            eid = _preferred_proof_id(list(bsum.evidence_ids), bsum.invoice_number)
+            groups["due_soon"]["cards"].append({
+                "vendor": bsum.vendor,
+                "invoice": bsum.invoice_number,
+                "amount": amt_txt,
+                "status": bill_status_badge(bsum.state, overdue=False),
+                "summary": sentence,
+                "proof": {"evidence_id": eid, "label": f"Invoice {bsum.invoice_number}", "supports": sentence} if eid else None,
+            })
+
+    for it in items:
+        if it.kind == "bank_detail_mismatch":
+            bsum = summary_by_inv.get(it.subject)
+            if not bsum:
+                continue
+            cmp = compare_vendor_payment_details(store, CompareVendorPaymentDetailsArgs(invoice_number=bsum.invoice_number))
+            doc_acct = cmp.on_document.account_last4 if cmp.on_document and cmp.on_document.account_last4 else "new details"
+            file_acct = cmp.on_file.account_last4 if cmp.on_file and cmp.on_file.account_last4 else "on file"
+            sentence = mask_numbers(
+                f"Invoice asks to pay account ending in {doc_acct}, which differs from your {file_acct} record on file."
+            )
+            amt_txt = format_money_owner(bsum.remaining.amount, bsum.remaining.currency)
+            eid = _preferred_proof_id(list(it.evidence_ids), bsum.invoice_number)
+            groups["check_before_paying"]["cards"].append({
+                "vendor": bsum.vendor,
+                "invoice": bsum.invoice_number,
+                "amount": amt_txt,
+                "status": bill_status_badge(bsum.state, needs_check=True),
+                "summary": sentence,
+                "proof": {"evidence_id": eid, "label": f"Invoice {bsum.invoice_number}", "supports": sentence} if eid else None,
+            })
+        elif it.kind == "message_conflict":
+            bsum = summary_by_inv.get(it.subject)
+            if not bsum:
+                continue
+            st = get_bill_status(store, GetBillStatusArgs(bill_id=bsum.bill_id, as_of=as_of))
+            cand_amt = sum((p.amount_applied.amount for p in st.possible_payments), Decimal("0.00"))
+            if cand_amt > 0:
+                sentence = mask_numbers(
+                    f"Vendor message says paid, while bank records show only an unconfirmed {format_money_owner(cand_amt, bsum.remaining.currency)} payment."
+                )
+            else:
+                sentence = mask_numbers("Vendor message says this is paid, but bank records do not show a confirmed match.")
+            amt_txt = format_money_owner(bsum.remaining.amount, bsum.remaining.currency)
+            eid = _preferred_proof_id(list(it.evidence_ids), bsum.invoice_number)
+            groups["check_before_paying"]["cards"].append({
+                "vendor": bsum.vendor,
+                "invoice": bsum.invoice_number,
+                "amount": amt_txt,
+                "status": bill_status_badge(bsum.state, needs_check=True),
+                "summary": sentence,
+                "proof": {"evidence_id": eid, "label": "Vendor message", "supports": sentence} if eid else None,
+            })
+        elif it.kind in ("duplicate_bill", "total_mismatch", "due_date_conflict"):
+            bsum = summary_by_inv.get(it.subject)
+            if not bsum:
+                continue
+            amt_txt = format_money_owner(bsum.total.amount, bsum.total.currency)
+            if it.kind == "duplicate_bill":
+                sentence = "Matches an earlier bill on vendor, amount, and date."
+            elif it.kind == "total_mismatch":
+                sentence = f"Line items or tax do not add up to the printed {amt_txt} total."
+            else:
+                sentence = "Printed due date disagrees with the payment terms on this invoice."
+            eid = _preferred_proof_id(list(it.evidence_ids), bsum.invoice_number)
+            groups["check_before_paying"]["cards"].append({
+                "vendor": bsum.vendor,
+                "invoice": bsum.invoice_number,
+                "amount": amt_txt,
+                "status": bill_status_badge(bsum.state, needs_check=True),
+                "summary": mask_numbers(sentence),
+                "proof": {"evidence_id": eid, "label": f"Invoice {bsum.invoice_number}", "supports": sentence} if eid else None,
+            })
+
+    seen_money_back: set[str] = set()
+    for it in items:
+        if it.kind == "duplicate_payment" and it.subject not in seen_money_back:
+            seen_money_back.add(it.subject)
+            bsum = summary_by_inv.get(it.subject)
+            if not bsum:
+                continue
+            st = get_bill_status(store, GetBillStatusArgs(bill_id=bsum.bill_id, as_of=as_of))
+            extra = sum((p.amount_applied.amount for p in st.payments), Decimal("0.00")) - bsum.total.amount
+            amt_txt = format_money_owner(max(extra, Decimal("0.00")), bsum.total.currency)
+            sentence = mask_numbers(f"Confirmed payments exceed this bill by {amt_txt}; check whether a refund is owed.")
+            eid = _preferred_proof_id(list(it.evidence_ids), bsum.invoice_number)
+            groups["possible_money_back"]["cards"].append({
+                "vendor": bsum.vendor,
+                "invoice": bsum.invoice_number,
+                "amount": amt_txt,
+                "status": bill_status_badge(bsum.state),
+                "summary": sentence,
+                "proof": {"evidence_id": eid, "label": "Bank record", "supports": sentence} if eid else None,
+            })
+        elif it.kind == "candidate_payment_link" and ":" in it.subject:
+            inv_num, txn_id = it.subject.split(":", 1)
+            bsum = summary_by_inv.get(inv_num)
+            if not bsum or bsum.state not in (PaymentState.PAID, PaymentState.OVERPAID) or inv_num in seen_money_back:
+                continue
+            seen_money_back.add(inv_num)
+            txn = txn_by_id.get(txn_id)
+            amt_val = abs(txn.amount) if txn else bsum.total.amount
+            curr = txn.currency if txn else bsum.total.currency
+            amt_txt = format_money_owner(amt_val, curr)
+            date_txt = format_date_owner(txn.posted_on) if txn else "recently"
+            sentence = mask_numbers(
+                f"Paid twice? Another {amt_txt} bank payment on {date_txt} matches this already-paid bill."
+            )
+            eid = txn_id if txn_id in it.evidence_ids else _preferred_proof_id(list(it.evidence_ids), inv_num)
+            groups["possible_money_back"]["cards"].append({
+                "vendor": bsum.vendor,
+                "invoice": bsum.invoice_number,
+                "amount": amt_txt,
+                "status": bill_status_badge(bsum.state),
+                "summary": sentence,
+                "proof": {"evidence_id": eid, "label": "Bank transaction", "supports": sentence} if eid else None,
+            })
+
+    return [g for g in groups.values() if g["cards"]]
 
 
 class EvidenceNotFoundError(LookupError):
@@ -161,9 +428,11 @@ def present_result(result: ChatTurnResult, mode: str) -> dict:
             })
             seen.add(key)
     valid = result.response is not None
+    kind = result.answerability.value if result.answerability else "ERROR"
     return {
         "ok": valid, "config": result.config_name, "mode": mode,
-        "kind": result.answerability.value if result.answerability else "ERROR",
+        "kind": kind,
+        "badge": RESPONSE_BADGES.get(kind, ""),
         "answer": mask_numbers(result.answer) if valid else "The assistant did not return a valid answer. Your question has not been answered. Try again or start a new conversation.",
         "clarifying_question": mask_numbers(result.clarifying_question or ""),
         "next_step": mask_numbers(result.next_step or ""),
@@ -436,11 +705,45 @@ class DemoService:
         self._page_cache: dict[tuple[str, str, int, int], CachedPdfPage] = {}
         self._cache_lock = threading.Lock()
         self._default_stores: tuple[Store | None, Store] | None = None
+        self._attention_cache: list[dict] | None = None
+
+    def _business_info(self) -> tuple[str, str]:
+        ledger_file = self.bundle / "ledger.json"
+        if ledger_file.is_file():
+            try:
+                biz = json.loads(ledger_file.read_text(encoding="utf-8")).get("business") or {}
+                return str(biz.get("name") or "Ember & Oat Cafe"), str(biz.get("evaluation_clock") or "2026-09-24")
+            except (ValueError, OSError):
+                pass
+        return "Ember & Oat Cafe", "2026-09-24"
+
+    def attention_panel(self) -> list[dict]:
+        with self.lock:
+            cached = self._attention_cache
+        if cached is not None:
+            return cached
+        _, as_of_str = self._business_info()
+        as_of = date.fromisoformat(as_of_str)
+        ext_store, gold_store, _ = self._stores_for_session(None)
+        store = ext_store or gold_store
+        panel = build_attention_panel(store, as_of)
+        with self.lock:
+            self._attention_cache = panel
+        return panel
 
     def metadata(self):
-        return {"mode": self.mode, "business": "Ember & Oat Cafe", "as_of": "2026-09-24",
-                "dataset": "Synthetic café records", "token": self.token, "questions": QUESTIONS,
-                "configs": [{"id": k, "name": v[0], "description": v[1]} for k, v in CONFIGS.items()]}
+        business, as_of_str = self._business_info()
+        return {
+            "mode": self.mode,
+            "business": business,
+            "as_of": as_of_str,
+            "as_of_display": format_header_date(as_of_str),
+            "dataset": "Synthetic café records",
+            "token": self.token,
+            "questions": QUESTIONS,
+            "configs": [{"id": k, "name": v[0], "description": v[1]} for k, v in CONFIGS.items()],
+            "attention": self.attention_panel(),
+        }
 
     def create(self, config: str) -> str:
         if config not in CONFIGS:
@@ -796,6 +1099,8 @@ def make_server(port=8765, mode="rehearsal", service=None):
             route = parts.path
             if route == "/api/meta":
                 return self.send(200, app.metadata())
+            if route == "/api/attention":
+                return self.send(200, {"groups": app.attention_panel()})
             if route in ("/api/evidence", "/api/evidence/page"):
                 params = parse_qs(parts.query, keep_blank_values=False)
                 eid = (params.get("id") or [""])[0]

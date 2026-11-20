@@ -1,0 +1,9 @@
+sample_id,stratum,run_id,baseline_source,configuration,query_id,turn_index,hist_verdict,legacy_same_pp_verdict,v3_1_strict_verdict,v3_1_with_specs_verdict,parse_recovered,needs_policy_review,sign_only_keys,changed_keys_a
+REV-001,historical_v1_core_dev,20261118-164027-cafe_01-claude-haiku-5-5,prior_rescored,C3,Q11,0,False,True,True,True,True,False,,
+REV-002,v2_expanded_dev,20261118-232652-clinic_01-claude-haiku-5-5,orig,C1,D214,0,True,True,False,True,False,True,amount,amount=550.00 USD(True->False)
+REV-003,v2_expanded_dev,20261118-232652-clinic_01-claude-haiku-5-5,orig,C1,D214,1,True,True,False,True,False,True,total,total=550.00 USD(True->False)
+REV-004,historical_v1_core_dev,20261117-234352-cafe_01-claude-haiku-5-5,prior_rescored,C3,Q01,0,False,True,True,True,True,False,,
+REV-005,historical_v1_core_dev,20261118-161549-plumbing_01-claude-haiku-5-5,prior_rescored,C3,Q27,0,False,True,True,True,True,False,,
+REV-006,historical_v1_core_dev,20261118-164027-cafe_01-claude-haiku-5-5,prior_rescored,C0,Q20,0,False,True,True,True,True,False,,
+REV-007,historical_v1_core_dev,20261118-164027-cafe_01-claude-haiku-5-5,prior_rescored,C3,Q18,2,False,True,True,True,True,False,,
+REV-008,v2_core_dev,20261118-223250-cafe_01-claude-haiku-5-5,orig,C1,Q17,2,True,True,False,True,False,True,payment,payment=300.00(True->False)

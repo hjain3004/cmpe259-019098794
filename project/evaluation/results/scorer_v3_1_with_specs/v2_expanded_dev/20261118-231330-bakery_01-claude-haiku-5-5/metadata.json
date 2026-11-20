@@ -1,0 +1,122 @@
+{
+  "run_id": "20261118-231330-bakery_01-claude-haiku-5-5 (scorer_v3_1:with_specs_v3_1)",
+  "bundle": "/Users/himanshu_jain/NLP_Project_Himanshu_Jain/cmpe259-019098794/project/data/dev/bakery_01",
+  "bundle_name": "bakery_01",
+  "resolved_scenario": "bakery_01",
+  "scoring_policy": "with_specs_v3_1",
+  "scorer_version": "scorer_v3_1",
+  "eval_spec_path": "/Users/himanshu_jain/NLP_Project_Himanshu_Jain/cmpe259-019098794/project/evaluation/specs_v3_1/amount_semantics_overrides.yaml",
+  "eval_spec_version": "specs_v3_1",
+  "model_version": "claude-haiku-5-5",
+  "prompt_version": "answer_system_v2",
+  "git_head": "4f23435",
+  "git_dirty": true,
+  "hashes": {
+    "scoring.py": "204198e75620e78f4408329a167f22a7131f0e1243f88ef91e7a1b17a081a646",
+    "postprocess.py": "3850a577c753d61c4a26718bf8647db304c3fa961fe315c88c0b19255eda691d",
+    "eval_specs.py": "cd5bf0478052406e26da1e3411c269e7905425b9b95ea6226a803a7211de92c9",
+    "gold.yaml": "67a3c8824c681ce868bfff8d03d0a3d5a71fc05f2a6181fef65483db8db69996",
+    "queries.yaml": "01bcb0dd17c1e6178e074c60707eb0d702011a540f689e61dfc4cc84e9341b26",
+    "eval_spec": "36a8f37c7f0e805a2bf4ff4a44415db167fc33ace9e6b92311ae16da9d25b05c",
+    "eval_spec_manifest": "64971446e90f5c7903693f5937a5a94613db94588a9520541b8305cd60d4779b",
+    "rescore_v3_1.py": "0903674ae6cbbaa839996e1d5037e6a7ad990e46f72598b3b8d611cde49b7e3a"
+  },
+  "stratum": "v2_expanded_dev",
+  "original_run_path": "/Users/himanshu_jain/NLP_Project_Himanshu_Jain/cmpe259-019098794/project/evaluation/results/20261118-231330-bakery_01-claude-haiku-5-5",
+  "baseline_source": "orig",
+  "original_code_commit": "7a5dd10",
+  "comparison_a_scorer_only": {
+    "C0": {
+      "turns": 27,
+      "legacy_ok": 18,
+      "strict_ok": 18,
+      "with_specs_ok": 18,
+      "primary_ok": 18,
+      "primary_p2f": 0,
+      "primary_f2p": 0,
+      "policy_review": 0
+    },
+    "C1": {
+      "turns": 27,
+      "legacy_ok": 15,
+      "strict_ok": 15,
+      "with_specs_ok": 15,
+      "primary_ok": 15,
+      "primary_p2f": 0,
+      "primary_f2p": 0,
+      "policy_review": 0
+    },
+    "C2": {
+      "turns": 27,
+      "legacy_ok": 15,
+      "strict_ok": 15,
+      "with_specs_ok": 15,
+      "primary_ok": 15,
+      "primary_p2f": 0,
+      "primary_f2p": 0,
+      "policy_review": 0
+    },
+    "C3": {
+      "turns": 27,
+      "legacy_ok": 15,
+      "strict_ok": 15,
+      "with_specs_ok": 15,
+      "primary_ok": 15,
+      "primary_p2f": 0,
+      "primary_f2p": 0,
+      "policy_review": 0
+    },
+    "C4": {
+      "turns": 27,
+      "legacy_ok": 16,
+      "strict_ok": 16,
+      "with_specs_ok": 16,
+      "primary_ok": 16,
+      "primary_p2f": 0,
+      "primary_f2p": 0,
+      "policy_review": 0
+    }
+  },
+  "comparison_b_historical_vs_current_pipeline": {
+    "C0": {
+      "turns": 27,
+      "hist_ok": 18,
+      "primary_ok": 18,
+      "parse_recovery": 0,
+      "scorer_p2f": 0,
+      "scorer_f2p": 0
+    },
+    "C1": {
+      "turns": 27,
+      "hist_ok": 15,
+      "primary_ok": 15,
+      "parse_recovery": 0,
+      "scorer_p2f": 0,
+      "scorer_f2p": 0
+    },
+    "C2": {
+      "turns": 27,
+      "hist_ok": 15,
+      "primary_ok": 15,
+      "parse_recovery": 0,
+      "scorer_p2f": 0,
+      "scorer_f2p": 0
+    },
+    "C3": {
+      "turns": 27,
+      "hist_ok": 15,
+      "primary_ok": 15,
+      "parse_recovery": 0,
+      "scorer_p2f": 0,
+      "scorer_f2p": 0
+    },
+    "C4": {
+      "turns": 27,
+      "hist_ok": 16,
+      "primary_ok": 16,
+      "parse_recovery": 0,
+      "scorer_p2f": 0,
+      "scorer_f2p": 0
+    }
+  }
+}

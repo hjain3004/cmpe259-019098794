@@ -1,0 +1,67 @@
+{
+  "doc_id": "inv_NS-842",
+  "fields": {
+    "vendor_name": {
+      "text": "Northside Supplies",
+      "page": 1
+    },
+    "invoice_number": {
+      "text": "NS-842",
+      "page": 1
+    },
+    "issue_date": {
+      "text": "12/25/2025",
+      "page": 1
+    },
+    "stated_due_date": {
+      "text": "01/24/2026",
+      "page": 1
+    },
+    "payment_terms": {
+      "text": "Net 30",
+      "page": 1
+    },
+    "reference_or_po": {
+      "text": "PO-1127",
+      "page": 1
+    },
+    "subtotal": {
+      "text": "$375.60",
+      "page": 1
+    },
+    "tax": {
+      "text": "$30.99",
+      "page": 1
+    },
+    "total": {
+      "text": "$406.59",
+      "page": 1
+    },
+    "currency": {
+      "text": "USD",
+      "page": 1
+    },
+    "remit_bank_name": {
+      "text": "Bay Commerce Bank",
+      "page": 1
+    },
+    "remit_account": {
+      "text": "004417829931",
+      "page": 1
+    },
+    "remit_routing": {
+      "text": "121000358",
+      "page": 1
+    }
+  },
+  "lines": [
+    {
+      "text": "Sanitizer, gallon 8 gallon $38.50 $308.00",
+      "page": 1
+    },
+    {
+      "text": "Paper cups 16 oz, sleeve of 50 4 sleeve $16.90 $67.60",
+      "page": 1
+    }
+  ]
+}

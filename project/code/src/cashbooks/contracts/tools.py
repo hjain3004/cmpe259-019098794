@@ -186,7 +186,7 @@ class MatchPaymentsResult(Strict):
             raise ValueError(f"a {self.outcome} match lists the payments")
         if self.outcome == "ambiguous" and (len(self.candidates) < 2 or not self.why_undecided):
             raise ValueError("ambiguous needs two or more candidates and a reason")
-        if self.outcome == "no_candidates" and self.candidates:
+        if self.outcome == "no_candidates" and any(c.bill_id is not None for c in self.candidates):
             raise ValueError("no_candidates must not list candidates")
         return self
 

@@ -173,6 +173,18 @@ def check_challenge(bundle: Path, challenge_yaml: Path, gold_yaml: Path) -> list
                             errors.append(f"{cid}[{ti}]: amount {s!r} not in derived ledger amounts")
                         continue
                     errors.append(f"{cid}[{ti}]: unrecognized value {s!r} not grounded in ledger")
+            bc = gt.get("budget_check")
+            if bc:
+                for b in bc.get("overdue_clean", []):
+                    if b not in invoices or rem_ledger[b] <= ZERO:
+                        errors.append(f"{cid}[{ti}]: overdue_clean {b!r} is not an open invoice")
+                for b, info in bc.get("uncertain_bills", {}).items():
+                    if b not in invoices:
+                        errors.append(f"{cid}[{ti}]: uncertain_bills {b!r} is not an invoice")
+                        continue
+                    ca = str(info.get("certain_amount", ""))
+                    if ca != "0.00" and ca not in valid_amounts:
+                        errors.append(f"{cid}[{ti}]: uncertain_bills {b!r} certain_amount {ca!r} not in ledger amounts")
     return errors
 
 
